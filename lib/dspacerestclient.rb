@@ -1,33 +1,45 @@
-require File.dirname(__FILE__) + '/dspacerestclient/request'
+class DspaceRestClient
 
-module DspaceRestClient
+  attr_reader :dspaceurl, :headers, :token, :execute
 
-  attr_reader :dspaceurl, :headers, :cookies, :request
+  def initialize args
+    @dspaceurl = args[:dspaceurl]
+    @headers = {
+      :accept => :json,
+      :content_type => :json
+    }
+    @token = {}
+    @request = RestClient::Resource.new(
+      @dspaceurl,
+      :verify_ssl => OpenSSL::SSL::VERIFY_NONE,
+      :headers => @headers
+    )
+  end
 
-  def self.login (username, password)
-    action = '/login'
+  def get (endpoint)
+    @request[endpoint].get(@token)
+  end
+
+  def post (endpoint, data)
+    @request[endpoint].post(data,@token)
+  end
+
+  def login (username, password)
     data = JSON.generate({:email=>username,:password=>password})
-    response = self.post(:action => action, :data => data)
-    @token = {:'rest-dspace-token' => @response}
-    puts response
+    response = post('/login',data)
+    @token = {:'rest-dspace-token' => response}
   end
 
-  def self.logout
-    action = '/logout'
-    response = self.post(:action => action)
-    puts response
+  def logout
+    post('/logout',[])
   end
 
-  def self.test
-    action = '/test'
-    response = self.post(:action => action)
-    puts response
+  def status
+    get('/status')
   end
 
-  def self.status
-    action = '/status'
-    response = self.post(:action => action)
-    puts response
+  def test
+    get('test')
   end
 
 end
