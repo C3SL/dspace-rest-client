@@ -1,0 +1,5 @@
+To build:
+$ gem build dspace-rest-client.gemspec
+
+To install:
+$ gem install --local dspace-rest-client-0.0.1.gem
