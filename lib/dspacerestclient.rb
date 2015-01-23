@@ -47,12 +47,21 @@ class DspaceRestClient
   end
 
   def get_items
-    response = @request['/item'].get
+    response = @request['/items'].get
     items = []
     JSON.parse(response).each do |item|
       items << Item.new(item)
     end
     items
+  end
+
+  def get_bitstreams
+    response = @request['/bitstreams'].get
+    bitstreams = []
+    JSON.parse(response).each do |bits|
+      bitstreams << Bitstream.new(bits)
+    end
+    bitstreams
   end
 
   def login (username, password)
