@@ -13,8 +13,8 @@ class DspaceRestClient
   def initialize(args)
     @dspaceurl = args[:dspaceurl] or raise ArgumentError, "must pass :dspaceurl"
 
-    #:content_type => :json
     default_headers = {
+      :content_type => :json,
       :accept => :json
     }
     @headers = args[:headers] || default_headers
@@ -93,22 +93,24 @@ class DspaceRestClient
   end
   #---------------------------------------------------
 
+  #---------------------------------------------------
   def login (username, password)
     data = JSON.generate({:email=>username,:password=>password})
-    response = post('/login',data)
+    response = @request['/login'].post(data)
     @token = {:'rest-dspace-token' => response}
   end
 
   def logout
-    post('/logout',[])
+    response = @request['/logout'].post([], @token)
   end
 
   def status
-    get('/status')
+    response = @request['/status'].get
   end
 
   def test
-    get('test')
+    response = @request['test'].get
   end
+  #---------------------------------------------------
 
 end
