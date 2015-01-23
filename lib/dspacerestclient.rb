@@ -2,6 +2,7 @@ require 'rest-client'
 
 require File.dirname(__FILE__) + '/dspacerestclient/community'
 require File.dirname(__FILE__) + '/dspacerestclient/collection'
+require File.dirname(__FILE__) + '/dspacerestclient/items'
 
 class DspaceRestClient
 
@@ -43,6 +44,15 @@ class DspaceRestClient
       collections << Collection.new(coll)
     end
     collections
+  end
+
+  def get_items
+    response = @request['/item'].get
+    items = []
+    JSON.parse(response).each do |item|
+      items << Item.new(item)
+    end
+    items
   end
 
   def login (username, password)
