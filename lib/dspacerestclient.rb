@@ -29,6 +29,12 @@ class DspaceRestClient
   end
   #---------------------------------------------------
 
+  #---------------------------------------------------
+  def get_community(id)
+    response = @request["/communities/#{id}"].get
+    Community.new(JSON.parse(response))
+  end
+
   def get_communities
     response = @request['/communities'].get
     communities = []
@@ -36,6 +42,13 @@ class DspaceRestClient
       communities << Community.new(comm)
     end
     communities
+  end
+  #---------------------------------------------------
+
+  #---------------------------------------------------
+  def get_collection(id)
+    response = @request["/collections/#{id}"].get
+    Collection.new(JSON.parse(response))
   end
 
   def get_collections
@@ -46,6 +59,13 @@ class DspaceRestClient
     end
     collections
   end
+  #---------------------------------------------------
+
+  #---------------------------------------------------
+  def get_item(id)
+    response = @request["/items/#{id}"].get
+    Item.new(JSON.parse(response))
+  end
 
   def get_items
     response = @request['/items'].get
@@ -54,6 +74,13 @@ class DspaceRestClient
       items << Item.new(item)
     end
     items
+  end
+  #---------------------------------------------------
+
+  #---------------------------------------------------
+  def get_bitstream(id)
+    response = @request["/bitstreams/#{id}"].get
+    Bitstreams.new(JSON.parse(response))
   end
 
   def get_bitstreams
@@ -64,6 +91,7 @@ class DspaceRestClient
     end
     bitstreams
   end
+  #---------------------------------------------------
 
   def login (username, password)
     data = JSON.generate({:email=>username,:password=>password})
