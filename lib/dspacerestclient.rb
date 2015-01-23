@@ -28,11 +28,11 @@ class DspaceRestClient
 
   def get_communities
     response = @request['/communities'].get
-
-
-    JSON.parse(response).each do |record|
-      puts record.id
+    communities = []
+    JSON.parse(response).each do |comm|
+      communities << Community.new(comm)
     end
+    communities
   end
 
   def login (username, password)

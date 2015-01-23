@@ -2,22 +2,20 @@ class DspaceRestClient
 
   class Community
 
-    attr_reader :handle, :id, :name, :type,
+    attr_accessor :handle, :id, :name, :type,
       :copyrightText, :countItems, :introductoryText,
       :shortDescription, :sidebarText
 
     def initialize args
-      puts "COMMUNITY.INITIALIZE"
-
-      @response = {}
-      @dspaceurl = args[:dspaceurl]
-      @token = args[:token] || {}
-      @endpoint = args[:endpoint]
-
-    end
-
-    def response
-      @response
+      @handle = args['handle']
+      @id = args['id']
+      @name = args['name']
+      @type = args['type']
+      @copyrightText = args['copyrightText']
+      @countItems = args['countItems']
+      @introductoryText = args['introductoryText']
+      @shortDescription = args['shortDescription']
+      @sidebarText = args['sidebarText']
     end
 
   end
