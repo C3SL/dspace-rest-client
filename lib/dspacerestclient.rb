@@ -2,11 +2,12 @@ require 'rest-client'
 
 require File.dirname(__FILE__) + '/dspacerestclient/community'
 require File.dirname(__FILE__) + '/dspacerestclient/collection'
-require File.dirname(__FILE__) + '/dspacerestclient/items'
+require File.dirname(__FILE__) + '/dspacerestclient/item'
+require File.dirname(__FILE__) + '/dspacerestclient/bitstream'
 
 class DspaceRestClient
 
-  attr_reader :dspaceurl, :headers, :token
+  attr_reader :dspaceurl, :headers, :token, :request
 
   #---------------------------------------------------
   def initialize(args)
