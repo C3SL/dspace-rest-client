@@ -1,27 +1,38 @@
+require 'rest-client'
+
+require File.dirname(__FILE__) + '/dspacerestclient/community'
+
 class DspaceRestClient
 
-  attr_reader :dspaceurl, :headers, :token, :execute
+  attr_reader :dspaceurl, :headers, :token
 
-  def initialize args
-    @dspaceurl = args[:dspaceurl]
-    @headers = {
-      :accept => :json,
-      :content_type => :json
+  #---------------------------------------------------
+  def initialize(args)
+    @dspaceurl = args[:dspaceurl] or raise ArgumentError, "must pass :dspaceurl"
+
+    #:content_type => :json
+    default_headers = {
+      :accept => :json
     }
-    @token = {}
+    @headers = args[:headers] || default_headers
+    @token = args[:token] || {}
+    @authenticated = false
+
     @request = RestClient::Resource.new(
       @dspaceurl,
       :verify_ssl => OpenSSL::SSL::VERIFY_NONE,
-      :headers => @headers
+      :headers => @headers,
     )
   end
+  #---------------------------------------------------
 
-  def get (endpoint)
-    @request[endpoint].get(@token)
-  end
+  def get_communities
+    response = @request['/communities'].get
 
-  def post (endpoint, data)
-    @request[endpoint].post(data,@token)
+
+    JSON.parse(response).each do |record|
+      puts record.id
+    end
   end
 
   def login (username, password)

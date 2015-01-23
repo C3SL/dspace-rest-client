@@ -6,7 +6,10 @@ Gem::Specification.new do |s|
   s.description = "DSpace REST-API Client for Ruby! Implements all DSpace REST-API endpoints requests."
   s.authors     = ["C3SL - Centro de Computação Cientifica e Software Livre"]
   s.email       = 'c3sl@c3sl.ufpr.br'
-  s.files       = `git ls-files -z`.split("\0")
+  s.files       = Dir['lib/*.rb'] +
+                  Dir['lib/dspacerestclient/*.rb'] +
+                  Dir['bin/*']
+  #s.files       = `git ls-files -z`.split("\0")
   #s.test_files  = `git ls-files -z spec/`.split("\0")
   s.homepage    = 'https://gitlab.c3sl.ufpr.br/bnzanette/dspace-rest-client'
   s.license     = 'GNU General Public License'
