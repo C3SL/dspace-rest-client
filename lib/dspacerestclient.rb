@@ -24,9 +24,6 @@ module DSpaceRest
       )
     end
 
-    def status
-      response = @request['/status'].get
-    end
 
     def test
       response = @request['/test'].get
