@@ -31,6 +31,20 @@ module DSpaceRest
       items
     end
 
+    def metadata
+      response = @request["/items/#{id}/bitstreams"].get
+      JSON.parse(response)
+    end
+
+    def bitstreams
+      response = @request["/items/#{id}/bitstreams"].get
+      bitstreams = []
+      JSON.parse(response).each do |bits|
+        bitstreams << Bitstream.new(bits, @request)
+      end
+      bitstreams
+    end
+
   end
 
 end

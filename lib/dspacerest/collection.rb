@@ -34,6 +34,15 @@ module DSpaceRest
       collections
     end
 
+    def items
+      response = @request["/communities/#{id}/items"].get
+      items = []
+      JSON.parse(response).each do |item|
+        items << Item.new(item, @request)
+      end
+      items
+    end
+
   end
 
 end

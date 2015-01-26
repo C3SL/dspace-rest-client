@@ -37,6 +37,10 @@ module DSpaceRest
       bitStreams
     end
 
+    def retrieve
+      response = @request["/bitstreams/#{id}/retrieve"].get
+    end
+
   end
 
 end

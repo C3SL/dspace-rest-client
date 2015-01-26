@@ -34,6 +34,24 @@ module DSpaceRest
       communities
     end
 
+    def sub_communities
+      response = @request["/communities/#{id}/communities"].get
+      communities = []
+      JSON.parse(response).each do |comm|
+        communities << Community.new(comm, @request)
+      end
+      communities
+    end
+
+    def collections
+      response = @request["/communities/#{id}/collections"].get
+      collections = []
+      JSON.parse(response).each do |coll|
+        collections << Collection.new(coll, @request)
+      end
+      collections
+    end
+
   end
 
 end
