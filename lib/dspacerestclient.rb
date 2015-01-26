@@ -1,116 +1,69 @@
 require 'rest-client'
 
-require File.dirname(__FILE__) + '/dspacerestclient/community'
-require File.dirname(__FILE__) + '/dspacerestclient/collection'
-require File.dirname(__FILE__) + '/dspacerestclient/item'
-require File.dirname(__FILE__) + '/dspacerestclient/bitstream'
+module DSpaceRest
 
-class DspaceRestClient
+  class Client
 
-  attr_reader :dspaceurl, :headers, :token, :request
+    attr_reader :request
 
-  #---------------------------------------------------
-  def initialize(args)
-    @dspaceurl = args[:dspaceurl] or raise ArgumentError, "must pass :dspaceurl"
+    #---------------------------------------------------
+    def initialize(args)
+      dspaceurl = args[:dspaceurl] or raise ArgumentError, "must pass :dspaceurl"
 
-    default_headers = {
-      :content_type => :json,
-      :accept => :json
-    }
-    @headers = args[:headers] || default_headers
-    @token = args[:token] || {}
-    @authenticated = false
+      # build http header
+      default_headers = {
+          :content_type => :json,
+          :accept => :json
+      }
+      headers = args[:headers] || default_headers
 
-    @request = RestClient::Resource.new(
-      @dspaceurl,
-      :verify_ssl => OpenSSL::SSL::VERIFY_NONE,
-      :headers => @headers,
-    )
-  end
-  #---------------------------------------------------
-
-  #---------------------------------------------------
-  def get_community(id)
-    response = @request["/communities/#{id}"].get
-    Community.new(JSON.parse(response))
-  end
-
-  def get_communities
-    response = @request['/communities'].get
-    communities = []
-    JSON.parse(response).each do |comm|
-      communities << Community.new(comm)
+      @request = RestClient::Resource.new(
+          dspaceurl,
+          :verify_ssl => OpenSSL::SSL::VERIFY_NONE,
+          :headers => headers,
+      )
     end
-    communities
-  end
-  #---------------------------------------------------
 
-  #---------------------------------------------------
-  def get_collection(id)
-    response = @request["/collections/#{id}"].get
-    Collection.new(JSON.parse(response))
-  end
-
-  def get_collections
-    response = @request['/collections'].get
-    collections = []
-    JSON.parse(response).each do |coll|
-      collections << Collection.new(coll)
+    def status
+      response = @request['/status'].get
     end
-    collections
-  end
-  #---------------------------------------------------
 
-  #---------------------------------------------------
-  def get_item(id)
-    response = @request["/items/#{id}"].get
-    Item.new(JSON.parse(response))
-  end
-
-  def get_items
-    response = @request['/items'].get
-    items = []
-    JSON.parse(response).each do |item|
-      items << Item.new(item)
+    def test
+      response = @request['/test'].get
     end
-    items
-  end
-  #---------------------------------------------------
 
-  #---------------------------------------------------
-  def get_bitstream(id)
-    response = @request["/bitstreams/#{id}"].get
-    Bitstreams.new(JSON.parse(response))
-  end
 
-  def get_bitstreams
-    response = @request['/bitstreams'].get
-    bitstreams = []
-    JSON.parse(response).each do |bits|
-      bitstreams << Bitstream.new(bits)
+    def get_community(id)
+      Community.get_by_id id, @request
     end
-    bitstreams
-  end
-  #---------------------------------------------------
 
-  #---------------------------------------------------
-  def login (username, password)
-    data = JSON.generate({:email=>username,:password=>password})
-    response = @request['/login'].post(data)
-    @token = {:'rest-dspace-token' => response}
-  end
+    def get_communities
+      Community.get_all @request
+    end
 
-  def logout
-    response = @request['/logout'].post([], @token)
-  end
+    def get_collection(id)
+      Collection.get_by_id id, @request
+    end
 
-  def status
-    response = @request['/status'].get
-  end
+    def get_collections
+      Collection.get_all @request
+    end
 
-  def test
-    response = @request['test'].get
-  end
-  #---------------------------------------------------
+    def get_item(id)
+      Item.get_by_id id, @request
+    end
 
+    def get_items
+      Item.get_all @request
+    end
+
+    def get_bitstream(id)
+      BitStream.get_by_id id, @request
+    end
+
+    def get_bitstreams
+      BitStream.get_all @request
+    end
+
+  end
 end

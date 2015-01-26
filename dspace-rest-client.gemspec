@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.authors     = ["C3SL - Centro de Computação Cientifica e Software Livre"]
   s.email       = 'c3sl@c3sl.ufpr.br'
   s.files       = Dir['lib/*.rb'] +
-                  Dir['lib/dspacerestclient/*.rb'] +
+                  Dir['lib/dspacerest/*.rb'] +
                   Dir['bin/*']
   #s.files       = `git ls-files -z`.split("\0")
   #s.test_files  = `git ls-files -z spec/`.split("\0")
