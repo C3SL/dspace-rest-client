@@ -76,11 +76,11 @@ module DSpaceRest
     end
 
     def get_bitstream(id)
-      BitStream.get_by_id id, @request
+      Bitstream.get_by_id id, @request
     end
 
     def get_bitstreams
-      BitStream.get_all @request
+      Bitstream.get_all @request
     end
     #---------------------------------------------------
 
