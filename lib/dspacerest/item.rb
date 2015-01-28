@@ -60,7 +60,9 @@ module DSpaceRest
       response = @request["/items/#{id}/metadata"].put rqst
     end
 
-    def post_bitstream(bits)
+    def post_bitstream(file)
+      response = @request["/items/#{id}/bitstreams"].post File.read(file)
+      Bitstream.new(JSON.parse(response), @request)
     end
 
   end

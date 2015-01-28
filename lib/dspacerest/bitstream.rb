@@ -25,6 +25,7 @@ module DSpaceRest
 
     def self.get_by_id(id, request)
       response = request["/bitstreams/#{id}"].get
+      puts response
       Bitstream.new(JSON.parse(response), request)
     end
 
@@ -39,6 +40,18 @@ module DSpaceRest
 
     def retrieve
       response = @request["/bitstreams/#{id}/retrieve"].get
+    end
+
+    def put_metadata
+
+      array_metadata = {}
+      array_metadata["name"] = @name
+      array_metadata["bundleName"] = @bundleName
+      array_metadata["description"] = @description
+
+      rqst = JSON.generate(array_metadata)
+
+      response = @request["/bitstreams/#{id}"].put rqst
     end
 
   end
