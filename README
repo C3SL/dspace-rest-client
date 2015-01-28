@@ -1,5 +1,45 @@
-To build:
+* To build:
 $ gem build dspace-rest-client.gemspec
 
-To install:
+* To install:
 $ gem install --local dspace-rest-client-0.0.1.gem
+
+* Example script:
+
+#####################################################
+
+require 'dspace-rest-client'
+
+dspaceurl='https://localhost:8443/rest'
+
+# CREATE THE "REQUEST RESOURCE"
+request = DSpaceRest::Client.new(:dspaceurl => dspaceurl)
+
+# LOGIN
+request.login('admin@dspace.com','admin')
+
+# CREATE A NEW INSTANCE OF AN ITEM TO LATER USE IT AS AN
+# ARGUMENT TO "POST_ITEM" REQUEST
+new_item = request.new_item
+new_item.set_metadata("dc.title","TESTING!!!","en_US")
+new_item.set_metadata("dc.description","A BRIEF DESCRIPTION...","en_US")
+
+# GETS THE COLLECTION THAT WILL STORE THE NEW ITEM
+coll = request.get_collection(1)
+
+# POST THE NEW ITEM
+# "item" VARIABLE STORE THE INFO RETURNED BY DSPACE
+# ALONG WITH ID, HANDLE, ...
+item = coll.post_item(new_item)
+
+# POST A NEW BITSTREAM TO THE NEW ITEM
+file = item.post_bitstream('file.pdf')
+
+# MODIFY ITEM INFO AND PUT IT ON DSPACE
+file.name = "pdf1.pdf"
+file.description = "Descrição do item..."
+file.put_metadata
+
+puts " --- NEW ITEM ID: #{item.id} ---"
+
+#####################################################
