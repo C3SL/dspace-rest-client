@@ -3,7 +3,8 @@ module DSpaceRest
   class Item
 
     attr_accessor :handle, :id, :name, :type,
-                  :archived, :lastModified, :withdrawn
+                  :archived, :lastModified, :withdrawn,
+                  :metadata
 
     def initialize args, request
       @handle = args['handle']
@@ -13,6 +14,8 @@ module DSpaceRest
       @archived = args['archived']
       @lastModified = args['lastModified']
       @withdrawn = args['withdrawn']
+
+      @metadata = Hash.new
 
       @request = request
     end
@@ -31,18 +34,33 @@ module DSpaceRest
       items
     end
 
-    def metadata
-      response = @request["/items/#{id}/bitstreams"].get
-      JSON.parse(response)
+    def get_metadata
+      response = @request["/items/#{id}/metadata"].get
+      JSON.parse(response).each do |m|
+        @metadata[m["key"]] = Metadata.new(m)
+      end
+      @metadata
     end
 
-    def bitstreams
+    def get_bitstreams
       response = @request["/items/#{id}/bitstreams"].get
       bitstreams = []
       JSON.parse(response).each do |bits|
         bitstreams << Bitstream.new(bits, @request)
       end
       bitstreams
+    end
+
+    def put_metadata
+      array_metadata = []
+      @metadata.each_value do |m|
+        array_metadata << m.to_h
+      end
+      rqst = JSON.generate(array_metadata)
+      response = @request["/items/#{id}/metadata"].put rqst
+    end
+
+    def post_bitstream(bits)
     end
 
   end
