@@ -7,13 +7,13 @@ module DSpaceRest
                   :metadata
 
     def initialize args, request
-      @handle = args['handle']
-      @id = args['id']
-      @name = args['name']
-      @type = args['type']
-      @archived = args['archived']
-      @lastModified = args['lastModified']
-      @withdrawn = args['withdrawn']
+      @handle = args['handle'] || ""
+      @id = args['id'] || ""
+      @name = args['name'] || ""
+      @type = args['type'] || ""
+      @archived = args['archived'] || ""
+      @lastModified = args['lastModified'] || ""
+      @withdrawn = args['withdrawn'] || ""
 
       @metadata = Hash.new
 
@@ -64,6 +64,17 @@ module DSpaceRest
       response = @request["/items/#{id}/bitstreams"].post File.read(file)
       Bitstream.new(JSON.parse(response), @request)
     end
+
+    #---------------------------------------------------
+    def set_metadata(key,value,language)
+      m = {}
+      m['key'] = key
+      m['value'] = value
+      m['language'] = language
+      @metadata[key] = Metadata.new(m)
+      @metadata
+    end
+    #---------------------------------------------------
 
   end
 
