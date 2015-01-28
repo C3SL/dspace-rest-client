@@ -1,6 +1,6 @@
 module DSpaceRest
 
-  class BitStream
+  class Bitstream
 
     attr_accessor :id, :name, :type, :bundleName,
                   :checkSum, :description, :format, :mimeType,
@@ -25,7 +25,7 @@ module DSpaceRest
 
     def self.get_by_id(id, request)
       response = request["/bitstreams/#{id}"].get
-      Bitstreams.new(JSON.parse(response), request)
+      Bitstream.new(JSON.parse(response), request)
     end
 
     def self.get_all(request)
