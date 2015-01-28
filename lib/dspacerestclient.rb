@@ -8,28 +8,49 @@ module DSpaceRest
 
     #---------------------------------------------------
     def initialize(args)
-      dspaceurl = args[:dspaceurl] or raise ArgumentError, "must pass :dspaceurl"
+      @dspaceurl = args[:dspaceurl] or raise ArgumentError, "must pass :dspaceurl"
 
-      # build http header
-      default_headers = {
-          :content_type => :json,
-          :accept => :json
-      }
-      headers = args[:headers] || default_headers
+      @headers = Hash.new
+      @headers[:content_type] = :json
+      @headers[:accept] = :json
 
+      set_request
+    end
+    #---------------------------------------------------
+
+    #---------------------------------------------------
+    def set_request
       @request = RestClient::Resource.new(
-          dspaceurl,
-          :verify_ssl => OpenSSL::SSL::VERIFY_NONE,
-          :headers => headers,
+        @dspaceurl,
+        :verify_ssl => OpenSSL::SSL::VERIFY_NONE,
+        :headers => @headers
       )
     end
 
+    def login (username, password)
+      user_info = JSON.generate({
+        :email => username,
+        :password => password
+      })
+      response = @request['/login'].post user_info
+      @headers[:rest_dspace_token] = response
+      set_request
+    end
+
+    def logout
+      response = @request['/logout'].post([], @token)
+    end
+
+    def status
+      response = @request['/status'].get
+    end
 
     def test
       response = @request['/test'].get
     end
+    #---------------------------------------------------
 
-
+    #---------------------------------------------------
     def get_community(id)
       Community.get_by_id id, @request
     end
@@ -61,6 +82,7 @@ module DSpaceRest
     def get_bitstreams
       BitStream.get_all @request
     end
+    #---------------------------------------------------
 
   end
 end
