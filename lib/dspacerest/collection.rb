@@ -34,13 +34,25 @@ module DSpaceRest
       collections
     end
 
-    def items
+    def get_items
       response = @request["/collections/#{id}/items"].get
       items = []
       JSON.parse(response).each do |item|
         items << Item.new(item, @request)
       end
       items
+    end
+
+    def post_item(item)
+      array_metadata = []
+      item.metadata.each_value do |m|
+        array_metadata << m.to_h
+      end
+      rqst = JSON.generate({"metadata" => array_metadata})
+
+      response = @request["/collections/#{id}/items"].post rqst
+
+      Item.new(JSON.parse(response), @request)
     end
 
   end
