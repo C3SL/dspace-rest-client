@@ -32,6 +32,11 @@ coll = request.get_collection(1)
 # ALONG WITH ID, HANDLE, ...
 item = coll.post_item(new_item)
 
+# MODIFY INFO OF THE ITEM THAS HAS ALREADY BEEN POSTED
+item.set_metadate("dc.title","NEW NAME, BECAUSE THE ACTUAL IS NOT GOOD")
+item.set_metadata("dc.author","My Name")
+item.put_metadata
+
 # POST A NEW BITSTREAM TO THE NEW ITEM
 file = item.post_bitstream('file.pdf')
 
