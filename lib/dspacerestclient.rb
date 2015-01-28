@@ -51,6 +51,10 @@ module DSpaceRest
     #---------------------------------------------------
 
     #---------------------------------------------------
+    def new_community
+      Community.new "", @request
+    end
+
     def get_community(id)
       Community.get_by_id id, @request
     end
@@ -59,12 +63,20 @@ module DSpaceRest
       Community.get_all @request
     end
 
+    def new_collection
+      Collection.new "", @request
+    end
+
     def get_collection(id)
       Collection.get_by_id id, @request
     end
 
     def get_collections
       Collection.get_all @request
+    end
+
+    def new_item
+      Item.new "", @request
     end
 
     def get_item(id)
