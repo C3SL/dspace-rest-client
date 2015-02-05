@@ -43,7 +43,7 @@ module DSpaceRest
       communities
     end
 
-    def collections
+    def get_collections
       response = @request["/communities/#{id}/collections"].get
       collections = []
       JSON.parse(response).each do |coll|
