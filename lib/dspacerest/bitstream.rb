@@ -38,6 +38,10 @@ module DSpaceRest
       bitStreams
     end
 
+    def get_retrieve_link
+      @request.url + @retrieveLink
+    end
+
     def retrieve
       response = @request["/bitstreams/#{id}/retrieve"].get
     end
