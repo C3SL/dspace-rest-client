@@ -2,22 +2,55 @@ module DSpaceRest
 
   class Item
 
-    attr_accessor :handle, :id, :name, :type,
-                  :archived, :lastModified, :withdrawn,
-                  :metadata
+    attr_accessor :name, :archived, :withdrawn
+
+    attr_reader   :id, :handle, :type, :link, :lastModified,
+                  :parentCollection, :parentCollectionList, :bitstreams,
+                  :expand, :metadata
 
     def initialize args, request
-      @handle = args['handle'] || ""
       @id = args['id'] || ""
       @name = args['name'] || ""
+      @handle = args['handle'] || ""
       @type = args['type'] || ""
-      @archived = args['archived'] || ""
+      @link = args['link'] || ""
       @lastModified = args['lastModified'] || ""
+      @parentCollection = args['parentCollection'] || ""
+      @parentCollectionList = args['parentCollectionList'] || ""
+      @parentCommunityList = args['parentCommunityList'] || ""
+      @bitstreams = args['bitstreams'] || ""
+      @archived = args['archived'] || ""
       @withdrawn = args['withdrawn'] || ""
-
+      @expand = args['expand'] || ""
       @metadata = []
-
       @request = request
+    end
+
+    def to_h
+      h = Hash.new
+      h["id"] = @id
+      h["name"] = @name
+      h["handle"] = @handle
+      h["type"] = @type
+      h["link"] = @link
+      h["lastModified"] = @lastModified
+      h["parentCollection"] = @parentCollection
+      h["parentCollectionList"] = @parentCollectionList
+      h["parentCommunityList"] = @parentCommunityList
+      h["bitstreams"] = @bitstreams
+      h["archived"] = @archived
+      h["withdrawn"] = @withdrawn
+      h["expand"] = @expand
+
+      if !@metadata.empty?
+        metadata_array = []
+        @metadata.each do |m|
+          metadata_array << m.to_h
+        end
+        h["metadata"] = metadata_array
+      end
+
+      h
     end
 
     def self.get_by_id(id, request)
@@ -70,8 +103,8 @@ module DSpaceRest
       m = {}
       m['key'] = key
       m['value'] = value
-      m['language'] = language
-      @metadata[key] = Metadata.new(m)
+      m['language'] = language || ""
+      @metadata << Metadata.new(m)
       @metadata
     end
     #---------------------------------------------------
