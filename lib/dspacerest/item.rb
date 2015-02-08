@@ -15,7 +15,7 @@ module DSpaceRest
       @lastModified = args['lastModified'] || ""
       @withdrawn = args['withdrawn'] || ""
 
-      @metadata = Hash.new
+      @metadata = []
 
       @request = request
     end
@@ -37,7 +37,7 @@ module DSpaceRest
     def get_metadata
       response = @request["/items/#{id}/metadata"].get
       JSON.parse(response).each do |m|
-        @metadata[m["key"]] = Metadata.new(m)
+        @metadata << Metadata.new(m)
       end
       @metadata
     end
@@ -52,12 +52,12 @@ module DSpaceRest
     end
 
     def put_metadata
-      array_metadata = []
+      form_array = []
       @metadata.each_value do |m|
-        array_metadata << m.to_h
+        form << m.to_h
       end
-      rqst = JSON.generate(array_metadata)
-      response = @request["/items/#{id}/metadata"].put rqst
+      form = JSON.generate(array_metadata)
+      response = @request["/items/#{id}/metadata"].put form
     end
 
     def post_bitstream(file)
