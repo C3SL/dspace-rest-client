@@ -63,6 +63,10 @@ module DSpaceRest
       Community.get_all @request
     end
 
+    def get_topcommunities
+      Community.get_all_top @request
+    end
+
     def new_collection
       Collection.new "", @request
     end
