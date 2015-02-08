@@ -74,15 +74,8 @@ module DSpaceRest
     end
 
     def post_item(item)
-
-      form_array = []
-      item.metadata.each_value do |m|
-        form_array << m.to_h
-      end
-      form = JSON.generate({"metadata" => form_array})
-
+      form = JSON.generate({"metadata" => item.to_h["metadata"]})
       response = @request["/collections/#{id}/items"].post form
-
       Item.new(JSON.parse(response), @request)
     end
 
