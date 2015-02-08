@@ -38,7 +38,7 @@ module DSpaceRest
     end
 
     def logout
-      response = @request['/logout'].post []
+      response = @request['/logout'].post [], @token
     end
 
     def status
