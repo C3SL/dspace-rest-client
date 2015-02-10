@@ -84,18 +84,23 @@ module DSpaceRest
       bitstreams
     end
 
+    def get_parentcollection
+      response = @request["/items/#{id}\?expand\=parentCollection"].get
+      Collection.new(JSON.parse(response)['parentCollection'], @request)
+    end
+
     def put_metadata
-      form_array = []
-      @metadata.each_value do |m|
-        form << m.to_h
-      end
-      form = JSON.generate(array_metadata)
+      form = JSON.generate({"metadata" => item.to_h["metadata"]})
       response = @request["/items/#{id}/metadata"].put form
     end
 
     def post_bitstream(file)
       response = @request["/items/#{id}/bitstreams"].post File.read(file)
       Bitstream.new(JSON.parse(response), @request)
+    end
+
+    def delete_item
+      response = @request["/items/#{id}"].delete
     end
 
     #---------------------------------------------------
