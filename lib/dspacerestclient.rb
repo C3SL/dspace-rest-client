@@ -14,16 +14,16 @@ module DSpaceRest
       @headers[:content_type] = :json
       @headers[:accept] = :json
 
-      set_request
+      set_request @headers
     end
     #---------------------------------------------------
 
     #---------------------------------------------------
-    def set_request
+    def set_request(headers)
       @request = RestClient::Resource.new(
         @dspaceurl,
         :verify_ssl => OpenSSL::SSL::VERIFY_NONE,
-        :headers => @headers
+        :headers => headers
       )
     end
 
@@ -34,7 +34,7 @@ module DSpaceRest
       })
       response = @request['/login'].post user_info
       @headers[:rest_dspace_token] = response
-      set_request
+      set_request @headers
     end
 
     def logout
