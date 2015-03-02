@@ -26,6 +26,10 @@ module DSpaceRest
       @request = request
     end
 
+	def reset_metadata
+		@metadata = []
+	end
+
     def to_h
       h = Hash.new
       h["id"] = @id
