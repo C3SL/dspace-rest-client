@@ -94,7 +94,7 @@ module DSpaceRest
     end
 
     def put_metadata
-      form = JSON.generate({"metadata" => item.to_h["metadata"]})
+      form = JSON.generate(self.to_h["metadata"])
       response = @request["/items/#{id}/metadata"].put form
     end
 
