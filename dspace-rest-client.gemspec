@@ -15,4 +15,5 @@ Gem::Specification.new do |s|
   s.license     = 'GNU General Public License'
 
   s.add_dependency('rest-client', '>= 1.7', '< 2')
+  s.add_dependency('curb', '~> 0.8.6')
 end
