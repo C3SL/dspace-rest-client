@@ -1,3 +1,5 @@
+require 'curb'
+
 module DSpaceRest
 
   class Item
@@ -95,7 +97,8 @@ module DSpaceRest
     end
 
     def post_bitstream(file)
-      response = @request["/items/#{id}/bitstreams"].post File.read(file)
+      #response = upload_via_rest("/items/#{id}/bitstreams", file)
+      response = upload_via_curl("/items/#{id}/bitstreams", file)
       Bitstream.new(JSON.parse(response), @request)
     end
 
@@ -117,6 +120,29 @@ module DSpaceRest
   		@metadata = []
   	end
     #---------------------------------------------------
+
+    private
+
+      def upload_via_rest(endpoint, file)
+        @request[endpoint].post File.read(file)
+      end
+
+      def upload_via_curl(endpoint, file)
+        dspaceurl = @request.url
+        token = @request.headers[:rest_dspace_token]
+
+        c = Curl::Easy.new("#{dspaceurl}#{endpoint}")
+
+        c.headers['Accept'] = 'application/json'
+        c.headers['rest-dspace-token'] = token
+
+        c.multipart_form_post = true
+        c.ssl_verify_peer = false
+
+        c.http_post(Curl::PostField.file('thing[file]', file))
+
+        c.body_str
+      end
 
   end
 
