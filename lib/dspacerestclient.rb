@@ -35,6 +35,7 @@ module DSpaceRest
       response = @request['/login'].post user_info
       @headers[:rest_dspace_token] = response
       set_request @headers
+      response
     end
 
     def logout
