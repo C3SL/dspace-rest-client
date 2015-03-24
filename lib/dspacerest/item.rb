@@ -97,8 +97,8 @@ module DSpaceRest
     end
 
     def post_bitstream(file)
-      #response = upload_via_rest("/items/#{id}/bitstreams", file)
-      response = upload_via_curl("/items/#{id}/bitstreams", file)
+      response = upload_via_rest("/items/#{id}/bitstreams", file)
+      #response = upload_via_curl("/items/#{id}/bitstreams", file)
       Bitstream.new(JSON.parse(response), @request)
     end
 
