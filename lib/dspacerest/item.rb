@@ -1,4 +1,7 @@
 require 'curb'
+require 'net/http'
+require 'net/https'
+require 'uri'
 
 module DSpaceRest
 
@@ -97,8 +100,7 @@ module DSpaceRest
     end
 
     def post_bitstream(file)
-      response = upload_via_rest("/items/#{id}/bitstreams", file)
-      #response = upload_via_curl("/items/#{id}/bitstreams", file)
+      response = upload_via_curl("/items/#{id}/bitstreams", file)
       Bitstream.new(JSON.parse(response), @request)
     end
 
@@ -124,10 +126,28 @@ module DSpaceRest
     private
 
       def upload_via_rest(endpoint, file)
-        @request[endpoint].post File.read(file)
+        response = @request[endpoint].post File.open(file,"rb")
+        response
       end
 
       def upload_via_curl(endpoint, file)
+        dspaceurl = @request.url
+        token = @request.headers[:rest_dspace_token]
+        uri = URI.parse("#{dspaceurl}#{endpoint}")
+
+        curl_command = "curl -k -4 --silent \\
+          -H \"rest-dspace-token: #{token}\" \\
+          -H \"accept: application/json\" \\
+        	-X POST \"#{uri}\" \\
+        	--data-binary \"@#{file}\""
+
+        response = `#{curl_command}`
+
+        response
+      end
+
+      def upload_via_curb(endpoint, file)
+        puts "AKI_CURL_5"
         dspaceurl = @request.url
         token = @request.headers[:rest_dspace_token]
 
@@ -139,7 +159,7 @@ module DSpaceRest
         c.multipart_form_post = true
         c.ssl_verify_peer = false
 
-        c.http_post(Curl::PostField.file('thing[file]', file))
+        c.http_post(Curl::PostField.file('', file))
 
         c.body_str
       end
