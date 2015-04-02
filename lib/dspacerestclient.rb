@@ -4,42 +4,38 @@ module DSpaceRest
 
   class Client
 
-    attr_reader :request
-
     #---------------------------------------------------
     def initialize(args)
-      @dspaceurl = args[:dspaceurl] or raise ArgumentError, "must pass :dspaceurl"
+      dspaceurl = args[:dspaceurl] or raise ArgumentError, "must pass :dspaceurl"
+      token = args[:dspacetoken] || ""
 
-      @headers = Hash.new
-      @headers[:content_type] = :json
-      @headers[:accept] = :json
+      headers = Hash.new
+      headers[:content_type] = :json
+      headers[:accept] = :json
 
-      set_request @headers
-    end
-    #---------------------------------------------------
+      unless token.empty?
+        headers[:rest_dspace_token] = token
+      end
 
-    #---------------------------------------------------
-    def set_request(headers)
       @request = RestClient::Resource.new(
-        @dspaceurl,
+        dspaceurl,
         :verify_ssl => OpenSSL::SSL::VERIFY_NONE,
         :headers => headers
       )
     end
+    #---------------------------------------------------
 
+    #---------------------------------------------------
     def login (username, password)
       user_info = JSON.generate({
         :email => username,
         :password => password
       })
       response = @request['/login'].post user_info
-      @headers[:rest_dspace_token] = response
-      set_request @headers
-      response
     end
 
-    def logout
-      response = @request['/logout'].post [], @token
+    def logout (token)
+      response = @request['/logout'].post [], token
     end
 
     def status
