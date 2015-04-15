@@ -1,105 +1,60 @@
 require 'rest-client'
 
-module DSpaceRest
+class DspaceClient
 
-  class Client
-
-    attr_reader :request
-
-    #---------------------------------------------------
-    def initialize(args)
-      @dspaceurl = args[:dspaceurl] or raise ArgumentError, "must pass :dspaceurl"
-
-      @headers = Hash.new
-      @headers[:content_type] = :json
-      @headers[:accept] = :json
-
-      set_request @headers
-    end
-    #---------------------------------------------------
-
-    #---------------------------------------------------
-    def set_request(headers)
-      @request = RestClient::Resource.new(
-        @dspaceurl,
-        :verify_ssl => OpenSSL::SSL::VERIFY_NONE,
-        :headers => headers
-      )
-    end
-
-    def login (username, password)
-      user_info = JSON.generate({
-        :email => username,
-        :password => password
-      })
-      response = @request['/login'].post user_info
-      @headers[:rest_dspace_token] = response
-      set_request @headers
-      response
-    end
-
-    def logout
-      response = @request['/logout'].post [], @token
-    end
-
-    def status
-      response = @request['/status'].get
-    end
-
-    def test
-      response = @request['/test'].get
-    end
-    #---------------------------------------------------
-
-    #---------------------------------------------------
-    def new_community
-      Community.new "", @request
-    end
-
-    def get_community(id)
-      Community.get_by_id id, @request
-    end
-
-    def get_communities
-      Community.get_all @request
-    end
-
-    def get_topcommunities
-      Community.get_all_top @request
-    end
-
-    def new_collection
-      Collection.new "", @request
-    end
-
-    def get_collection(id)
-      Collection.get_by_id id, @request
-    end
-
-    def get_collections
-      Collection.get_all @request
-    end
-
-    def new_item
-      Item.new "", @request
-    end
-
-    def get_item(id)
-      Item.get_by_id id, @request
-    end
-
-    def get_items
-      Item.get_all @request
-    end
-
-    def get_bitstream(id)
-      Bitstream.get_by_id id, @request
-    end
-
-    def get_bitstreams
-      Bitstream.get_all @request
-    end
-    #---------------------------------------------------
-
+  def initialize(url)
+    @url = url
+    @rest_client = build_rest_client url
   end
+
+  def repository
+    @dspace_repository ||= build_repository @rest_client
+  end
+
+  def login(username, password)
+    user = JSON.generate({
+                             email: username,
+                             password: password
+                         })
+
+    # send login request to server and receive the token
+    authenticated_token = @rest_client['/login'].post user
+
+    # overwrite the rest_client and dspace_repository
+    @rest_client = build_rest_client @url, rest_dspace_token: authenticated_token
+    @dspace_repository = build_repository @rest_client
+
+    authenticated_token
+  end
+
+  def logout
+    response = @rest_client['/logout'].post []
+  end
+
+  def status
+    response = @rest_client['/status'].get
+  end
+
+  def test
+    response = @rest_client['/test'].get
+  end
+
+  private
+
+  def build_repository(rest_client)
+    DSpaceRest::Repositories::DspaceRepository.new rest_client
+  end
+
+  def build_rest_client(url, headers={})
+    headers = headers.merge({
+                                content_type: :json,
+                                accept: :json
+                            })
+
+    RestClient::Resource.new(url,
+                             verify_ssl: OpenSSL::SSL::VERIFY_NONE,
+                             headers: headers
+    )
+  end
+
 end
