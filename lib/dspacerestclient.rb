@@ -46,14 +46,12 @@ class DspaceClient
   end
 
   def build_rest_client(url, headers={})
-    headers = headers.merge({
-                                content_type: :json,
-                                accept: :json
-                            })
-
     RestClient::Resource.new(url,
                              verify_ssl: OpenSSL::SSL::VERIFY_NONE,
-                             headers: headers
+                             headers: headers.merge(
+                                 content_type: :json,
+                                 accept: :json
+                             )
     )
   end
 

@@ -1,26 +1,26 @@
 module DSpaceRest
   class Community
 
-    attr_accessor :name, :logo, :copyrightText,
-                  :introductoryText, :shortDescription, :sidebarText
+    attr_accessor :name, :logo, :copyright_text,
+                  :introductory_text, :short_description, :sidebar_text
 
-    attr_reader :id, :handle, :type, :link, :parentCommunity,
-                :countItems, :subcommunities, :collections, :expand
+    attr_reader :id, :handle, :type, :link, :parent_community,
+                :count_items, :sub_communities, :collections, :expand
 
-    def initialize args
+    def initialize(args={})
       @id = args['id']
       @name = args['name']
       @handle = args['handle']
       @type = args['type']
       @link = args['link']
       @logo = args['logo']
-      @parentCommunity = args['parentCommunity']
-      @copyrightText = args['copyrightText']
-      @introductoryText = args['introductoryText']
-      @shortDescription = args['shortDescription']
-      @sidebarText = args['sidebarText']
-      @countItems = args['countItems']
-      @subcommunities = args['subcommunities']
+      @parent_community = args['parentCommunity']
+      @copyright_text = args['copyrightText']
+      @introductory_text = args['introductoryText']
+      @short_description = args['shortDescription']
+      @sidebar_text = args['sidebarText']
+      @count_items = args['countItems']
+      @sub_communities = args['subcommunities']
       @collections = args['collections']
       @expand = args['expand']
     end
@@ -33,13 +33,13 @@ module DSpaceRest
       h["type"] = @type
       h["link"] = @link
       h["logo"] = @logo
-      h["parentCommunity"] = @parentCommunity
-      h["copyrightText"] = @copyrightText
-      h["introductoryText"] = @introductoryText
-      h["shortDescription"] = @shortDescription
-      h["sidebarText"] = @sidebarText
-      h["countItems"] = @countItems
-      h["subcommunities"] = @subcommunities
+      h["parentCommunity"] = @parent_community
+      h["copyrightText"] = @copyright_text
+      h["introductoryText"] = @introductory_text
+      h["shortDescription"] = @short_description
+      h["sidebarText"] = @sidebar_text
+      h["countItems"] = @count_items
+      h["subcommunities"] = @sub_communities
       h["collections"] = @collections
       h["expand"] = @expand
       h
