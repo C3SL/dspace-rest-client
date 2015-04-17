@@ -22,27 +22,27 @@ module DSpaceRest
       # DELETE /bitstreams/{bitstream id}/policy/{policy_id} - Delete bitstream policy.
 
       def get_bitstream_by_id(id)
-        response = request["/bitstreams/#{id}"].get
-        Bitstream.new(JSON.parse(response))
+        response = rest_client["/bitstreams/#{id}"].get
+        DSpaceRest::Bitstream.new(JSON.parse(response))
       end
 
       def get_all_bitstreams
-        response = request["/bitstreams"].get
+        response = rest_client["/bitstreams"].get
         bit_streams = []
         JSON.parse(response).each do |bits|
-          bit_streams << Bitstream.new(bits)
+          bit_streams << DSpaceRest::Bitstream.new(bits)
         end
         bit_streams
       end
 
       def retrieve_data(bitstream)
-        response = @request["/bitstreams/#{bitstream.id}/retrieve"].get
+        response = rest_client["/bitstreams/#{bitstream.id}/retrieve"].get
       end
 
       def update(bitstream)
         valid_keys=['name', 'description', 'sequenceId']
         form = JSON.generate(bitstream.to_h.select { |k, v| valid_keys.include? k })
-        response = @request["/bitstreams/#{bitstream.id}"].put form
+        response = rest_client["/bitstreams/#{bitstream.id}"].put form
       end
     end
   end

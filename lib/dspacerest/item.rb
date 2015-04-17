@@ -55,7 +55,7 @@ module DSpaceRest
       m['value'] = value
       m['language'] = language || ""
 
-      @metadata << Metadata.new(m)
+      @metadata << DSpaceRest::Metadata.new(m)
       @metadata
     end
 

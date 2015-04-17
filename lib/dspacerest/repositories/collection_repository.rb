@@ -19,21 +19,21 @@ module DSpaceRest
         response = rest_client["/collections/#{collection.id}/items"].get
         items = []
         JSON.parse(response).each do |item|
-          items << Item.new(item)
+          items << DSpaceRest::Item.new(item)
         end
         items
       end
 
       def get_collection_by_id(id)
         response = rest_client["/collections/#{id}"].get
-        Collection.new(JSON.parse(response))
+        DSpaceRest::Collection.new(JSON.parse(response))
       end
 
       def get_all_collections
         response = rest_client["/collections"].get
         collections = []
         JSON.parse(response).each do |coll|
-          collections << Collection.new(coll)
+          collections << DSpaceRest::Collection.new(coll)
         end
         collections
       end
@@ -42,7 +42,7 @@ module DSpaceRest
         response = rest_client["/communities/#{community.id}/collections"].get
         collections = []
         JSON.parse(response).each do |coll|
-          collections << Collection.new(coll)
+          collections << DSpaceRest::Collection.new(coll)
         end
         collections
       end
@@ -50,13 +50,13 @@ module DSpaceRest
       def create_collection_for(community, collection)
         form = JSON.generate(collection.to_h)
         response = rest_client["/communities/#{community.id}/collections"].post form
-        Collection.new(JSON.parse(response))
+        DSpaceRest::Collection.new(JSON.parse(response))
       end
 
       def create_item_for(collection, item)
         form = JSON.generate({"metadata" => item.to_h["metadata"]})
         response = rest_client["/collections/#{collection.id}/items"].post form
-        Item.new(JSON.parse(response))
+        DSpaceRest::Item.new(JSON.parse(response))
       end
 
     end

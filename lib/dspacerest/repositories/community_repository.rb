@@ -15,14 +15,14 @@ module DSpaceRest
 
       def get_community_by_id(id)
         response = rest_client["/communities/#{id}"].get
-        Community.new(JSON.parse(response))
+        DSpaceRest::Community.new(JSON.parse(response))
       end
 
       def get_all_communities
         response = rest_client["/communities"].get
         communities = []
         JSON.parse(response).each do |comm|
-          communities << Community.new(comm)
+          communities << DSpaceRest::Community.new(comm)
         end
         communities
       end
@@ -31,7 +31,7 @@ module DSpaceRest
         response = rest_client["/communities/top-communities"].get
         communities = []
         JSON.parse(response).each do |comm|
-          communities << Community.new(comm)
+          communities << DSpaceRest::Community.new(comm)
         end
         communities
       end
@@ -40,7 +40,7 @@ module DSpaceRest
         response = rest_client["/communities/#{community.id}/communities"].get
         communities = []
         JSON.parse(response).each do |comm|
-          communities << Community.new(comm)
+          communities << DSpaceRest::Community.new(comm)
         end
         communities
       end
@@ -54,7 +54,7 @@ module DSpaceRest
         form = JSON.generate(subcommunity.to_h)
         response = rest_client["/communities/#{community.id}/communities"].post form
 
-        Community.new(JSON.parse(response))
+        DSpaceRest::Community.new(JSON.parse(response))
       end
 
     end

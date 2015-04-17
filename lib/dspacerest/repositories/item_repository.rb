@@ -20,21 +20,21 @@ module DSpaceRest
         response = rest_client["/items"].get
         items = []
         JSON.parse(response).each do |item|
-          items << Item.new(item)
+          items << DSpaceRest::Item.new(item)
         end
         items
       end
 
       def get_item_by_id(id)
         response = rest_client["/items/#{id}"].get
-        Item.new(JSON.parse(response))
+        DSpaceRest::Item.new(JSON.parse(response))
       end
 
       def get_metadata_of(item)
         response = rest_client["/items/#{item.id}/metadata"].get
         metadata = []
         JSON.parse(response).each do |m|
-          metadata << Metadata.new(m)
+          metadata << DSpaceRest::Metadata.new(m)
         end
         metadata
       end
@@ -43,7 +43,7 @@ module DSpaceRest
         response = rest_client["/items/#{item.id}/bitstreams"].get
         bitstreams = []
         JSON.parse(response).each do |bits|
-          bitstreams << Bitstream.new(bits)
+          bitstreams << DSpaceRest::Bitstream.new(bits)
         end
         bitstreams
       end
@@ -56,7 +56,7 @@ module DSpaceRest
 
       def create_bitstream_for(item, file, upload_strategy)
         response = upload_strategy.upload("/items/#{item.id}/bitstreams", file)
-        Bitstream.new(JSON.parse(response))
+        DSpaceRest::Bitstream.new(JSON.parse(response))
       end
 
       def delete(item)
