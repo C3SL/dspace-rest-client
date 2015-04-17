@@ -10,5 +10,3 @@ module DSpaceRest
     end
   end
 end
-
-File

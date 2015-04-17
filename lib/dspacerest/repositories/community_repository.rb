@@ -1,13 +1,24 @@
 module DSpaceRest
   module Repositories
     class CommunityRepository < AbstractRepository
+      # Communities in DSpace are used for organization and hierarchy, and are containers that hold sub-Communities and Collections.
 
-      def get_community(id)
+      # √ GET /communities - Returns array of all communities in DSpace.
+      # √ GET /communities/top-communities - Returns array of all top communities in DSpace
+      # √ GET /communities/{communityId} - Returns community
+      # √ GET /communities/{communityId}/communities - Returns array of subcommunities of community.
+      # √ POST /communities - Create new community at top level. You must post community.
+      # √ POST /communities/{communityId}/communities - Create new subcommunity in community. You must post Community.
+      # PUT /communities/{communityId} - Update community. You must put Community
+      # DELETE /communities/{communityId} - Delete community.
+      # DELETE /communities/{communityId}/communities/{communityId2} - Delete subcommunity in community.
+
+      def get_community_by_id(id)
         response = rest_client["/communities/#{id}"].get
         Community.new(JSON.parse(response))
       end
 
-      def get_communities
+      def get_all_communities
         response = rest_client["/communities"].get
         communities = []
         JSON.parse(response).each do |comm|
@@ -16,7 +27,7 @@ module DSpaceRest
         communities
       end
 
-      def get_topcommunities
+      def get_top_communities
         response = rest_client["/communities/top-communities"].get
         communities = []
         JSON.parse(response).each do |comm|

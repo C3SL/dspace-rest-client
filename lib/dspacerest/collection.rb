@@ -1,32 +1,30 @@
 module DSpaceRest
-
   class Collection
 
-    attr_accessor :name, :logo, :license, :copyrightText,
-                  :introductoryText, :shortDescription, :sidebarText
+    attr_accessor :name, :logo, :license, :copyright_text,
+                  :introductory_text, :short_description, :sidebar_text
 
-    attr_reader   :id, :handle, :type, :link, :parentCommunity,
-                  :parentCommunityList, :items,
-                  :numberItems, :subcommunities, :collections, :expand
+    attr_reader :id, :handle, :type, :link, :parent_community,
+                :parent_community_list, :items,
+                :number_iems, :sub_communities, :collections, :expand
 
-    def initialize args, request
+    def initialize args
       @id = args['id']
       @name = args['name']
       @handle = args['handle']
       @type = args['type']
       @link = args['link']
       @logo = args['logo']
-      @parentCommunity = args['parentCommunity']
-      @parentCommunityList = args['parentCommunityList']
+      @parent_community = args['parentCommunity']
+      @parent_community_list = args['parentCommunityList']
       @items = args['items']
       @license = args['license']
-      @copyrightText = args['copyrightText']
-      @introductoryText = args['introductoryText']
-      @shortDescription = args['shortDescription']
-      @sidebarText = args['sidebarText']
-      @numberItems = args['countItems']
+      @copyright_text = args['copyrightText']
+      @introductory_text = args['introductoryText']
+      @short_description = args['shortDescription']
+      @sidebar_text = args['sidebarText']
+      @number_items = args['countItems']
       @expand = args['expand']
-      @request = request
     end
 
     def to_h
@@ -37,48 +35,18 @@ module DSpaceRest
       h["type"] = @type
       h["link"] = @link
       h["logo"] = @logo
-      h["parentCommunity"] = @parentCommunity
-      h["parentCommunityList"] = @parentCommunityList
+      h["parentCommunity"] = @parent_community
+      h["parentCommunityList"] = @parent_community_list
       h["items"] = @items
       h["license"] = @license
-      h["copyrightText"] = @copyrightText
-      h["introductoryText"] = @introductoryText
-      h["shortDescription"] = @shortDescription
-      h["sidebarText"] = @sidebarText
-      h["numberItems"] = @numberItems
+      h["copyrightText"] = @copyright_text
+      h["introductoryText"] = @introductory_text
+      h["shortDescription"] = @short_description
+      h["sidebarText"] = @sidebar_text
+      h["numberItems"] = @number_items
       h["expand"] = @expand
       h
     end
 
-    def self.get_by_id(id, request)
-      response = request["/collections/#{id}"].get
-      Collection.new(JSON.parse(response), request)
-    end
-
-    def self.get_all(request)
-      response = request["/collections"].get
-      collections = []
-      JSON.parse(response).each do |coll|
-        collections << Collection.new(coll, request)
-      end
-      collections
-    end
-
-    def get_items
-      response = @request["/collections/#{id}/items"].get
-      items = []
-      JSON.parse(response).each do |item|
-        items << Item.new(item, @request)
-      end
-      items
-    end
-
-    def post_item(item)
-      form = JSON.generate({"metadata" => item.to_h["metadata"]})
-      response = @request["/collections/#{id}/items"].post form
-      Item.new(JSON.parse(response), @request)
-    end
-
   end
-
 end
