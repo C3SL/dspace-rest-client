@@ -53,7 +53,7 @@ module DSpaceRest
         Collection.new(JSON.parse(response))
       end
 
-      def create_item(collection, item)
+      def create_item_for(collection, item)
         form = JSON.generate({"metadata" => item.to_h["metadata"]})
         response = rest_client["/collections/#{collection.id}/items"].post form
         Item.new(JSON.parse(response))
