@@ -16,7 +16,11 @@ module DSpaceRest
       @type = args['type']
       @link = args['link']
       @logo = args['logo']
-      @parentCommunity = args['parentCommunity']
+      if (args['parentCommunity'] != nil)
+        @parentCommunity = Community.new(args['parentCommunity'], request)
+      else
+        @parentCommunity = nil
+      end
       @parentCommunityList = args['parentCommunityList']
       @items = args['items']
       @license = args['license']
@@ -51,7 +55,7 @@ module DSpaceRest
     end
 
     def self.get_by_id(id, request)
-      response = request["/collections/#{id}"].get
+      response = request["/collections/#{id}?expand=parentCommunity"].get
       Collection.new(JSON.parse(response), request)
     end
 
