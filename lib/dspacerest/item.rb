@@ -91,7 +91,7 @@ module DSpaceRest
 
     def get_parentcollection
       response = @request["/items/#{id}\?expand\=parentCollection"].get
-      Collection.new(JSON.parse(response)['parentCollection'], @request)
+      Collection.get_by_id(JSON.parse(response)['parentCollection']['id'], @request)
     end
 
     def put_metadata
