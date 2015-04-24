@@ -24,19 +24,19 @@ class DspaceClient
     @rest_client = build_rest_client @url, rest_dspace_token: authenticated_token
     @dspace_repository = build_repository @rest_client
 
-    authenticated_token
+    return (!authenticated_token.nil?)
   end
 
   def logout
-    response = @rest_client['/logout'].post []
+    response = JSON.parse @rest_client['/logout'].post []
   end
 
   def status
-    response = @rest_client['/status'].get
+    response = JSON.parse @rest_client['/status'].get
   end
 
   def test
-    response = @rest_client['/test'].get
+    response = JSON.parse(@rest_client['/test'].get)
   end
 
   private

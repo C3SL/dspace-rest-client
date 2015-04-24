@@ -1,10 +1,15 @@
 # More logical way to require 'dspace-rest-client'
 require File.dirname(__FILE__) + '/dspacerestclient'
-
-def require_all(_dir)
-  Dir[File.expand_path(File.join(File.dirname(File.absolute_path(__FILE__)), _dir)) + "/**/*.rb"].each do |file|
-    require file
-  end
-end
-
-require_all File.dirname(__FILE__) + '/dspacerest/'
+require File.dirname(__FILE__) + '/dspacerest/bitstream'
+require File.dirname(__FILE__) + '/dspacerest/collection'
+require File.dirname(__FILE__) + '/dspacerest/community'
+require File.dirname(__FILE__) + '/dspacerest/item'
+require File.dirname(__FILE__) + '/dspacerest/metadata'
+require File.dirname(__FILE__) + '/dspacerest/repositories/abstract_repository'
+require File.dirname(__FILE__) + '/dspacerest/repositories/bitstream_repository'
+require File.dirname(__FILE__) + '/dspacerest/repositories/collection_repository'
+require File.dirname(__FILE__) + '/dspacerest/repositories/community_repository'
+require File.dirname(__FILE__) + '/dspacerest/repositories/dspace_repository'
+require File.dirname(__FILE__) + '/dspacerest/repositories/item_repository'
+require File.dirname(__FILE__) + '/dspacerest/strategies/uploads/curl_strategy'
+require File.dirname(__FILE__) + '/dspacerest/strategies/uploads/rest_strategy'

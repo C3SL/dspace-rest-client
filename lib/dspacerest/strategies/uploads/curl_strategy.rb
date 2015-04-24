@@ -1,4 +1,4 @@
-require 'curlb'
+#require 'curl'
 
 module DSpaceRest
   module Strategies
