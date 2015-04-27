@@ -80,7 +80,7 @@ end
 - DELETE /items/{item id}/bitstreams/{bitstream id} - Delete item bitstream.
 
 ### Version
-0.9.0
+1.0.0
 
 ### Contributors
 > - Mauricio Giacomini Girardello <mgg12@inf.ufpr.br>
@@ -95,7 +95,7 @@ $ gem build dspace-rest-client.gemspec
 
 To install:
 ```sh
-gem install --local dspace-rest-client-0.9.0.gem
+gem install --local dspace-rest-client-1.0.0.gem
 ```
 
 ### Development

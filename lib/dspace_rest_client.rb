@@ -1,5 +1,5 @@
 # More logical way to require 'dspace-rest-client'
-require File.dirname(__FILE__) + '/dspacerestclient'
+require File.dirname(__FILE__) + '/dspace_client'
 require File.dirname(__FILE__) + '/dspacerest/bitstream'
 require File.dirname(__FILE__) + '/dspacerest/collection'
 require File.dirname(__FILE__) + '/dspacerest/community'

@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/lib/dspace-rest-client'
+require 'lib/dspace_rest_client'
 require 'json'
 
 client = DspaceClient.new('https://demo.dspace.org/rest')
