@@ -20,32 +20,43 @@ module DSpaceRest
       @short_description = args['shortDescription']
       @sidebar_text = args['sidebarText']
       @count_items = args['countItems']
-      @sub_communities = build_subcommunities(args['subcommunities']) unless args['subcommunities'].empty?
+      @sub_communities = build_communities(args['subcommunities']) unless args['subcommunities'].empty?
       @collections = build_collections(args['collections']) unless args['collections'].empty?
       @expand = args['expand']
     end
 
     def to_h
-      h = Hash.new
-      h["handle"] = @handle
-      h["name"] = @name
-      h["id"] = @id
-      h["type"] = @type
-      h["link"] = @link
-      h["logo"] = @logo
-      h["parentCommunity"] = @parent_community
-      h["copyrightText"] = @copyright_text
-      h["introductoryText"] = @introductory_text
-      h["shortDescription"] = @short_description
-      h["sidebarText"] = @sidebar_text
-      h["countItems"] = @count_items
-      h["subcommunities"] = @sub_communities
-      h["collections"] = @collections
-      h["expand"] = @expand
+      h = {
+          id: @id,
+          name: @name,
+          handle: @handle,
+          type: @type,
+          link: @link,
+          logo: @logo,
+          parentCommunity: @parent_community,
+          subcommunities: obj2hash(@sub_communities),
+          collections: obj2hash(@collections),
+          copyrightText: @copyright_text,
+          introductoryText: @introductory_text,
+          shortDescription: @short_description,
+          sidebarText: @sidebar_text,
+          countItems: @count_items,
+          expand: @expand
+      }
+
       h
     end
 
     private
+
+    def obj2hash(list)
+      hash = []
+      list.each do |m|
+        hash << m.to_h
+      end
+
+      hash
+    end
 
     def build_collections(collections=[])
       colls = []
@@ -55,7 +66,7 @@ module DSpaceRest
       colls
     end
 
-    def build_subcommunities(communities=[])
+    def build_communities(communities=[])
       colls = []
       communities.each do |c|
         colls << DSpaceRest::Community.new(c)
