@@ -14,14 +14,14 @@ module DSpaceRest
       @type = args['type']
       @link = args['link']
       @logo = args['logo']
-      @parent_community = args['parentCommunity']
+      @parent_community = DSpaceRest::Community.new(args['parentCommunity']) unless args['parentCommunity'].nil?
       @copyright_text = args['copyrightText']
       @introductory_text = args['introductoryText']
       @short_description = args['shortDescription']
       @sidebar_text = args['sidebarText']
       @count_items = args['countItems']
-      @sub_communities = args['subcommunities']
-      @collections = args['collections']
+      @sub_communities = build_collections(args['subcommunities']) unless args['subcommunities'].empty?
+      @collections = build_collections(args['collections']) unless args['collections'].empty?
       @expand = args['expand']
     end
 
@@ -43,6 +43,24 @@ module DSpaceRest
       h["collections"] = @collections
       h["expand"] = @expand
       h
+    end
+
+    private
+
+    def build_collections(collections=[])
+      colls = []
+      collections.each do |c|
+        colls << DSpaceRest::Collection.new(c)
+      end
+      colls
+    end
+
+    def build_subcommunities(communities=[])
+      colls = []
+      communities.each do |c|
+        colls << DSpaceRest::Community.new(c)
+      end
+      colls
     end
 
   end
