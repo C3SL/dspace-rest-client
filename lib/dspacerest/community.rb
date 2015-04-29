@@ -20,7 +20,7 @@ module DSpaceRest
       @short_description = args['shortDescription']
       @sidebar_text = args['sidebarText']
       @count_items = args['countItems']
-      @sub_communities = build_collections(args['subcommunities']) unless args['subcommunities'].empty?
+      @sub_communities = build_subcommunities(args['subcommunities']) unless args['subcommunities'].empty?
       @collections = build_collections(args['collections']) unless args['collections'].empty?
       @expand = args['expand']
     end
