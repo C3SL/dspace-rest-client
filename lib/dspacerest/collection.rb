@@ -15,9 +15,9 @@ module DSpaceRest
       @type = args['type']
       @link = args['link']
       @logo = args['logo']
-      @parent_community = args['parentCommunity']
-      @parent_community_list = args['parentCommunityList']
-      @items = args['items']
+      @parent_community = DSpaceRest::Community.new(args['parentCommunity']) unless args['parentCommunity'].nil?
+      @parent_community_list = build_communities(args['parentCommunityList']) unless args['parentCommunityList'].empty?
+      @items = build_items(args['items']) unless args['items'].empty?
       @license = args['license']
       @copyright_text = args['copyrightText']
       @introductory_text = args['introductoryText']
@@ -46,6 +46,24 @@ module DSpaceRest
       h["numberItems"] = @number_items
       h["expand"] = @expand
       h
+    end
+
+    private
+
+    def build_communities(communities=[])
+      colls = []
+      communities.each do |c|
+        colls << DSpaceRest::Community.new(c)
+      end
+      colls
+    end
+
+    def build_items(items=[])
+      colls = []
+      items.each do |c|
+        colls << DSpaceRest::Item.new(c)
+      end
+      colls
     end
 
   end
