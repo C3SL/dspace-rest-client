@@ -50,12 +50,7 @@ module DSpaceRest
     private
 
     def obj2hash(list)
-      hash = []
-      list.each do |m|
-        hash << m.to_h
-      end
-
-      hash
+      DSpaceRest::Builders::HashBuilder.models2hash list
     end
 
     def build_collections(collections=[])

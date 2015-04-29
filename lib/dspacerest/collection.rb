@@ -6,7 +6,7 @@ module DSpaceRest
 
     attr_reader :id, :handle, :type, :link, :parent_community,
                 :parent_community_list, :items,
-                :number_iems, :sub_communities, :collections, :expand
+                :number_items, :expand
 
     def initialize args
       @id = args['id']
@@ -15,16 +15,17 @@ module DSpaceRest
       @type = args['type']
       @link = args['link']
       @logo = args['logo']
-      @parent_community = DSpaceRest::Community.new(args['parentCommunity']) unless args['parentCommunity'].nil?
-      @parent_community_list = build_communities(args['parentCommunityList']) unless args['parentCommunityList'].empty?
-      @items = build_items(args['items']) unless args['items'].empty?
       @license = args['license']
       @copyright_text = args['copyrightText']
       @introductory_text = args['introductoryText']
       @short_description = args['shortDescription']
       @sidebar_text = args['sidebarText']
-      @number_items = args['countItems']
+      @number_items = args['numberItems']
       @expand = args['expand']
+
+      @parent_community = DSpaceRest::Community.new(args['parentCommunity']) unless args['parentCommunity'].nil?
+      @parent_community_list = build_communities(args['parentCommunityList']) unless args['parentCommunityList'].empty?
+      @items = build_items(args['items']) unless args['items'].empty?
     end
 
     def to_h
@@ -52,15 +53,6 @@ module DSpaceRest
 
     private
 
-    def obj2hash(list)
-      hash = []
-      list.each do |m|
-        hash << m.to_h
-      end
-
-      hash
-    end
-
     def build_communities(communities=[])
       colls = []
       communities.each do |c|
@@ -75,6 +67,10 @@ module DSpaceRest
         colls << DSpaceRest::Item.new(c)
       end
       colls
+    end
+
+    def obj2hash(list)
+      DSpaceRest::Builders::HashBuilder.models2hash list
     end
 
   end

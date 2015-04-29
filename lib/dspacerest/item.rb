@@ -41,7 +41,7 @@ module DSpaceRest
           archived: @archived,
           withdrawn: @withdrawn,
           expand: @expand,
-          metadata: obj2hash @metadata
+          metadata: obj2hash(@metadata)
       }
 
       h
@@ -64,12 +64,7 @@ module DSpaceRest
     private
 
     def obj2hash(list)
-      hash = []
-      list.each do |m|
-        hash << m.to_h
-      end
-
-      hash
+      DSpaceRest::Builders::HashBuilder.models2hash list
     end
 
     def build_metadatas(metadatas=[])
