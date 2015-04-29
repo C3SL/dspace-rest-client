@@ -10,7 +10,7 @@ module DSpaceRest
     end
 
     def to_h
-      {"key": @key, "value": @value, "language": @language}
+      {key: @key, value: @value, language: @language}
     end
 
   end

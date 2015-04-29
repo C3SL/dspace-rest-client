@@ -20,18 +20,20 @@ module DSpaceRest
     end
 
     def to_h
-      h = Hash.new
-      h['id'] = @id
-      h['action'] = @action
-      h['epersonId'] = @eperson_id
-      h['groupId'] = @group_id
-      h['resourceId'] = @resource_id
-      h['resourceType'] = @resource_type
-      h['rpDescription'] = @rp_description
-      h['rpName'] = @rp_name
-      h['rpType'] = @rp_type
-      h['startDate'] = @start_date
-      h['endDate'] = @end_date
+      h = {
+          id: @id,
+          action: @action,
+          epersonId: @eperson_id,
+          groupId: @group_id,
+          resourceId: @resource_id,
+          resourceType: @resource_type,
+          rpDescription: @rp_description,
+          rpName: @rp_name,
+          rpType: @rp_type,
+          startDate: @start_date,
+          endDate: @end_date
+      }
+      
       h
     end
 

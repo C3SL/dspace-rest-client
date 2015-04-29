@@ -27,22 +27,24 @@ module DSpaceRest
     end
 
     def to_h
-      h = Hash.new
-      h['id'] = @id
-      h['name'] = @name
-      h['type'] = @type
-      h['link'] = @link
-      h['bundleName'] = @bundle_name
-      h['description'] = @description
-      h['format'] = @format
-      h['mimeType'] = @mime_type
-      h['sizeBytes'] = @size_bytes
-      h['parentObject'] = @parent_object
-      h['retrieveLink'] = @retrieve_link
-      h['checkSum'] = @check_sum
-      h['sequenceId'] = @sequence_id
-      h['policies'] = @policies
-      h['expand'] = @expand
+      h = {
+          id: @id,
+          name: @name,
+          type: @type,
+          link: @link,
+          bundleName: @bundle_name,
+          description: @description,
+          format: @format,
+          mimeType: @mime_type,
+          sizeBytes: @size_bytes,
+          parentObject: @parent_object,
+          retrieveLink: @retrieve_link,
+          checkSum: @check_sum,
+          sequenceId: @sequence_id,
+          policies: @policies,
+          expand: @expand
+      }
+
       h
     end
 

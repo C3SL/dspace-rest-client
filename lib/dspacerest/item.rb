@@ -27,24 +27,22 @@ module DSpaceRest
     end
 
     def to_h
-      h = Hash.new
-      h["id"] = @id
-      h["name"] = @name
-      h["handle"] = @handle
-      h["type"] = @type
-      h["link"] = @link
-      h["lastModified"] = @last_modified
-      h["parentCollection"] = @parent_collection
-      h["parentCollectionList"] = @parent_collection_list
-      h["parentCommunityList"] = @parent_community_list
-      h["bitstreams"] = @bit_streams
-      h["archived"] = @archived
-      h["withdrawn"] = @withdrawn
-      h["expand"] = @expand
-
-      if !@metadata.empty?
-        h["metadata"] = metadata2hash @metadata
-      end
+      h = {
+          id: @id,
+          name: @name,
+          handle: @handle,
+          type: @type,
+          link: @link,
+          lastModified: @last_modified,
+          parentCollection: @parent_collection.to_h,
+          parentCollectionList: obj2hash(@parent_collection_list),
+          parentCommunityList: obj2hash(@parent_community_list),
+          bitstreams: obj2hash(@bit_streams),
+          archived: @archived,
+          withdrawn: @withdrawn,
+          expand: @expand,
+          metadata: obj2hash @metadata
+      }
 
       h
     end
@@ -65,21 +63,21 @@ module DSpaceRest
 
     private
 
+    def obj2hash(list)
+      hash = []
+      list.each do |m|
+        hash << m.to_h
+      end
+
+      hash
+    end
+
     def build_metadatas(metadatas=[])
       colls = []
       metadatas.each do |c|
         colls << DSpaceRest::Metadata.new(c)
       end
       colls
-    end
-
-    def metadata2hash(metadata)
-      hash = []
-      @metadata.each do |m|
-        hash << m.to_h
-      end
-
-      hash
     end
 
     def build_communities(communities=[])
