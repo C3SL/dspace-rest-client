@@ -1,4 +1,4 @@
-require 'lib/dspace_rest_client'
+require_relative 'lib/dspace_rest_client'
 require 'json'
 
 client = DspaceClient.new('https://demo.dspace.org/rest')

@@ -24,13 +24,15 @@ module DSpaceRest
         items
       end
 
-      def get_collection_by_id(id)
-        response = rest_client["/collections/#{id}"].get
+      def get_collection_by_id(id, expand = nil)
+        expand_uri = build_expand_uri(expand)
+        response = rest_client["/collections/#{id}?#{expand_uri}"].get
         DSpaceRest::Collection.new(JSON.parse(response))
       end
 
-      def get_all_collections
-        response = rest_client["/collections"].get
+      def get_all_collections(expand = nil)
+        expand_uri = build_expand_uri(expand)
+        response = rest_client["/collections?#{expand_uri}"].get
         collections = []
         JSON.parse(response).each do |coll|
           collections << DSpaceRest::Collection.new(coll)
@@ -38,8 +40,9 @@ module DSpaceRest
         collections
       end
 
-      def get_collections_of(community)
-        response = rest_client["/communities/#{community.id}/collections"].get
+      def get_collections_of(community, expand = nil)
+        expand_uri = build_expand_uri(expand)
+        response = rest_client["/communities/#{community.id}/collections?#{expand_uri}"].get
         collections = []
         JSON.parse(response).each do |coll|
           collections << DSpaceRest::Collection.new(coll)
@@ -57,6 +60,12 @@ module DSpaceRest
         form = JSON.generate({"metadata" => item.to_h["metadata"]})
         response = rest_client["/collections/#{collection.id}/items"].post form
         DSpaceRest::Item.new(JSON.parse(response))
+      end
+
+      private
+
+      def expandable_properties
+        ["parentCommunityList","parentCommunity","items","license","logo","all"]
       end
 
     end

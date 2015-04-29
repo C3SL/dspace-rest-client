@@ -13,13 +13,15 @@ module DSpaceRest
       # DELETE /communities/{communityId} - Delete community.
       # DELETE /communities/{communityId}/communities/{communityId2} - Delete subcommunity in community.
 
-      def get_community_by_id(id)
-        response = rest_client["/communities/#{id}"].get
+      def get_community_by_id(id, expand = nil)
+        expand_uri = build_expand_uri(expand)
+        response = rest_client["/communities/#{id}?#{expand_uri}"].get
         DSpaceRest::Community.new(JSON.parse(response))
       end
 
-      def get_all_communities
-        response = rest_client["/communities"].get
+      def get_all_communities(expand = nil)
+        expand_uri = build_expand_uri(expand)
+        response = rest_client["/communities?#{expand_uri}"].get
         communities = []
         JSON.parse(response).each do |comm|
           communities << DSpaceRest::Community.new(comm)
@@ -27,8 +29,9 @@ module DSpaceRest
         communities
       end
 
-      def get_top_communities
-        response = rest_client["/communities/top-communities"].get
+      def get_top_communities(expand = nil)
+        expand_uri = build_expand_uri(expand)
+        response = rest_client["/communities/top-communities?#{expand_uri}"].get
         communities = []
         JSON.parse(response).each do |comm|
           communities << DSpaceRest::Community.new(comm)
@@ -36,8 +39,9 @@ module DSpaceRest
         communities
       end
 
-      def get_subcommunities_of(community)
-        response = rest_client["/communities/#{community.id}/communities"].get
+      def get_subcommunities_of(community, expand = nil)
+        expand_uri = build_expand_uri(expand)
+        response = rest_client["/communities/#{community.id}/communities?#{expand_uri}"].get
         communities = []
         JSON.parse(response).each do |comm|
           communities << DSpaceRest::Community.new(comm)
@@ -55,6 +59,12 @@ module DSpaceRest
         response = rest_client["/communities/#{community.id}/communities"].post form
 
         DSpaceRest::Community.new(JSON.parse(response))
+      end
+
+      private
+
+      def expandable_properties
+        ["parentCommunity","collections","subCommunities","logo","all"]
       end
 
     end

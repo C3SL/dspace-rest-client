@@ -16,8 +16,9 @@ module DSpaceRest
       # DELETE /items/{item id}/bitstreams/{bitstream id} - Delete item bitstream.
 
 
-      def get_all_items
-        response = rest_client["/items"].get
+      def get_all_items(expand = nil)
+        expand_uri = build_expand_uri(expand)
+        response = rest_client["/items?#{expand_uri}"].get
         items = []
         JSON.parse(response).each do |item|
           items << DSpaceRest::Item.new(item)
@@ -25,8 +26,9 @@ module DSpaceRest
         items
       end
 
-      def get_item_by_id(id)
-        response = rest_client["/items/#{id}"].get
+      def get_item_by_id(id, expand = nil)
+        expand_uri = build_expand_uri(expand)
+        response = rest_client["/items/#{id}?#{expand_uri}"].get
         DSpaceRest::Item.new(JSON.parse(response))
       end
 
@@ -61,6 +63,12 @@ module DSpaceRest
 
       def delete(item)
         response = rest_client["/items/#{item.id}"].delete
+      end
+
+      private
+
+      def expandable_properties
+        ["metadata","parentCollection","parentCollectionList","parentCommunityList","bitstreams","all"]
       end
 
     end
