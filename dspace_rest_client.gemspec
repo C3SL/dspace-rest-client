@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = 'dspace_rest_client'
-  s.version = '1.0.0'
+  s.version = '1.1.0'
   s.date = '2015-04-17'
   s.summary = "DSpace REST-API Client for Ruby!"
   s.description = "DSpace REST-API Client for Ruby! Implements all DSpace REST-API endpoints requests."
@@ -9,6 +9,7 @@ Gem::Specification.new do |s|
   s.files = Dir['lib/*.rb'] +
       Dir['lib/dspacerest/*.rb'] +
       Dir['lib/dspacerest/repositories/*.rb'] +
+      Dir['lib/dspacerest/builders/*.rb'] +
       Dir['lib/dspacerest/strategies/uploads/*.rb'] +
       Dir['bin/*']
   #s.files       = `git ls-files -z`.split("\0")
