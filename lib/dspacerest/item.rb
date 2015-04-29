@@ -10,20 +10,20 @@ module DSpaceRest
                 :expand, :metadata
 
     def initialize args
-      @id = args['id'] || ""
-      @name = args['name'] || ""
-      @handle = args['handle'] || ""
-      @type = args['type'] || ""
-      @link = args['link'] || ""
-      @last_modified = args['lastModified'] || ""
-      @parent_collection = args['parentCollection'] || ""
-      @parent_collection_list = args['parentCollectionList'] || ""
-      @parent_community_list = args['parentCommunityList'] || ""
-      @bit_streams = args['bitstreams'] || ""
-      @archived = args['archived'] || ""
-      @withdrawn = args['withdrawn'] || ""
-      @expand = args['expand'] || ""
-      @metadata = []
+      @id = args['id']
+      @name = args['name']
+      @handle = args['handle']
+      @type = args['type']
+      @link = args['link']
+      @last_modified = args['lastModified']
+      @parent_collection = DSpaceRest::Collection.new(args['parentCollection']) unless args['parentCollection'].nil?
+      @parent_collection_list = build_collections(args['parentCollectionList']) unless args['parentCollectionList'].empty?
+      @parent_community_list = build_communities(args['parentCommunityList']) unless args['parentCommunityList'].empty?
+      @bit_streams = build_bitstreams(args['bitstreams']) unless args['bitstreams'].empty?
+      @archived = args['archived']
+      @withdrawn = args['withdrawn']
+      @expand = args['expand']
+      @metadata = build_metadatas(args['metadata']) unless args['expand'].empty?
     end
 
     def to_h
@@ -65,6 +65,14 @@ module DSpaceRest
 
     private
 
+    def build_metadatas(metadatas=[])
+      colls = []
+      metadatas.each do |c|
+        colls << DSpaceRest::Metadata.new(c)
+      end
+      colls
+    end
+
     def metadata2hash(metadata)
       hash = []
       @metadata.each do |m|
@@ -72,6 +80,30 @@ module DSpaceRest
       end
 
       hash
+    end
+
+    def build_communities(communities=[])
+      colls = []
+      communities.each do |c|
+        colls << DSpaceRest::Community.new(c)
+      end
+      colls
+    end
+
+    def build_collections(collections=[])
+      colls = []
+      collections.each do |c|
+        colls << DSpaceRest::Collection.new(c)
+      end
+      colls
+    end
+
+    def build_bitstreams(bitstreams=[])
+      colls = []
+      bitstreams.each do |c|
+        colls << DSpaceRest::Bitstream.new(c)
+      end
+      colls
     end
 
   end
