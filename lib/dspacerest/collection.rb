@@ -24,8 +24,8 @@ module DSpaceRest
       @expand = args['expand']
 
       @parent_community = DSpaceRest::Community.new(args['parentCommunity']) unless args['parentCommunity'].nil?
-      @parent_community_list = build_communities(args['parentCommunityList']) unless args['parentCommunityList'].nil?
-      @items = build_items(args['items']) unless args['items'].nil?
+      @parent_community_list = DSpaceRest::Builders::ModelBuilder.build_communities(args['parentCommunityList'])
+      @items = DSpaceRest::Builders::ModelBuilder.build_items(args['items'])
     end
 
     def to_h
@@ -52,24 +52,6 @@ module DSpaceRest
     end
 
     private
-
-    def build_communities(communities=[])
-      return communities if communities.nil?
-      colls = []
-      communities.each do |c|
-        colls << DSpaceRest::Community.new(c)
-      end
-      colls
-    end
-
-    def build_items(items=[])
-      return items if items.nil?
-      colls = []
-      items.each do |c|
-        colls << DSpaceRest::Item.new(c)
-      end
-      colls
-    end
 
     def obj2hash(list)
       DSpaceRest::Builders::HashBuilder.models2hash list

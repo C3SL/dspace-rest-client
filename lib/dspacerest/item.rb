@@ -17,13 +17,13 @@ module DSpaceRest
       @link = args['link']
       @last_modified = args['lastModified']
       @parent_collection = DSpaceRest::Collection.new(args['parentCollection']) unless args['parentCollection'].nil?
-      @parent_collection_list = build_collections(args['parentCollectionList']) unless args['parentCollectionList'].nil?
-      @parent_community_list = build_communities(args['parentCommunityList']) unless args['parentCommunityList'].nil?
-      @bit_streams = build_bitstreams(args['bitstreams']) unless args['bitstreams'].nil?
+      @parent_collection_list = DSpaceRest::Builders::ModelBuilder.build_collections(args['parentCollectionList'])
+      @parent_community_list = DSpaceRest::Builders::ModelBuilder.build_communities(args['parentCommunityList'])
+      @bit_streams = DSpaceRest::Builders::ModelBuilder.build_bitstreams(args['bitstreams'])
       @archived = args['archived']
       @withdrawn = args['withdrawn']
       @expand = args['expand']
-      @metadata = build_metadatas(args['metadata']) unless args['expand'].nil?
+      @metadata = DSpaceRest::Builders::ModelBuilder.build_metadatas(args['metadata'])
     end
 
     def to_h
@@ -65,42 +65,6 @@ module DSpaceRest
 
     def obj2hash(list)
       DSpaceRest::Builders::HashBuilder.models2hash list
-    end
-
-    def build_metadatas(metadatas=[])
-      return metadatas if metadatas.nil?
-      colls = []
-      metadatas.each do |c|
-        colls << DSpaceRest::Metadata.new(c)
-      end
-      colls
-    end
-
-    def build_communities(communities=[])
-      return communities if communities.nil?
-      colls = []
-      communities.each do |c|
-        colls << DSpaceRest::Community.new(c)
-      end
-      colls
-    end
-
-    def build_collections(collections=[])
-      return collections if collections.nil?
-      colls = []
-      collections.each do |c|
-        colls << DSpaceRest::Collection.new(c)
-      end
-      colls
-    end
-
-    def build_bitstreams(bitstreams=[])
-      return bitstreams if bitstreams.nil?
-      colls = []
-      bitstreams.each do |c|
-        colls << DSpaceRest::Bitstream.new(c)
-      end
-      colls
     end
 
   end
