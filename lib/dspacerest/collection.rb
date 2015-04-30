@@ -24,8 +24,8 @@ module DSpaceRest
       @expand = args['expand']
 
       @parent_community = DSpaceRest::Community.new(args['parentCommunity']) unless args['parentCommunity'].nil?
-      @parent_community_list = build_communities(args['parentCommunityList']) unless args['parentCommunityList'].empty?
-      @items = build_items(args['items']) unless args['items'].empty?
+      @parent_community_list = build_communities(args['parentCommunityList']) unless args['parentCommunityList'].nil?
+      @items = build_items(args['items']) unless args['items'].nil?
     end
 
     def to_h
@@ -54,6 +54,7 @@ module DSpaceRest
     private
 
     def build_communities(communities=[])
+      return communities if communities.nil?
       colls = []
       communities.each do |c|
         colls << DSpaceRest::Community.new(c)
@@ -62,6 +63,7 @@ module DSpaceRest
     end
 
     def build_items(items=[])
+      return items if items.nil?
       colls = []
       items.each do |c|
         colls << DSpaceRest::Item.new(c)

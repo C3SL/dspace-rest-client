@@ -22,7 +22,7 @@ module DSpaceRest
       @retrieve_link = args['retrieveLink']
       @check_sum = args['checkSum']
       @sequence_id = args['sequenceId']
-      @policies = build_policies(args['policies']) unless args['policies'].empty?
+      @policies = build_policies(args['policies']) unless args['policies'].nil?
       @expand = args['expand']
     end
 
@@ -51,6 +51,7 @@ module DSpaceRest
     private
 
     def build_policies(policies=[])
+      return policies if policies.nil?
       colls = []
       policies.each do |c|
         colls << DSpaceRest::Policy.new(c)

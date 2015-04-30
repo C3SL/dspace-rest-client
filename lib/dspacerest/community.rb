@@ -20,8 +20,8 @@ module DSpaceRest
       @short_description = args['shortDescription']
       @sidebar_text = args['sidebarText']
       @count_items = args['countItems']
-      @sub_communities = build_communities(args['subcommunities']) unless args['subcommunities'].empty?
-      @collections = build_collections(args['collections']) unless args['collections'].empty?
+      @sub_communities = build_communities(args['subcommunities']) unless args['subcommunities'].nil?
+      @collections = build_collections(args['collections']) unless args['collections'].nil?
       @expand = args['expand']
     end
 
@@ -54,6 +54,7 @@ module DSpaceRest
     end
 
     def build_collections(collections=[])
+      return collections if collections.nil?
       colls = []
       collections.each do |c|
         colls << DSpaceRest::Collection.new(c)
@@ -62,6 +63,7 @@ module DSpaceRest
     end
 
     def build_communities(communities=[])
+      return communities if communities.nil?
       colls = []
       communities.each do |c|
         colls << DSpaceRest::Community.new(c)
