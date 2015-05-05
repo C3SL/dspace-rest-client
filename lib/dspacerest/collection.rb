@@ -1,88 +1,61 @@
 module DSpaceRest
-
   class Collection
 
-    attr_accessor :name, :logo, :license, :copyrightText,
-                  :introductoryText, :shortDescription, :sidebarText
+    attr_accessor :name, :logo, :license, :copyright_text,
+                  :introductory_text, :short_description, :sidebar_text
 
-    attr_reader   :id, :handle, :type, :link, :parentCommunity,
-                  :parentCommunityList, :items,
-                  :numberItems, :subcommunities, :collections, :expand
+    attr_reader :id, :handle, :type, :link, :parent_community,
+                :parent_community_list, :items,
+                :number_items, :expand
 
-    def initialize args, request
+    def initialize args
       @id = args['id']
       @name = args['name']
       @handle = args['handle']
       @type = args['type']
       @link = args['link']
       @logo = args['logo']
-      if (args['parentCommunity'] != nil)
-        @parentCommunity = Community.new(args['parentCommunity'], request)
-      else
-        @parentCommunity = nil
-      end
-      @parentCommunityList = args['parentCommunityList']
-      @items = args['items']
       @license = args['license']
-      @copyrightText = args['copyrightText']
-      @introductoryText = args['introductoryText']
-      @shortDescription = args['shortDescription']
-      @sidebarText = args['sidebarText']
-      @numberItems = args['countItems']
+      @copyright_text = args['copyrightText']
+      @introductory_text = args['introductoryText']
+      @short_description = args['shortDescription']
+      @sidebar_text = args['sidebarText']
+      @number_items = args['numberItems']
       @expand = args['expand']
-      @request = request
+
+      @parent_community = DSpaceRest::Community.new(args['parentCommunity']) unless args['parentCommunity'].nil?
+      @parent_community_list = DSpaceRest::Builders::ModelBuilder.build_communities(args['parentCommunityList'])
+      @items = DSpaceRest::Builders::ModelBuilder.build_items(args['items'])
     end
 
     def to_h
-      h = Hash.new
-      h["id"] = @id
-      h["name"] = @name
-      h["handle"] = @handle
-      h["type"] = @type
-      h["link"] = @link
-      h["logo"] = @logo
-      h["parentCommunity"] = @parentCommunity
-      h["parentCommunityList"] = @parentCommunityList
-      h["items"] = @items
-      h["license"] = @license
-      h["copyrightText"] = @copyrightText
-      h["introductoryText"] = @introductoryText
-      h["shortDescription"] = @shortDescription
-      h["sidebarText"] = @sidebarText
-      h["numberItems"] = @numberItems
-      h["expand"] = @expand
+      h = {
+          id: @id,
+          name: @name,
+          handle: @handle,
+          type: @type,
+          link: @link,
+          logo: @logo,
+          parentCommunity: @parent_community,
+          parentCommunitList: @parent_community_list,
+          items: obj2hash(@items),
+          license: @license,
+          copyrightText: @copyright_text,
+          introductoryText: @introductory_text,
+          shortDescription: @short_description,
+          sidebarText: @sidebar_text,
+          numberItems: @number_items,
+          expand: @expand
+      }
+
       h
     end
 
-    def self.get_by_id(id, request)
-      response = request["/collections/#{id}?expand=parentCommunity"].get
-      Collection.new(JSON.parse(response), request)
-    end
+    private
 
-    def self.get_all(request)
-      response = request["/collections"].get
-      collections = []
-      JSON.parse(response).each do |coll|
-        collections << Collection.new(coll, request)
-      end
-      collections
-    end
-
-    def get_items
-      response = @request["/collections/#{id}/items"].get
-      items = []
-      JSON.parse(response).each do |item|
-        items << Item.new(item, @request)
-      end
-      items
-    end
-
-    def post_item(item)
-      form = JSON.generate({"metadata" => item.to_h["metadata"]})
-      response = @request["/collections/#{id}/items"].post form
-      Item.new(JSON.parse(response), @request)
+    def obj2hash(list)
+      DSpaceRest::Builders::HashBuilder.models2hash list
     end
 
   end
-
 end
