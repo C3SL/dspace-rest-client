@@ -3,9 +3,14 @@ require 'rest-client'
 class DspaceClient
   attr_reader :rest_client
 
-  def initialize(url)
+  def initialize(url, authenticated_token = nil)
     @url = url
-    @rest_client = build_rest_client url
+
+    if (authenticated_token.nil?)
+      @rest_client = build_rest_client url
+    else
+      @rest_client = build_rest_client url, rest_dspace_token: authenticated_token
+    end
   end
 
   def repository
@@ -25,7 +30,7 @@ class DspaceClient
     @rest_client = build_rest_client @url, rest_dspace_token: authenticated_token
     @dspace_repository = build_repository @rest_client
 
-    return (!authenticated_token.nil?)
+    authenticated_token
   end
 
   def logout
