@@ -1,7 +1,7 @@
 require 'rest-client'
 
 class DspaceClient
-  attr_reader :rest_client
+  attr_reader :rest_client, :url
 
   def initialize(url, authenticated_token = nil)
     @url = url
