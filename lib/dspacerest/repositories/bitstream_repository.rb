@@ -42,7 +42,7 @@ module DSpaceRest
       end
 
       def update(bitstream)
-        valid_keys=['name', 'description', 'sequenceId']
+        valid_keys=[:name, :description, :sequenceId]
         form = JSON.generate(bitstream.to_h.select { |k, v| valid_keys.include? k })
         response = rest_client["/bitstreams/#{bitstream.id}"].put form
       end
