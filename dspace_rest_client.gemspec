@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name = 'dspace_rest_client'
-  s.version = '1.1.1'
-  s.date = '2015-04-17'
+  s.version = '1.1.2'
+  s.date = '2015-05-22'
   s.summary = "DSpace REST-API Client for Ruby!"
   s.description = "DSpace REST-API Client for Ruby! Implements all DSpace REST-API endpoints requests."
   s.authors = ["Mauricio Giacomini Girardello", "Bruno N. Zanette", "Mateus Rambo Strey"]
