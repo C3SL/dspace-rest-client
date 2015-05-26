@@ -4,8 +4,10 @@ module DSpaceRest
 
       def self.models2hash(list)
         hash = []
-        list.each do |m|
-          hash << m.to_h
+        unless list.nil?
+          list.each do |m|
+            hash << m.to_h
+          end
         end
 
         hash
