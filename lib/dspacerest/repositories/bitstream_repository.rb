@@ -27,9 +27,11 @@ module DSpaceRest
         DSpaceRest::Bitstream.new(JSON.parse(response))
       end
 
-      def get_all_bitstreams(expand = nil)
+      def get_all_bitstreams(expand = nil, limit = nil, offset = nil)
         expand_uri = build_expand_uri(expand)
-        response = rest_client["/bitstreams?#{expand_uri}"].get
+        limit_uri = build_parameter_uri('limit',limit)
+        offset_uri = build_parameter_uri('offset',offset)
+        response = rest_client["/bitstreams?#{expand_uri}&#{limit_uri}&#{offset_uri}"].get
         bit_streams = []
         JSON.parse(response).each do |bits|
           bit_streams << DSpaceRest::Bitstream.new(bits)
@@ -51,6 +53,10 @@ module DSpaceRest
 
       def expandable_properties
         ["parent","policies","all"]
+      end
+
+      def query_parameters
+        ["limit","offset"]
       end
 
     end

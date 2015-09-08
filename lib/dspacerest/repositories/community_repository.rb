@@ -19,9 +19,11 @@ module DSpaceRest
         DSpaceRest::Community.new(JSON.parse(response))
       end
 
-      def get_all_communities(expand = nil)
+      def get_all_communities(expand = nil, limit = nil, offset = nil)
         expand_uri = build_expand_uri(expand)
-        response = rest_client["/communities?#{expand_uri}"].get
+        limit_uri = build_parameter_uri('limit',limit)
+        offset_uri = build_parameter_uri('offset',offset)
+        response = rest_client["/communities?#{expand_uri}&#{limit_uri}&#{offset_uri}"].get
         communities = []
         JSON.parse(response).each do |comm|
           communities << DSpaceRest::Community.new(comm)
@@ -29,9 +31,11 @@ module DSpaceRest
         communities
       end
 
-      def get_top_communities(expand = nil)
+      def get_top_communities(expand = nil, limit = nil, offset = nil)
         expand_uri = build_expand_uri(expand)
-        response = rest_client["/communities/top-communities?#{expand_uri}"].get
+        limit_uri = build_parameter_uri('limit',limit)
+        offset_uri = build_parameter_uri('offset',offset)
+        response = rest_client["/communities/top-communities?#{expand_uri}&#{limit_uri}&#{offset_uri}"].get
         communities = []
         JSON.parse(response).each do |comm|
           communities << DSpaceRest::Community.new(comm)
@@ -39,9 +43,11 @@ module DSpaceRest
         communities
       end
 
-      def get_subcommunities_of(community, expand = nil)
+      def get_subcommunities_of(community, expand = nil, limit = nil, offset = nil)
         expand_uri = build_expand_uri(expand)
-        response = rest_client["/communities/#{community.id}/communities?#{expand_uri}"].get
+        limit_uri = build_parameter_uri('limit',limit)
+        offset_uri = build_parameter_uri('offset',offset)
+        response = rest_client["/communities/#{community.id}/communities?#{expand_uri}&#{limit_uri}&#{offset_uri}"].get
         communities = []
         JSON.parse(response).each do |comm|
           communities << DSpaceRest::Community.new(comm)
@@ -65,6 +71,10 @@ module DSpaceRest
 
       def expandable_properties
         ["parentCommunity","collections","subCommunities","logo","all"]
+      end
+
+      def query_parameters
+        ["limit","offset"]
       end
 
     end

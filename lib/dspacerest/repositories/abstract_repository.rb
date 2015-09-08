@@ -15,6 +15,12 @@ module DSpaceRest
         end
       end
 
+      def build_parameter_uri(parameter, value = nil)
+        if query_parameters.include? parameter
+          "#{parameter}=#{value}"
+        end
+      end
+
     end
   end
 end

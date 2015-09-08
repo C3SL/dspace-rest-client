@@ -15,8 +15,10 @@ module DSpaceRest
       # DELETE /collections/{collectionId}/items/{itemId} - Delete item in collection.
       # DELETE /communities/{communityId}/collections/{collectionId} - Delete collection in community.
 
-      def get_collection_items(collection)
-        response = rest_client["/collections/#{collection.id}/items"].get
+      def get_collection_items(collection, limit = nil, offset = nil)
+        limit_uri = build_parameter_uri('limit',limit)
+        offset_uri = build_parameter_uri('offset',offset)
+        response = rest_client["/collections/#{collection.id}/items&#{limit_uri}&#{offset_uri}"].get
         items = []
         JSON.parse(response).each do |item|
           items << DSpaceRest::Item.new(item)
@@ -30,9 +32,11 @@ module DSpaceRest
         DSpaceRest::Collection.new(JSON.parse(response))
       end
 
-      def get_all_collections(expand = nil)
+      def get_all_collections(expand = nil, limit = nil, offset = nil)
         expand_uri = build_expand_uri(expand)
-        response = rest_client["/collections?#{expand_uri}"].get
+        limit_uri = build_parameter_uri('limit',limit)
+        offset_uri = build_parameter_uri('offset',offset)
+        response = rest_client["/collections?#{expand_uri}&#{limit_uri}&#{offset_uri}"].get
         collections = []
         JSON.parse(response).each do |coll|
           collections << DSpaceRest::Collection.new(coll)
@@ -40,9 +44,11 @@ module DSpaceRest
         collections
       end
 
-      def get_collections_of(community, expand = nil)
+      def get_collections_of(community, expand = nil, limit = nil, offset = nil)
         expand_uri = build_expand_uri(expand)
-        response = rest_client["/communities/#{community.id}/collections?#{expand_uri}"].get
+        limit_uri = build_parameter_uri('limit',limit)
+        offset_uri = build_parameter_uri('offset',offset)
+        response = rest_client["/communities/#{community.id}/collections?#{expand_uri}&#{limit_uri}&#{offset_uri}"].get
         collections = []
         JSON.parse(response).each do |coll|
           collections << DSpaceRest::Collection.new(coll)
@@ -66,6 +72,10 @@ module DSpaceRest
 
       def expandable_properties
         ["parentCommunityList","parentCommunity","items","license","logo","all"]
+      end
+
+      def query_parameters
+        ["limit","offset"]
       end
 
     end
