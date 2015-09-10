@@ -43,10 +43,11 @@ module DSpaceRest
         metadata
       end
 
-      def get_bitstreams_of(item, limit = nil, offset = nil)
+      def get_bitstreams_of(item, expand = nil, limit = nil, offset = nil)
+        expand_uri = build_expand_uri(expand)
         limit_uri = build_parameter_uri('limit',limit)
         offset_uri = build_parameter_uri('offset',offset)
-        response = rest_client["/items/#{item.id}/bitstreams&#{limit_uri}&#{offset_uri}"].get
+        response = rest_client["/items/#{item.id}/bitstreams?#{expand_uri}&#{limit_uri}&#{offset_uri}"].get
         bitstreams = []
         JSON.parse(response).each do |bits|
           bitstreams << DSpaceRest::Bitstream.new(bits)

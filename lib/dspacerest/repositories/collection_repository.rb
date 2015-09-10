@@ -15,10 +15,11 @@ module DSpaceRest
       # DELETE /collections/{collectionId}/items/{itemId} - Delete item in collection.
       # DELETE /communities/{communityId}/collections/{collectionId} - Delete collection in community.
 
-      def get_collection_items(collection, limit = nil, offset = nil)
+      def get_collection_items(collection, expand = nil, limit = nil, offset = nil)
+        expand_uri = build_expand_uri(expand)
         limit_uri = build_parameter_uri('limit',limit)
         offset_uri = build_parameter_uri('offset',offset)
-        response = rest_client["/collections/#{collection.id}/items&#{limit_uri}&#{offset_uri}"].get
+        response = rest_client["/collections/#{collection.id}/items?#{expand_uri}&#{limit_uri}&#{offset_uri}"].get
         items = []
         JSON.parse(response).each do |item|
           items << DSpaceRest::Item.new(item)
