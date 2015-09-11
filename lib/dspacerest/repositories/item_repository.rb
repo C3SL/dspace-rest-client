@@ -18,7 +18,6 @@ module DSpaceRest
 
       def get_all_items(params)
         query_string = build_query_string(params)
-        puts query_string
         response = rest_client["/items?#{query_string}"].get
         items = []
         JSON.parse(response).each do |item|
