@@ -9,16 +9,27 @@ module DSpaceRest
 
       protected
 
-      def build_expand_uri(expand = nil)
-        if expandable_properties.include? expand
-          "expand=#{expand}"
-        end
-      end
+      def build_query_string(params)
 
-      def build_parameter_uri(parameter, value = nil)
-        if query_parameters.include? parameter
-          "#{parameter}=#{value}"
+        query_string=""
+
+        if query_parameters.include? 'limit'
+          query_string << "limit=#{params[:limit]}&"
         end
+
+        if query_parameters.include? 'offset'
+          query_string << "offset=#{params[:offset]}&"
+        end
+
+        expand_string = ""
+        params[:expand].each do |expand|
+          if expandable_properties.include? expand
+            expand_string << "#{expand},"
+          end
+        end
+        query_string << "expand=#{expand_string}"
+
+        query_string
       end
 
     end

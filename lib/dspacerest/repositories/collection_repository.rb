@@ -15,11 +15,9 @@ module DSpaceRest
       # DELETE /collections/{collectionId}/items/{itemId} - Delete item in collection.
       # DELETE /communities/{communityId}/collections/{collectionId} - Delete collection in community.
 
-      def get_collection_items(collection, expand = nil, limit = nil, offset = nil)
-        expand_uri = build_expand_uri(expand)
-        limit_uri = build_parameter_uri('limit',limit)
-        offset_uri = build_parameter_uri('offset',offset)
-        response = rest_client["/collections/#{collection.id}/items?#{expand_uri}&#{limit_uri}&#{offset_uri}"].get
+      def get_collection_items(collection, params)
+        query_string = build_query_string(params)
+        response = rest_client["/collections/#{collection.id}/items?#{query_string}"].get
         items = []
         JSON.parse(response).each do |item|
           items << DSpaceRest::Item.new(item)
@@ -27,17 +25,15 @@ module DSpaceRest
         items
       end
 
-      def get_collection_by_id(id, expand = nil)
-        expand_uri = build_expand_uri(expand)
-        response = rest_client["/collections/#{id}?#{expand_uri}"].get
+      def get_collection_by_id(id, params)
+        query_string = build_query_string(params)
+        response = rest_client["/collections/#{id}?#{query_string}"].get
         DSpaceRest::Collection.new(JSON.parse(response))
       end
 
-      def get_all_collections(expand = nil, limit = nil, offset = nil)
-        expand_uri = build_expand_uri(expand)
-        limit_uri = build_parameter_uri('limit',limit)
-        offset_uri = build_parameter_uri('offset',offset)
-        response = rest_client["/collections?#{expand_uri}&#{limit_uri}&#{offset_uri}"].get
+      def get_all_collections(params)
+        query_string = build_query_string(params)
+        response = rest_client["/collections?#{query_string}"].get
         collections = []
         JSON.parse(response).each do |coll|
           collections << DSpaceRest::Collection.new(coll)
@@ -45,11 +41,9 @@ module DSpaceRest
         collections
       end
 
-      def get_collections_of(community, expand = nil, limit = nil, offset = nil)
-        expand_uri = build_expand_uri(expand)
-        limit_uri = build_parameter_uri('limit',limit)
-        offset_uri = build_parameter_uri('offset',offset)
-        response = rest_client["/communities/#{community.id}/collections?#{expand_uri}&#{limit_uri}&#{offset_uri}"].get
+      def get_collections_of(community, params)
+        query_string = build_query_string(params)
+        response = rest_client["/communities/#{community.id}/collections?#{query_string}"].get
         collections = []
         JSON.parse(response).each do |coll|
           collections << DSpaceRest::Collection.new(coll)

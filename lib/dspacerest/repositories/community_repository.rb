@@ -13,17 +13,15 @@ module DSpaceRest
       # DELETE /communities/{communityId} - Delete community.
       # DELETE /communities/{communityId}/communities/{communityId2} - Delete subcommunity in community.
 
-      def get_community_by_id(id, expand = nil)
-        expand_uri = build_expand_uri(expand)
-        response = rest_client["/communities/#{id}?#{expand_uri}"].get
+      def get_community_by_id(id, params)
+        query_string = build_query_string(params)
+        response = rest_client["/communities/#{id}?#{query_string}"].get
         DSpaceRest::Community.new(JSON.parse(response))
       end
 
-      def get_all_communities(expand = nil, limit = nil, offset = nil)
-        expand_uri = build_expand_uri(expand)
-        limit_uri = build_parameter_uri('limit',limit)
-        offset_uri = build_parameter_uri('offset',offset)
-        response = rest_client["/communities?#{expand_uri}&#{limit_uri}&#{offset_uri}"].get
+      def get_all_communities(params)
+        query_string = build_query_string(params)
+        response = rest_client["/communities?#{query_string}"].get
         communities = []
         JSON.parse(response).each do |comm|
           communities << DSpaceRest::Community.new(comm)
@@ -31,11 +29,9 @@ module DSpaceRest
         communities
       end
 
-      def get_top_communities(expand = nil, limit = nil, offset = nil)
-        expand_uri = build_expand_uri(expand)
-        limit_uri = build_parameter_uri('limit',limit)
-        offset_uri = build_parameter_uri('offset',offset)
-        response = rest_client["/communities/top-communities?#{expand_uri}&#{limit_uri}&#{offset_uri}"].get
+      def get_top_communities(params)
+        query_string = build_query_string(params)
+        response = rest_client["/communities/top-communities?#{query_string}"].get
         communities = []
         JSON.parse(response).each do |comm|
           communities << DSpaceRest::Community.new(comm)
@@ -43,11 +39,9 @@ module DSpaceRest
         communities
       end
 
-      def get_subcommunities_of(community, expand = nil, limit = nil, offset = nil)
-        expand_uri = build_expand_uri(expand)
-        limit_uri = build_parameter_uri('limit',limit)
-        offset_uri = build_parameter_uri('offset',offset)
-        response = rest_client["/communities/#{community.id}/communities?#{expand_uri}&#{limit_uri}&#{offset_uri}"].get
+      def get_subcommunities_of(community, params)
+        query_string = build_query_string(params)
+        response = rest_client["/communities/#{community.id}/communities?#{query_string}"].get
         communities = []
         JSON.parse(response).each do |comm|
           communities << DSpaceRest::Community.new(comm)
