@@ -1,10 +1,10 @@
 Gem::Specification.new do |s|
   s.name = 'dspace_rest_client'
-  s.version = '1.1.2'
-  s.date = '2015-05-22'
+  s.version = '1.1.3'
+  s.date = '2015-09-08'
   s.summary = "DSpace REST-API Client for Ruby!"
   s.description = "DSpace REST-API Client for Ruby! Implements all DSpace REST-API endpoints requests."
-  s.authors = ["Mauricio Giacomini Girardello", "Bruno N. Zanette", "Mateus Rambo Strey"]
+  s.authors = ["Mauricio Giacomini Girardello", "Bruno Nocera Zanette", "Mateus Rambo Strey"]
   s.email = 'c3sl@c3sl.ufpr.br'
   s.files = Dir['lib/*.rb'] +
       Dir['lib/dspacerest/*.rb'] +

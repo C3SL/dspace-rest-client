@@ -21,15 +21,15 @@ module DSpaceRest
       # DELETE /bitstreams/{bitstream id} - Delete bitstream from DSpace.
       # DELETE /bitstreams/{bitstream id}/policy/{policy_id} - Delete bitstream policy.
 
-      def get_bitstream_by_id(id, expand = nil)
-        expand_uri = build_expand_uri(expand)
-        response = rest_client["/bitstreams/#{id}?#{expand_uri}"].get
+      def get_bitstream_by_id(id, params)
+        query_string = build_query_string(params)
+        response = rest_client["/bitstreams/#{id}?#{query_string}"].get
         DSpaceRest::Bitstream.new(JSON.parse(response))
       end
 
-      def get_all_bitstreams(expand = nil)
-        expand_uri = build_expand_uri(expand)
-        response = rest_client["/bitstreams?#{expand_uri}"].get
+      def get_all_bitstreams(params)
+        query_string = build_query_string(params)
+        response = rest_client["/bitstreams?#{query_string}"].get
         bit_streams = []
         JSON.parse(response).each do |bits|
           bit_streams << DSpaceRest::Bitstream.new(bits)
@@ -51,6 +51,10 @@ module DSpaceRest
 
       def expandable_properties
         ["parent","policies","all"]
+      end
+
+      def query_parameters
+        ["limit","offset"]
       end
 
     end
