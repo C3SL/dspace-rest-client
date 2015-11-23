@@ -20,7 +20,7 @@ module DSpaceRest
     end
 
     def to_h
-      h = {
+      {
           id: @id,
           action: @action,
           epersonId: @eperson_id,
@@ -33,8 +33,6 @@ module DSpaceRest
           startDate: @start_date,
           endDate: @end_date
       }
-      
-      h
     end
 
   end

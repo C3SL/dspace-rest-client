@@ -29,7 +29,7 @@ module DSpaceRest
     end
 
     def to_h
-      h = {
+      {
           id: @id,
           name: @name,
           handle: @handle,
@@ -47,8 +47,6 @@ module DSpaceRest
           numberItems: @number_items,
           expand: @expand
       }
-
-      h
     end
 
     private

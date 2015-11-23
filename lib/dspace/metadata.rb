@@ -1,6 +1,5 @@
 module DSpaceRest
   class Metadata
-
     attr_accessor :key, :value, :language
 
     def initialize args

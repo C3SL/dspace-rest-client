@@ -27,7 +27,7 @@ module DSpaceRest
     end
 
     def to_h
-      h = {
+      {
           id: @id,
           name: @name,
           handle: @handle,
@@ -43,8 +43,6 @@ module DSpaceRest
           expand: @expand,
           metadata: obj2hash(@metadata)
       }
-
-      h
     end
 
     def add_metadata(key, value, language)

@@ -27,7 +27,7 @@ module DSpaceRest
     end
 
     def to_h
-      h = {
+      {
           id: @id,
           name: @name,
           type: @type,
@@ -44,8 +44,6 @@ module DSpaceRest
           policies: @policies,
           expand: @expand
       }
-
-      h
     end
   end
 end
