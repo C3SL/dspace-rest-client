@@ -1,6 +1,7 @@
-$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-require 'dspace'
+$LOAD_PATH.unshift(File.dirname(__FILE__))
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), "..", "lib"))
 
-require 'minitest/unit'
+require "bundler"
+Bundler.setup
+require 'dspace'
 require 'minitest/autorun'
-require 'minitest/pride'
