@@ -1,4 +1,4 @@
-module DSpaceRest
+module Dspace
   class Collection
 
     attr_accessor :name, :logo, :license, :copyright_text,
@@ -23,9 +23,9 @@ module DSpaceRest
       @number_items = args['numberItems']
       @expand = args['expand']
 
-      @parent_community = DSpaceRest::Community.new(args['parentCommunity']) unless args['parentCommunity'].nil?
-      @parent_community_list = DSpaceRest::Builders::ModelBuilder.build_communities(args['parentCommunityList'])
-      @items = DSpaceRest::Builders::ModelBuilder.build_items(args['items'])
+      @parent_community = Dspace::Community.new(args['parentCommunity']) unless args['parentCommunity'].nil?
+      @parent_community_list = Dspace::Builders::ModelBuilder.build_communities(args['parentCommunityList'])
+      @items = Dspace::Builders::ModelBuilder.build_items(args['items'])
     end
 
     def to_h
@@ -52,7 +52,7 @@ module DSpaceRest
     private
 
     def obj2hash(list)
-      DSpaceRest::Builders::HashBuilder.models2hash list
+      Dspace::Builders::HashBuilder.models2hash list
     end
 
   end

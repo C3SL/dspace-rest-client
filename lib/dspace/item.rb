@@ -1,6 +1,6 @@
 require 'curb'
 
-module DSpaceRest
+module Dspace
   class Item
 
     attr_accessor :name, :archived, :withdrawn
@@ -16,14 +16,14 @@ module DSpaceRest
       @type = args['type']
       @link = args['link']
       @last_modified = args['lastModified']
-      @parent_collection = DSpaceRest::Collection.new(args['parentCollection']) unless args['parentCollection'].nil?
-      @parent_collection_list = DSpaceRest::Builders::ModelBuilder.build_collections(args['parentCollectionList'])
-      @parent_community_list = DSpaceRest::Builders::ModelBuilder.build_communities(args['parentCommunityList'])
-      @bit_streams = DSpaceRest::Builders::ModelBuilder.build_bitstreams(args['bitstreams'])
+      @parent_collection = Dspace::Collection.new(args['parentCollection']) unless args['parentCollection'].nil?
+      @parent_collection_list = Dspace::Builders::ModelBuilder.build_collections(args['parentCollectionList'])
+      @parent_community_list = Dspace::Builders::ModelBuilder.build_communities(args['parentCommunityList'])
+      @bit_streams = Dspace::Builders::ModelBuilder.build_bitstreams(args['bitstreams'])
       @archived = args['archived']
       @withdrawn = args['withdrawn']
       @expand = args['expand']
-      @metadata = DSpaceRest::Builders::ModelBuilder.build_metadatas(args['metadata'])
+      @metadata = Dspace::Builders::ModelBuilder.build_metadatas(args['metadata'])
     end
 
     def to_h
@@ -51,7 +51,7 @@ module DSpaceRest
       m['value'] = value
       m['language'] = language || ""
 
-      @metadata << DSpaceRest::Metadata.new(m)
+      @metadata << Dspace::Metadata.new(m)
       @metadata
     end
 
@@ -62,7 +62,7 @@ module DSpaceRest
     private
 
     def obj2hash(list)
-      DSpaceRest::Builders::HashBuilder.models2hash list
+      Dspace::Builders::HashBuilder.models2hash list
     end
 
   end

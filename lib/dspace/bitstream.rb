@@ -1,4 +1,4 @@
-module DSpaceRest
+module Dspace
   class Bitstream
 
     attr_accessor :name, :bundle_name,
@@ -22,7 +22,7 @@ module DSpaceRest
       @retrieve_link = args['retrieveLink']
       @check_sum = args['checkSum']
       @sequence_id = args['sequenceId']
-      @policies = DSpaceRest::Builders::ModelBuilder.build_policies(args['policies'])
+      @policies = Dspace::Builders::ModelBuilder.build_policies(args['policies'])
       @expand = args['expand']
     end
 

@@ -1,4 +1,4 @@
-module DSpaceRest
+module Dspace
   class Policy
 
     attr_reader :id, :action, :eperson_id, :group_id,

@@ -1,4 +1,4 @@
-module DSpaceRest
+module Dspace
   class Metadata
     attr_accessor :key, :value, :language
 
