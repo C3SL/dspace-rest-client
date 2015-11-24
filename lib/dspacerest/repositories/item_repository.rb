@@ -51,14 +51,13 @@ module DSpaceRest
         bitstreams
       end
 
-
       def create_metadata_for(item)
         form = JSON.generate(self.to_h["metadata"])
         response = rest_client["/items/#{item.id}/metadata"].put form
       end
 
       def create_bitstream_for(item, file, upload_strategy)
-        response = upload_strategy.upload("/items/#{item.id}/bitstreams", file)
+        response = upload_strategy.upload("/items/#{item.id}/bitstreams?name=#{file.name}&description=#{file.description}", file.path)
         DSpaceRest::Bitstream.new(JSON.parse(response))
       end
 
