@@ -1,4 +1,4 @@
-module DSpaceRest
+module Dspace
   module Builders
     module HashBuilder
 

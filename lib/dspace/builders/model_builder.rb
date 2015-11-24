@@ -1,4 +1,4 @@
-module DSpaceRest
+module Dspace
   module Builders
     module ModelBuilder
 
@@ -6,7 +6,7 @@ module DSpaceRest
         return communities if communities.nil?
         colls = []
         communities.each do |c|
-          colls << DSpaceRest::Community.new(c)
+          colls << Dspace::Community.new(c)
         end
         colls
       end
@@ -15,7 +15,7 @@ module DSpaceRest
         return collections if collections.nil?
         colls = []
         collections.each do |c|
-          colls << DSpaceRest::Collection.new(c)
+          colls << Dspace::Collection.new(c)
         end
         colls
       end
@@ -24,7 +24,7 @@ module DSpaceRest
         return items if items.nil?
         colls = []
         items.each do |c|
-          colls << DSpaceRest::Item.new(c)
+          colls << Dspace::Item.new(c)
         end
         colls
       end
@@ -33,7 +33,7 @@ module DSpaceRest
         return bitstreams if bitstreams.nil?
         colls = []
         bitstreams.each do |c|
-          colls << DSpaceRest::Bitstream.new(c)
+          colls << Dspace::Bitstream.new(c)
         end
         colls
       end
@@ -42,7 +42,7 @@ module DSpaceRest
         return metadatas if metadatas.nil?
         colls = []
         metadatas.each do |c|
-          colls << DSpaceRest::Metadata.new(c)
+          colls << Dspace::Metadata.new(c)
         end
         colls
       end
@@ -51,7 +51,7 @@ module DSpaceRest
         return policies if policies.nil?
         colls = []
         policies.each do |c|
-          colls << DSpaceRest::Policy.new(c)
+          colls << Dspace::Policy.new(c)
         end
         colls
       end
