@@ -1,5 +1,11 @@
+require "forwardable"
+require "json"
 require "resource_kit"
-require "dspace/version"
-require "dspace/resources/community_resource"
+require_relative "dspace/version"
+require_relative "dspace/resources/community_resource"
+require_relative "dspace/builders/hash_builder"
+require_relative "dspace/builders/model_builder"
+require_relative "dspace/community"
 
-module Dspace; end
+module Dspace
+end
