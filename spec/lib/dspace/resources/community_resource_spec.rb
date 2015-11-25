@@ -14,6 +14,14 @@ RSpec.describe Dspace::Resources::CommunityResource, resource_kit: true do
     expect(Dspace::Resources::CommunityResource).to have_action(:find).that_handles(200).at_path('/rest/communities/:id')
   end
 
+  context "with community scope" do
+  	
+  	it "get collections" do
+  	    expect(Dspace::Resources::CommunityResource).to have_action(:collection).that_handles(200).at_path('/rest/communities/:id/collections')
+  	end
+
+  end
+
   #it 'handles a 201 with response body' do
   #  expect(MyResourceClass).to handle_response(:create).with(status: 201, body: '{"users":[]}') do |handled|
   #    expect(handled).to all(be_kind_of(User))
