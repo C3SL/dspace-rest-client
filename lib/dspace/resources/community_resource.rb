@@ -21,6 +21,14 @@ module Dspace
           end
         end
 
+        action :find, 'GET /communities/:id' do
+          handler(200) do |response|
+            Dspace::Community.new(JSON.parse(response.body))
+          end
+        end
+
+
+
       end
 
     end
