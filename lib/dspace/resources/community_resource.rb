@@ -30,6 +30,12 @@ module Dspace
             Dspace::Builders::ModelBuilder.build_collections(JSON.parse(response.body))
           end
         end
+
+        action :sub_communities, 'GET /rest/communities/:id/communities' do
+          handler(200) do |response|
+            Dspace::Builders::ModelBuilder.build_communities(JSON.parse(response.body))
+          end
+        end
       end
 
     end

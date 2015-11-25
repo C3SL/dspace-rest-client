@@ -2,23 +2,27 @@ require 'spec_helper'
 
 RSpec.describe Dspace::Resources::CommunityResource, resource_kit: true do
 
-  it 'has an all action' do
+  it 'get all communities' do
     expect(Dspace::Resources::CommunityResource).to have_action(:all).that_handles(200).at_path('/rest/communities')
   end
 
-  it 'has an top communities action' do
+  it 'get top communities' do
     expect(Dspace::Resources::CommunityResource).to have_action(:top_communities).that_handles(200).at_path('/rest/communities/top-communities')
   end
 
-  it 'has find community action' do
+  it 'find community' do
     expect(Dspace::Resources::CommunityResource).to have_action(:find).that_handles(200).at_path('/rest/communities/:id')
   end
 
   context "with community scope" do
-  	
-  	it "get collections" do
-  	    expect(Dspace::Resources::CommunityResource).to have_action(:collections).that_handles(200).at_path('/rest/communities/:id/collections')
-  	end
+
+    it "get collections" do
+      expect(Dspace::Resources::CommunityResource).to have_action(:collections).that_handles(200).at_path('/rest/communities/:id/collections')
+    end
+
+    it "get sub communities" do
+      expect(Dspace::Resources::CommunityResource).to have_action(:sub_communities).that_handles(200).at_path('/rest/communities/:id/communities')
+    end
 
   end
 
