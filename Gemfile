@@ -7,6 +7,7 @@ gemspec
 
 gem 'json'
 gem 'resource_kit'
+gem 'faraday'
 
 group :development, :spec do
   gem 'minitest', '~> 5.8.3'
