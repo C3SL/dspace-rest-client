@@ -8,6 +8,13 @@ module Dspace
             Dspace::Builders::ModelBuilder.build_communities(JSON.parse(response.body))
           end
         end
+
+        action :top_communities, 'GET /communities/top-communities' do
+          handler(200) do |response|
+            Dspace::Builders::ModelBuilder.build_communities(JSON.parse(response.body))
+          end
+        end
+
       end
 
     end
