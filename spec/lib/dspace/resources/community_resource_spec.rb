@@ -17,7 +17,7 @@ RSpec.describe Dspace::Resources::CommunityResource, resource_kit: true do
   context "with community scope" do
   	
   	it "get collections" do
-  	    expect(Dspace::Resources::CommunityResource).to have_action(:collection).that_handles(200).at_path('/rest/communities/:id/collections')
+  	    expect(Dspace::Resources::CommunityResource).to have_action(:collections).that_handles(200).at_path('/rest/communities/:id/collections')
   	end
 
   end

@@ -6,6 +6,7 @@ require_relative "dspace/resources/community_resource"
 require_relative "dspace/builders/hash_builder"
 require_relative "dspace/builders/model_builder"
 require_relative "dspace/community"
+require_relative "dspace/collection"
 
 module Dspace
 end
