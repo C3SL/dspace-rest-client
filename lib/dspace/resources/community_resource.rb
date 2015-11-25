@@ -2,9 +2,6 @@ module Dspace
   module Resources
     class CommunityResource < ResourceKit::Resource
 
-      # :collections GET /communities/{communityId}/collections - Returns an array of collections of the specified community.
-      # :subcommunities GET /communities/{communityId}/communities - Returns an array of subcommunities of the specified community.
-
       resources do
 
         action :all, 'GET /rest/communities' do
