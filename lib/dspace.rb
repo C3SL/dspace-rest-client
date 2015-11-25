@@ -9,4 +9,7 @@ require_relative "dspace/community"
 require_relative "dspace/collection"
 
 module Dspace
+
+  class NotAuthorizedError < StandardError; end
+
 end
