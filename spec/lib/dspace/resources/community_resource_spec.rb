@@ -1,27 +1,28 @@
 require 'spec_helper'
 
 RSpec.describe Dspace::Resources::CommunityResource, resource_kit: true do
+  subject(:resource) { Dspace::Resources::CommunityResource }
 
   it 'get all communities' do
-    expect(Dspace::Resources::CommunityResource).to have_action(:all).that_handles(200).at_path('/rest/communities')
+    expect(resource).to have_action(:all).that_handles(200).at_path('/rest/communities')
   end
 
   it 'get top communities' do
-    expect(Dspace::Resources::CommunityResource).to have_action(:top_communities).that_handles(200).at_path('/rest/communities/top-communities')
+    expect(resource).to have_action(:top_communities).that_handles(200).at_path('/rest/communities/top-communities')
   end
 
   it 'find community' do
-    expect(Dspace::Resources::CommunityResource).to have_action(:find).that_handles(200).at_path('/rest/communities/:id')
+    expect(resource).to have_action(:find).that_handles(200).at_path('/rest/communities/:id')
   end
 
   context "with community scope" do
 
     it "get collections" do
-      expect(Dspace::Resources::CommunityResource).to have_action(:collections).that_handles(200).at_path('/rest/communities/:id/collections')
+      expect(resource).to have_action(:collections).that_handles(200).at_path('/rest/communities/:id/collections')
     end
 
     it "get sub communities" do
-      expect(Dspace::Resources::CommunityResource).to have_action(:sub_communities).that_handles(200).at_path('/rest/communities/:id/communities')
+      expect(resource).to have_action(:sub_communities).that_handles(200).at_path('/rest/communities/:id/communities')
     end
 
   end
