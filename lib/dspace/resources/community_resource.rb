@@ -9,26 +9,23 @@ module Dspace
       # :subcommunities GET /communities/{communityId}/communities - Returns an array of subcommunities of the specified community.
 
       resources do
-        action :all, 'GET /communities' do
+        action :all, 'GET /rest/communities' do
           handler(200) do |response|
             Dspace::Builders::ModelBuilder.build_communities(JSON.parse(response.body))
           end
         end
 
-        action :top_communities, 'GET /communities/top-communities' do
+        action :top_communities, 'GET /rest/communities/top-communities' do
           handler(200) do |response|
             Dspace::Builders::ModelBuilder.build_communities(JSON.parse(response.body))
           end
         end
 
-        action :find, 'GET /communities/:id' do
+        action :find, 'GET /rest/communities/:id' do
           handler(200) do |response|
             Dspace::Community.new(JSON.parse(response.body))
           end
         end
-
-
-
       end
 
     end
