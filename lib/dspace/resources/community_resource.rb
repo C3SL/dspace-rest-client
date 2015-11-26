@@ -45,6 +45,21 @@ module Dspace
           handler(200, 201) { |response| true }
         end
 
+        action :create_subcommunity, 'POST /rest/communities/:id/communities' do
+          body { |object| JSON.generate(object.to_h) }
+          handler(200, 201) { |response| true }
+        end
+
+        action :create_collection, 'POST /rest/communities/:id/collections' do
+          body { |object| JSON.generate(object.to_h) }
+          handler(200, 201) { |response| true }
+        end
+
+        action :update, 'PUT /rest/communities/:id' do
+          body { |object| JSON.generate(object.to_h) }
+          handler(200, 201) { |response| true }
+        end
+
       end
     end
   end
