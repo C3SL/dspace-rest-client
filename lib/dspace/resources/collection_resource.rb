@@ -19,18 +19,6 @@ module Dspace
           end
         end
 
-        action :items, 'GET /rest/collections/:id/items' do
-          query_keys :expand, :limit, :offset
-          handler(200) do |response|
-            Dspace::Builders::ModelBuilder.build_(JSON.parse(response.body))
-          end
-        end
-
-        action :create_item, 'POST /rest/collections/:id/items' do
-          body { |object| JSON.generate(object.to_h) }
-          handler(200, 201) { |response| true }
-        end
-
         action :update, 'PUT /rest/collections/:id' do
           body { |object| JSON.generate(object.to_h) }
           handler(200, 201) { |response| true }
@@ -42,6 +30,18 @@ module Dspace
 
         action :delete_item, 'DELETE /rest/collections/:id/items/:item_id' do
           handler(200, 201, 204) { |response| true }
+        end
+
+        action :items, 'GET /rest/collections/:id/items' do
+          query_keys :expand, :limit, :offset
+          handler(200) do |response|
+            Dspace::Builders::ModelBuilder.build_(JSON.parse(response.body))
+          end
+        end
+
+        action :create_item, 'POST /rest/collections/:id/items' do
+          body { |object| JSON.generate(object.to_h) }
+          handler(200, 201) { |response| true }
         end
 
       end
