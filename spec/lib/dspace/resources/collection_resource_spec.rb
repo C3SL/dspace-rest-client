@@ -7,10 +7,10 @@ RSpec.describe Dspace::Resources::CollectionResource, resource_kit: true do
 # > GET /collections/{collectionId} - Return collection with id.
 # > GET /collections/{collectionId}/items - Return all items of collection. Use the limit parameter to control items per response (default 100) and offset for paging.
 # > POST /collections/{collectionId}/items - Create posted item in collection. You must post an Item
-# POST /collections/find-collection - Find collection by passed name.
+# > POST /collections/find-collection - Find collection by passed name.
 # > PUT /collections/{collectionId} - Update collection. You must put Collection.
 # DELETE /collections/{collectionId} - Delete collection from DSpace.
-# DELETE /collections/{collectionId}/items/{itemId} - Delete item in collection.
+# > DELETE /collections/{collectionId}/items/{itemId} - Delete item in collection.
 
   it 'get all collection' do
     expect(resource).to have_action(:all).that_handles(200).at_path('/rest/collections').with_verb(:get) do |handled|
@@ -25,6 +25,12 @@ RSpec.describe Dspace::Resources::CollectionResource, resource_kit: true do
   end   
 
   it 'Update collection' do
+    expect(resource).to have_action(:delete).that_handles(200).at_path('/rest/collections/:id').with_verb(:delete) do |handled|
+      expect(handled).to eq(true)
+    end
+  end
+
+  it 'Delete collection' do
     expect(resource).to have_action(:update).that_handles(200).at_path('/rest/collections/:id').with_verb(:put) do |handled|
       expect(handled).to eq(true)
     end
@@ -38,7 +44,7 @@ RSpec.describe Dspace::Resources::CollectionResource, resource_kit: true do
     end 
 
     it 'Create an item' do
-      expect(resource).to have_action(:create_items).that_handles(200).at_path('/rest/collections/:id/items').with_verb(:post) do |handled|
+      expect(resource).to have_action(:create_item).that_handles(200).at_path('/rest/collections/:id/items').with_verb(:post) do |handled|
         expect(handled).to eq(true)
       end
     end 
