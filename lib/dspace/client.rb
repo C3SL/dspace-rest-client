@@ -26,11 +26,7 @@ module Dspace
     end
 
     def method_missing(name, *args, &block)
-      if self.class.resources.keys.include?(name)
-        resource(name)
-      else
-        super
-      end
+      resource(name) || super
     end
 
     def resources
