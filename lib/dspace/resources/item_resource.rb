@@ -44,6 +44,21 @@ module Dspace
           handler(200, 201, 204) { |response| true }
         end
 
+        action :add_metadata, 'POST /rest/items/:id/metadata' do
+          body { |objects| Dspace::Builders::HashBuilder.models2hash(objects) }
+          handler(200, 201) { |response| true }
+        end
+
+        action :add_bitstream, 'POST /rest/items/:id/bitstreams' do
+          body { |object| JSON.generate(object.to_h) }
+          handler(200, 201) { |response| true }
+        end
+
+        action :update_metadata, 'PUT /rest/items/:id/metadata' do
+          body { |object| JSON.generate(object.to_h) }
+          handler(200, 201) { |response| true }
+        end
+
       end
     end
   end
