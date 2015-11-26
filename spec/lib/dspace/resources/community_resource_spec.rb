@@ -22,7 +22,7 @@ RSpec.describe Dspace::Resources::CommunityResource, resource_kit: true do
   end
 
   it 'create a new top-level community' do
-    expect(resource).to have_action(:create).that_handles(200,201).at_path('/rest/communities').with_verb(:post) do |handled|
+    expect(resource).to have_action(:create).that_handles(200, 201).at_path('/rest/communities').with_verb(:post) do |handled|
       expect(handled).to eq(true)
     end
   end
@@ -42,24 +42,22 @@ RSpec.describe Dspace::Resources::CommunityResource, resource_kit: true do
     end
 
     it 'create a sub-community' do
-      expect(resource).to have_action(:create_subcommunity).that_handles(200,201).at_path('/rest/communities/:id/communities').with_verb(:post) do |handled|
+      expect(resource).to have_action(:create_subcommunity).that_handles(200, 201).at_path('/rest/communities/:id/communities').with_verb(:post) do |handled|
         expect(handled).to eq(true)
       end
     end
 
     it 'update a community' do
-      expect(resource).to have_action(:update).that_handles(200,201).at_path('/rest/communities/:id').with_verb(:put) do |handled|
+      expect(resource).to have_action(:update).that_handles(200, 201).at_path('/rest/communities/:id').with_verb(:put) do |handled|
+        expect(handled).to eq(true)
+      end
+    end
+
+    it 'create a collection' do
+      expect(resource).to have_action(:create_collection).that_handles(200, 201).at_path('/rest/communities/:id/collections').with_verb(:post) do |handled|
         expect(handled).to eq(true)
       end
     end
 
   end
-
-  #it 'handles a 201 with response body' do
-  #  expect(MyResourceClass).to handle_response(:create).with(status: 201, body: '{"users":[]}') do |handled|
-  #    expect(handled).to all(be_kind_of(User))
-  #  end
-  #end
-
-
 end
