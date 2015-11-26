@@ -60,6 +60,18 @@ module Dspace
           handler(200, 201) { |response| true }
         end
 
+        action :delete, 'DELETE /rest/communities/:id' do
+          handler(200, 201, 204) { |response| true }
+        end
+
+        action :delete_collection, 'DELETE /rest/communities/:id/collections/:collection_id' do
+          handler(200, 201, 204) { |response| true }
+        end
+
+        action :delete_subcommunity, 'DELETE /rest/communities/:id/communities/:subcommunity_id' do
+          handler(200, 201, 204) { |response| true }
+        end
+
       end
     end
   end

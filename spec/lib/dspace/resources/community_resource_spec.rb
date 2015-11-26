@@ -47,8 +47,6 @@ RSpec.describe Dspace::Resources::CommunityResource, resource_kit: true do
       end
     end
 
-
-
     it 'update a community' do
       expect(resource).to have_action(:update).that_handles(200,201).at_path('/rest/communities/:id').with_verb(:put) do |handled|
         expect(handled).to eq(true)
