@@ -9,7 +9,7 @@ RSpec.describe Dspace::Resources::CollectionResource, resource_kit: true do
 # > POST /collections/{collectionId}/items - Create posted item in collection. You must post an Item
 # > POST /collections/find-collection - Find collection by passed name.
 # > PUT /collections/{collectionId} - Update collection. You must put Collection.
-# DELETE /collections/{collectionId} - Delete collection from DSpace.
+# > DELETE /collections/{collectionId} - Delete collection from DSpace.
 # > DELETE /collections/{collectionId}/items/{itemId} - Delete item in collection.
 
   it 'get all collection' do
