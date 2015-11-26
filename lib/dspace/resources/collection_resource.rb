@@ -19,6 +19,15 @@ module Dspace
           end
         end
 
+        action :update, 'PUT /rest/collections/:id' do
+          body { |object| JSON.generate(object.to_h) }
+          handler(200, 201) { |response| true }
+        end
+
+        action :delete, 'DELETE /rest/collections/:id' do
+          handler(200, 201, 204) { |response| true }
+        end
+
       end
     end
   end
