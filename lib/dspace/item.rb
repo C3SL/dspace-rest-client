@@ -1,5 +1,3 @@
-require 'curb'
-
 module Dspace
   class Item
 

@@ -10,9 +10,15 @@ require_relative "dspace/builders/hash_builder"
 require_relative "dspace/builders/model_builder"
 require_relative "dspace/community"
 require_relative "dspace/collection"
+require_relative "dspace/item"
+require_relative "dspace/metadata"
+require_relative "dspace/bitstream"
+require_relative "dspace/policy"
 
 module Dspace
 
   class NotAuthorizedError < StandardError; end
+  class InvalidTokenError < StandardError; end
+  class InvalidCredentialsError < StandardError; end
 
 end
