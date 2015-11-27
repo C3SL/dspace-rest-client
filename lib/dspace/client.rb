@@ -11,7 +11,10 @@ module Dspace
 
     def connection
       Faraday.new(connection_options) do |req|
-        req.adapter :net_http
+        req.request :multipart
+        req.request :url_encoded
+        req.use Faraday::Response::Logger, Logger.new('faraday.log')
+        req.adapter :net_http_persistent
       end
     end
 
@@ -60,7 +63,8 @@ module Dspace
           url: @dspace_api || DSPACE_API,
           headers: {
               content_type: 'application/json',
-              'rest-dspace-token' => access_token.to_s
+              'rest-dspace-token' => access_token.to_s,
+              user_agent: "dspace-rest-client #{Dspace::VERSION}"
           }
       }
     end
