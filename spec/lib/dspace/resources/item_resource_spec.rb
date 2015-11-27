@@ -40,6 +40,18 @@ RSpec.describe Dspace::Resources::ItemResource, resource_kit: true do
         expect(handled).to all(be_kind_of(Dspace::Metadata))
       end
     end
+
+    it 'add item metadata' do
+      expect(resource).to have_action(:add_metadata).that_handles(200).at_path('/rest/items/:id/metadata').with_verb(:post) do |handled|
+        expect(handled).to aeq(true)
+      end
+    end
+
+    it 'add item bitstreams' do
+      expect(resource).to have_action(:add_bitstrem).that_handles(200, 201).at_path('/rest/items/:id/bitstreams').with_verb(:post) do |handled|
+        expect(handled).to eq(true)
+      end
+    end
     
     it 'find item bitstream' do
       expect(resource).to have_action(:bitstreams).that_handles(200).at_path('/rest/items/:id/bitstreams').with_verb(:get) do |handled|
