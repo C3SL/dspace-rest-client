@@ -20,11 +20,11 @@ module Dspace
 
     def self.resources
       {
-          items: ItemResource,
-          collections: CollectionResource,
-          communities: CommunityResource,
-          status: StatusResource,
-          authentication: AuthenticationResource
+          items: ::Dspace::Resources::ItemResource,
+          collections: ::Dspace::Resources::CollectionResource,
+          communities: ::Dspace::Resources::CommunityResource,
+          status: ::Dspace::Resources::StatusResource,
+          authentication: ::Dspace::Resources::AuthenticationResource
       }
     end
 
