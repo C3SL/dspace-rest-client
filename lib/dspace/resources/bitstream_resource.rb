@@ -30,11 +30,9 @@ module Dspace
           end
         end
 
-        #action :retrive, 'GET /rest/bitstreams/:id/retrieve' do
-        #  handler(200) do |response|
-        #    tmpfile = Tempfile.new([filename, extension])
-        #  end
-        #end
+        action :retrive, 'GET /rest/bitstreams/:id/retrieve' do
+          handler(200) { |response| response.body }
+        end
 
         action :delete, 'DELETE /rest/bitstreams/:id' do
           handler(200, 201, 204) { |response| true }
@@ -54,12 +52,18 @@ module Dspace
           handler(200, 201) { |response| true }
         end
 
-       # action :update_data, 'PUT /rest/bitstreams/:id/data' do
-       #   body { |object| JSON.generate(object.to_h) }
+        # action :update_data, 'PUT /rest/bitstreams/:id/data' do
+        #   body { |object| JSON.generate(object.to_h) }
         #  handler(200, 201) { |response| true }
-       # end
+        # end
 
       end
+
+      def retrieve(args={})
+        bitstream = ResourceKit::ActionInvoker.call(action(:find), self, id: args.fetch(:id))
+        Dspace::Builders::TempfileBuilder.build bitstream.name, ResourceKit::ActionInvoker.call(action(:retrive), self)
+      end
+
     end
   end
 end
