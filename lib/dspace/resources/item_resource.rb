@@ -50,8 +50,9 @@ module Dspace
         end
 
         action :add_bitstream, 'POST /rest/items/:id/bitstreams' do
-          body { |object| JSON.generate(object.to_h) }
-          handler(200, 201) { |response| true }
+          query_keys :name, :description
+          body { |upload_io| upload_io }
+          handler(200) { |response| Dspace::Bitstream.new(JSON.parse(response.body)) }
         end
 
         action :update_metadata, 'PUT /rest/items/:id/metadata' do

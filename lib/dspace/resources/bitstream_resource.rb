@@ -52,10 +52,10 @@ module Dspace
           handler(200, 201) { |response| true }
         end
 
-        # action :update_data, 'PUT /rest/bitstreams/:id/data' do
-        #   body { |object| JSON.generate(object.to_h) }
-        #  handler(200, 201) { |response| true }
-        # end
+        action :update_data, 'PUT /rest/bitstreams/:id/data' do
+          body { |upload_io| upload_io }
+          handler(200, 201) { |response| true }
+        end
 
       end
 
