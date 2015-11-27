@@ -8,8 +8,8 @@ RSpec.describe Dspace::Resources::ItemResource, resource_kit: true do
 # > GET /items/{item id}/metadata - Return item metadata.
 # > GET /items/{item id}/bitstreams - Return item bitstreams.  Use the limit parameter to control items per response (default 100) and offset for paging.
 # POST /items/find-by-metadata-field - Find items by metadata entry. You must post a MetadataEntry.  DS-2501 - wrong SQL in REST /items/find-by-metadata-field CLOSED
-# POST /items/{item id}/metadata - Add metadata to item. You must post an array of MetadataEntry
-# POST /items/{item id}/bitstreams - Add bitstream to item. You must post a Bitstream
+# > POST /items/{item id}/metadata - Add metadata to item. You must post an array of MetadataEntry
+# > POST /items/{item id}/bitstreams - Add bitstream to item. You must post a Bitstream
 # PUT /items/{item id}/metadata - Update metadata in item. You must put a MetadataEntry
 # > DELETE /items/{item id} - Delete item.
 # > DELETE /items/{item id}/metadata - Clear item metadata.
