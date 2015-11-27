@@ -2,7 +2,7 @@ require "forwardable"
 require "json"
 require "resource_kit"
 require "faraday"
-require "active_support"
+require "active_support/all"
 
 require_relative "dspace/version"
 require_relative "dspace/resources/community_resource"

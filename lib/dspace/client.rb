@@ -7,13 +7,14 @@ module Dspace
     def initialize(options = {})
       @access_token = options.with_indifferent_access[:access_token]
       @dspace_api = options.with_indifferent_access[:dspace_api]
+      @logger = options.with_indifferent_access[:logger]
     end
 
     def connection
       Faraday.new(connection_options) do |req|
         req.request :multipart
         req.request :url_encoded
-        req.use Faraday::Response::Logger, Logger.new('faraday.log')
+        req.use(Faraday::Response::Logger, @logger) unless @logger.nil?
         req.adapter :net_http_persistent
       end
     end
