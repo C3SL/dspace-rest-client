@@ -35,7 +35,7 @@ module Dspace
         action :items, 'GET /rest/collections/:id/items' do
           query_keys :expand, :limit, :offset
           handler(200) do |response|
-            Dspace::Builders::ModelBuilder.build_(JSON.parse(response.body))
+            Dspace::Builders::ModelBuilder.build_items(JSON.parse(response.body))
           end
         end
 
