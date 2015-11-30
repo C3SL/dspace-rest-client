@@ -4,7 +4,7 @@ module Dspace
 
       resources do
         default_handler(400) { raise InvalidTokenError, 'Invalid access token.' }
-        default_handler(403) { raise InvalidCredentialsError, 'Invalid access token.' }
+        default_handler(403) { raise InvalidCredentialsError, 'Wrong Dspace credentials.' }
 
         action :login, 'POST /rest/login' do
           body { |email, password| JSON.generate({email: email, password: password}) }
