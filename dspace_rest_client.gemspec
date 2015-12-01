@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'dspace/version'
 
 Gem::Specification.new do |spec|
-  spec.date = '2015-11-23'
+  spec.date = '2015-12-01'
   spec.name = "dspace_rest_client"
   spec.version = Dspace::VERSION
   spec.authors = ["Mauricio Giacomini Girardello", "Lucas Ernesto Kindinger", "Bruno N. Zanette", "Mateus Rambo Strey"]
