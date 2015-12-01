@@ -1,15 +1,11 @@
-# Mark
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/mark`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+# DSpace REST Client
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'mark'
+gem 'dspace_rest_client'
 ```
 
 And then execute:
@@ -18,19 +14,32 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install mark
+    $ gem install dspace_rest_client
 
-## Usage
+## Get started
 
-TODO: Write usage instructions here
+Some requests requires user authentication.
+
+```ruby
+require 'dspace'
+client = Dspace::Client.new(dspace_api: 'https://demo.dspace.org/')
+
+if !client.is_running?
+  raise 'Can\'t connect to DSpace API.'
+end
+
+# authenticate
+client.login 'dspacedemo+admin@gmail.com', 'dspace'
+
+# create an community
+client.communities.create(Dspace::Community.new({'name' => 'Testando'}))
+```
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+After checking out the repo, run `bin/setup` to install dependencies. Then, run `rspec spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/mark. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome. This project is intended to be a safe, welcoming space for collaboration.
 

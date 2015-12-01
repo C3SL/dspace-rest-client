@@ -36,8 +36,8 @@ RSpec.describe Dspace::Resources::ItemResource, resource_kit: true do
     end
 
     it 'add item bitstreams' do
-      expect(resource).to have_action(:add_bitstream).that_handles(200, 201).at_path('/rest/items/:id/bitstreams').with_verb(:post) do |handled|
-        expect(handled).to eq(true)
+      expect(resource).to have_action(:add_bitstream).that_handles(200).at_path('/rest/items/:id/bitstreams').with_verb(:post) do |handled|
+        expect(handled).to be_kind_of(Dspace::Bitstream)
       end
     end
 
