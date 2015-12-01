@@ -21,6 +21,12 @@ RSpec.describe Dspace::Resources::BitstreamResource, resource_kit: true do
     end
   end
 
+  it 'retrive bitstream' do
+    expect(resource).to have_action(:retrieve).that_handles(200).at_path('/rest/bitstreams/:id/retrieve').with_verb(:get)
+
+    #TODO: mock actions expectations for test if retrieve method returns a Tempfile
+  end
+
   context 'Bitstream scope' do
 
     it 'find bitstream policy' do

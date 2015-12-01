@@ -25,7 +25,7 @@ module Dspace
           end
         end
 
-        action :retrive, 'GET /rest/bitstreams/:id/retrieve' do
+        action :retrieve, 'GET /rest/bitstreams/:id/retrieve' do
           handler(200) { |response| response.body }
         end
 
@@ -55,7 +55,7 @@ module Dspace
 
       def retrieve(args={})
         bitstream = ResourceKit::ActionInvoker.call(action(:find), self, id: args.fetch(:id))
-        Dspace::Builders::TempfileBuilder.build(bitstream.name, ResourceKit::ActionInvoker.call(action(:retrive), self))
+        Dspace::Builders::TempfileBuilder.build(bitstream.name, ResourceKit::ActionInvoker.call(action(:retrieve), self))
       end
 
     end
