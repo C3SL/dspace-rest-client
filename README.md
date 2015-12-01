@@ -36,8 +36,10 @@ client.communities.create(Dspace::Community.new({'name' => 'Testando'}))
 
 # get a bitstream and your file
 bitstream = client.bitstreams.find(id: 20, expand: 'parent')
-file = client.bitstreams.retrieve(id: 20)
+tmp_file = client.bitstreams.retrieve(id: 20) #<Tempfile:/tmp/..._teste.jpg>
 ```
+
+To see more examples, visit our Wiki.
 
 ## Development
 
