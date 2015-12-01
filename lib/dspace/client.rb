@@ -68,6 +68,7 @@ module Dspace
           },
           headers: {
               content_type: 'application/json',
+              accept: 'application/json',
               'rest-dspace-token' => access_token.to_s,
               user_agent: "dspace-rest-client #{Dspace::VERSION}"
           }
