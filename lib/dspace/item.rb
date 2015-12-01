@@ -1,5 +1,6 @@
 module Dspace
   class Item
+    include Dspace::Builders::HashBuilder
 
     attr_accessor :name, :archived, :withdrawn
 
@@ -55,12 +56,6 @@ module Dspace
 
     def reset_metadata
       @metadata = []
-    end
-
-    private
-
-    def obj2hash(list)
-      Dspace::Builders::HashBuilder.models2hash list
     end
 
   end

@@ -20,8 +20,8 @@ module Dspace
       @short_description = args['shortDescription']
       @sidebar_text = args['sidebarText']
       @count_items = args['countItems']
-      @sub_communities = Dspace::Builders::ModelBuilder.build_communities(args['subcommunities'])
-      @collections = Dspace::Builders::ModelBuilder.build_collections(args['collections'])
+      @sub_communities = Dspace::Builders::ModelBuilder.build_communities(args['subcommunities']) unless args['subcommunities'].nil?
+      @collections = Dspace::Builders::ModelBuilder.build_collections(args['collections']) unless args['collections'].nil?
       @expand = args['expand']
     end
 
@@ -48,7 +48,7 @@ module Dspace
     private
 
     def obj2hash(list)
-      Dspace::Builders::HashBuilder.models2hash list
+      Dspace::Builders::HashBuilder.models2hash list if list.is_a? Array
     end
 
   end

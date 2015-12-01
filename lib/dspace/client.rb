@@ -62,6 +62,9 @@ module Dspace
     def connection_options
       {
           url: @dspace_api || DSPACE_API,
+          ssl: {
+              verify: false
+          },
           headers: {
               content_type: 'application/json',
               'rest-dspace-token' => access_token.to_s,

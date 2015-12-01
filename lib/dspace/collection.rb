@@ -1,5 +1,6 @@
 module Dspace
   class Collection
+    include Dspace::Builders::HashBuilder
 
     attr_accessor :name, :logo, :license, :copyright_text,
                   :introductory_text, :short_description, :sidebar_text
@@ -47,12 +48,6 @@ module Dspace
           numberItems: @number_items,
           expand: @expand
       }
-    end
-
-    private
-
-    def obj2hash(list)
-      Dspace::Builders::HashBuilder.models2hash list
     end
 
   end

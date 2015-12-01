@@ -1,5 +1,6 @@
 module Dspace
   class Bitstream
+    include Dspace::Builders::HashBuilder
 
     attr_accessor :name, :bundle_name,
                   :description, :format, :mime_type
