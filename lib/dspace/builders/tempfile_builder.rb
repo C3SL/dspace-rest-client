@@ -3,7 +3,7 @@ module Dspace
     module TempfileBuilder
 
       def self.build(filename, contents = nil)
-        file = Tempfile.new([sanitize_filename(name), File.extname(name)]).tap do |f|
+        file = Tempfile.new([sanitize_filename(filename), File.extname(filename)]).tap do |f|
           f.write contents
           f.close
         end

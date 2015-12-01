@@ -21,6 +21,7 @@ module Dspace
 
     def self.resources
       {
+          bitstreams: ::Dspace::Resources::BitstreamResource,
           items: ::Dspace::Resources::ItemResource,
           collections: ::Dspace::Resources::CollectionResource,
           communities: ::Dspace::Resources::CommunityResource,

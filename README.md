@@ -33,6 +33,10 @@ client.login 'dspacedemo+admin@gmail.com', 'dspace'
 
 # create an community
 client.communities.create(Dspace::Community.new({'name' => 'Testando'}))
+
+# get a bitstream and your file
+bitstream = client.bitstreams.find(id: 20, expand: 'parent')
+file = client.bitstreams.retrieve(id: 20)
 ```
 
 ## Development

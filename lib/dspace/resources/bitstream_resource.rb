@@ -2,11 +2,6 @@ module Dspace
   module Resources
     class BitstreamResource < ResourceKit::Resource
 
-
-      # PUT /bitstreams/{bitstream id}/data - Update data/file of bitstream. You must put the data
-      # PUT /bitstreams/{bitstream id} - Update metadata of bitstream. You must put a Bitstream, does not alter the file/data
-
-
       resources do
         default_handler(401) { raise NotAuthorizedError, 'This request requires authentication' }
 
@@ -56,12 +51,11 @@ module Dspace
           body { |upload_io| upload_io }
           handler(200, 201) { |response| true }
         end
-
       end
 
       def retrieve(args={})
         bitstream = ResourceKit::ActionInvoker.call(action(:find), self, id: args.fetch(:id))
-        Dspace::Builders::TempfileBuilder.build bitstream.name, ResourceKit::ActionInvoker.call(action(:retrive), self)
+        Dspace::Builders::TempfileBuilder.build(bitstream.name, ResourceKit::ActionInvoker.call(action(:retrive), self))
       end
 
     end
