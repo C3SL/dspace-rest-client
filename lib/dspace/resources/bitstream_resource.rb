@@ -37,18 +37,18 @@ module Dspace
           handler(200, 201, 204) { |response| true }
         end
 
-        action :add_policy, 'POST /rest/bitstreams/:id/policy ' do
+        action :add_policy, 'POST /rest/bitstreams/:id/policy' do
           body { |object| JSON.generate(object.to_h) }
           handler(200, 201) { |response| true }
         end
 
-        action :update, 'PUT /rest/bitstreams/:id ' do
+        action :update, 'PUT /rest/bitstreams/:id' do
           body { |object| JSON.generate(object.to_h) }
           handler(200, 201) { |response| true }
         end
 
         action :update_data, 'PUT /rest/bitstreams/:id/data' do
-          body { |upload_io| upload_io }
+          body { |file| Base64.encode64(file.read) }
           handler(200, 201) { |response| true }
         end
       end
