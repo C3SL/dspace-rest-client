@@ -37,6 +37,14 @@ client.communities.create(Dspace::Community.new({'name' => 'Testando'}))
 # get a bitstream and your file
 bitstream = client.bitstreams.find(id: 20, expand: 'parent')
 tmp_file = client.bitstreams.retrieve(id: 20) #<Tempfile:/tmp/..._teste.jpg>
+
+# creating a new bitstream for some item
+file = File.new('/your/path/Pictures/Celular/some_book.pdf', 'r')
+bitstream = client.items.add_bitstream(file, id: 11, name: 'some_book.pdf', description: 'testing upload a pdf book')
+
+# updating bitstream metadata
+bitstream.name = 'new_book_name.pdf'
+client.bitstreams.update(bitstream, id: bitstream.id)
 ```
 
 To see more examples, visit our Wiki.
@@ -48,4 +56,3 @@ After checking out the repo, run `bin/setup` to install dependencies. Then, run 
 ## Contributing
 
 Bug reports and pull requests are welcome. This project is intended to be a safe, welcoming space for collaboration.
-
