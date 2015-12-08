@@ -13,8 +13,8 @@ Gem::Specification.new do |spec|
   spec.description = 'DSpace REST-API Client for Ruby! Implements all DSpace REST-API endpoints requests.'
   spec.homepage = 'https://gitlab.c3sl.ufpr.br/c3sl/dspace-rest-client'
   spec.license = 'GNU - General Public License'
-  spec.test_files = `git ls-files -z test/`.split("\0")
-  spec.files = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
+  spec.test_files = `git ls-files -z spec/`.split("\0")
+  spec.files = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(spec)/}) }
   spec.executables = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
