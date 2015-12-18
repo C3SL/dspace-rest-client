@@ -3,8 +3,8 @@ module Dspace
     module TempfileBuilder
 
       def self.build(filename, contents = nil)
-        file = Tempfile.new([sanitize_filename(filename), File.extname(filename)]).tap do |f|
-          f.write contents.force_encoding("UTF-8")
+        file = Tempfile.new([sanitize_filename(filename), File.extname(filename)], encoding: 'ascii-8bit').tap do |f|
+          f.write contents
           f.close
         end
       end
