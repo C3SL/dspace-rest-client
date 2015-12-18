@@ -4,7 +4,7 @@ module Dspace
 
       def self.build(filename, contents = nil)
         file = Tempfile.new([sanitize_filename(filename), File.extname(filename)]).tap do |f|
-          f.write contents
+          f.write contents.force_encoding("UTF-8")
           f.close
         end
       end
