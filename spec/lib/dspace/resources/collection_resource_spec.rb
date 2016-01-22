@@ -36,7 +36,7 @@ RSpec.describe Dspace::Resources::CollectionResource, resource_kit: true do
 
     it 'create an item' do
       expect(resource).to have_action(:create_item).that_handles(200).at_path('/rest/collections/:id/items').with_verb(:post) do |handled|
-        expect(handled).to eq(true)
+        expect(handled).to be_kind_of(Dspace::Item)
       end
     end 
 
