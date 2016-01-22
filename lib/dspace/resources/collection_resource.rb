@@ -41,7 +41,7 @@ module Dspace
 
         action :create_item, 'POST /rest/collections/:id/items' do
           body { |object| JSON.generate(object.to_h) }
-          handler(200, 201) { |response| true }
+          handler(200, 201) { |response| Dspace::Item.new(JSON.parse(response.body)) }
         end
 
       end

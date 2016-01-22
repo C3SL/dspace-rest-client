@@ -3,7 +3,7 @@ module Dspace
     module ModelBuilder
 
       def self.build_communities(communities=[])
-        return communities if communities.nil?
+        return communities unless communities.is_a? Array
         colls = []
         communities.each do |c|
           colls << Dspace::Community.new(c)
@@ -12,7 +12,7 @@ module Dspace
       end
 
       def self.build_collections(collections=[])
-        return collections if collections.nil?
+        return collections unless collections.is_a? Array
         colls = []
         collections.each do |c|
           colls << Dspace::Collection.new(c)
@@ -21,7 +21,7 @@ module Dspace
       end
 
       def self.build_items(items=[])
-        return items if items.nil?
+        return items unless items.is_a? Array
         colls = []
         items.each do |c|
           colls << Dspace::Item.new(c)
@@ -30,7 +30,7 @@ module Dspace
       end
 
       def self.build_bitstreams(bitstreams=[])
-        return bitstreams if bitstreams.nil?
+        return bitstreams unless bitstreams.is_a? Array
         colls = []
         bitstreams.each do |c|
           colls << Dspace::Bitstream.new(c)
@@ -39,7 +39,7 @@ module Dspace
       end
 
       def self.build_metadatas(metadatas=[])
-        return metadatas if metadatas.nil?
+        return metadatas unless metadatas.is_a? Array
         colls = []
         metadatas.each do |c|
           colls << Dspace::Metadata.new(c)
@@ -48,12 +48,20 @@ module Dspace
       end
 
       def self.build_policies(policies=[])
-        return policies if policies.nil?
+        return policies unless policies.is_a? Array
         colls = []
         policies.each do |c|
           colls << Dspace::Policy.new(c)
         end
         colls
+      end
+
+      def self.models2hash(list)
+        if list.is_a? Array
+          list.map do |m|
+            m.to_h
+          end
+        end
       end
 
     end
