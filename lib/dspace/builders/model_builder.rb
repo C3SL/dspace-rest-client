@@ -56,6 +56,14 @@ module Dspace
         colls
       end
 
+      def self.models2hash(list)
+        if list.is_a? Array
+          list.map do |m|
+            m.to_h
+          end
+        end
+      end
+
     end
   end
 end
