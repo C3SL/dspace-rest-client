@@ -50,8 +50,8 @@ module Dspace
         end
 
         action :add_bitstream, 'POST /rest/items/:id/bitstreams' do
-          query_keys :name, :description
-          body { |file| Base64.encode64(file.read) }
+          query_keys :name, :description, :bundle_name
+          body { |file| file.read }
           handler(200) { |response| Dspace::Bitstream.new(JSON.parse(response.body)) }
         end
 
