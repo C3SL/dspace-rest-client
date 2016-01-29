@@ -6,7 +6,7 @@ module Dspace
 
     attr_reader :id, :handle, :type, :link, :last_modified, :parent_collection,
                 :parent_collection_list, :parent_community_list, :bit_streams,
-                :expand, :metadata
+                :expand, :limit, :offset, :metadata
 
     def initialize args
       @id = args['id']
@@ -22,6 +22,8 @@ module Dspace
       @archived = args['archived']
       @withdrawn = args['withdrawn']
       @expand = args['expand']
+      @limit = args['limit']
+      @offset = args['offset']
       @metadata = Dspace::Builders::ModelBuilder.build_metadatas(args['metadata'])
     end
 
@@ -40,6 +42,8 @@ module Dspace
           archived: @archived,
           withdrawn: @withdrawn,
           expand: @expand,
+          limit: @limit,
+          offset: @offset,
           metadata: obj2hash(@metadata)
       }
     end

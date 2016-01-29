@@ -6,7 +6,7 @@ module Dspace
         default_handler(401) { raise NotAuthorizedError, 'This request requires authentication' }
 
         action :all, 'GET /rest/items' do
-          query_keys :expand
+          query_keys :expand, :limit, :offset
           handler(200) do |response|
             Dspace::Builders::ModelBuilder.build_items(JSON.parse(response.body))
           end
