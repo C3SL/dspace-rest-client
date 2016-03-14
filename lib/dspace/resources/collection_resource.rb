@@ -6,7 +6,7 @@ module Dspace
         default_handler(401) { raise NotAuthorizedError, 'This request requires authentication' }
 
         action :all, 'GET /rest/collections' do
-          query_keys :expand
+          query_keys :expand, :limit, :offset
           handler(200) do |response|
             Dspace::Builders::ModelBuilder.build_collections(JSON.parse(response.body))
           end
