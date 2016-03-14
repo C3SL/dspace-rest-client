@@ -56,7 +56,16 @@ module Dspace
       def retrieve(args={})
         bitstreams_path = args.fetch(:bitstreams_path, nil)
         bitstream = ResourceKit::ActionInvoker.call(action(:find), self, id: args.fetch(:id))
-        Dspace::Builders::TempfileBuilder.build(bitstream.name, ResourceKit::ActionInvoker.call(action(:retrieve), self, id: bitstream.id), bitstreams_path)
+        return nil if bitstream.is_a? String
+        Dspace::Builders::TempfileBuilder.build(bitstream_filename(bitstream), ResourceKit::ActionInvoker.call(action(:retrieve), self, id: bitstream.id), bitstreams_path)
+      end
+
+      private
+
+      def bitstream_filename(bitstream)
+        name = bitstream.try(:name)
+        name = bitstream.id.to_s if !name || name.empty?
+        name
       end
 
     end
