@@ -1,0 +1,20 @@
+stages:
+  - test
+
+before_script:
+  - apt-get update -y
+  # - apt-get install default-jre postgresql-client -y
+  # official way to provide password to psql: http://www.postgresql.org/docs/9.3/static/libpq-envars.html
+  # - export PGPASSWORD=$POSTGRES_PASSWORD
+  # - psql -h "postgres" -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c "SELECT 'OK' AS status;"
+  # gems
+  - gem install bundler
+  - bundle install --jobs $(nproc) --path=/cache/bundler
+
+test:
+  stage: test
+  script:
+    - bundle exec rspec spec
+    - rake test
+  tags:
+    - ruby
