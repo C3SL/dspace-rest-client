@@ -19,6 +19,13 @@ module Dspace
           end
         end
 
+        action :find_by_metadata, 'POST /rest/items/find-by-metadata-field' do
+          body { |object| JSON.generate(object.to_h) }
+          handler(200) do |response|
+            Dspace::Builders::ModelBuilder.build_items(JSON.parse(response.body))
+          end
+        end
+
         action :metadata, 'GET /rest/items/:id/metadata' do
           handler(200) do |response|
             Dspace::Builders::ModelBuilder.build_metadatas(JSON.parse(response.body))
