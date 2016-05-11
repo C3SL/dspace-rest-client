@@ -16,6 +16,7 @@ module Dspace
         filename.gsub!(/^.*(\\|\/)/, '')
         # Strip out the non-ascii character
         filename.gsub!(/[^0-9A-Za-z.\-]/, '_')
+        filename
       end
 
     end
