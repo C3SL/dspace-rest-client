@@ -9,7 +9,7 @@ module Dspace
                 :expand, :metadata
 
     def initialize args
-      @id = args['id']
+      @id = args['id'] || args['uuid']
       @name = args['name']
       @handle = args['handle']
       @type = args['type']

@@ -10,7 +10,7 @@ module Dspace
                 :sequence_id, :policies
 
     def initialize args
-      @id = args['id']
+      @id = args['id'] || args['uuid']
       @name = args['name']
       @type = args['type']
       @link = args['link']

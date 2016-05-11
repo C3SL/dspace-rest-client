@@ -10,7 +10,7 @@ module Dspace
                 :number_items, :expand
 
     def initialize args
-      @id = args['id']
+      @id = args['id'] || args['uuid']
       @name = args['name']
       @handle = args['handle']
       @type = args['type']
