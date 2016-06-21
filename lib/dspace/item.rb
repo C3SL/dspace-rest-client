@@ -22,7 +22,7 @@ module Dspace
       @archived = args['archived']
       @withdrawn = args['withdrawn']
       @expand = args['expand']
-      @metadata = Dspace::Builders::ModelBuilder.build_metadatas(args['metadata'])
+      @metadata = Dspace::Builders::ModelBuilder.build_metadatas(args['metadata']) || []
     end
 
     def to_h
