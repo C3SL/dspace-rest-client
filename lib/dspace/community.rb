@@ -48,7 +48,7 @@ module Dspace
     private
 
     def obj2hash(list)
-      Dspace::Builders::HashBuilder.models2hash list if list.is_a? Array
+      Dspace::Builders::ModelBuilder.models2hash list if list.is_a? Array
     end
 
   end
