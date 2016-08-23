@@ -8,7 +8,7 @@ module Dspace
                 :parent_collection_list, :parent_community_list, :bit_streams,
                 :expand, :metadata
 
-    def initialize args
+    def initialize(args={})
       @id = args['id'] || args['uuid']
       @name = args['name']
       @handle = args['handle']

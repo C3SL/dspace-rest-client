@@ -9,7 +9,7 @@ module Dspace
                 :parent_community_list, :items,
                 :number_items, :expand
 
-    def initialize args
+    def initialize(args={})
       @id = args['id'] || args['uuid']
       @name = args['name']
       @handle = args['handle']

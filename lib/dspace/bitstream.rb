@@ -9,7 +9,7 @@ module Dspace
                 :parent_object, :retrieve_link, :check_sum,
                 :sequence_id, :policies
 
-    def initialize args
+    def initialize(args={})
       @id = args['id'] || args['uuid']
       @name = args['name']
       @type = args['type']
