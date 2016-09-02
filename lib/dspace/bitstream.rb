@@ -14,7 +14,7 @@ module Dspace
       @name = args['name']
       @type = args['type']
       @link = args['link']
-      @bundle_name = args['bundleName']
+      @bundle_name = args['bundleName'] || args['bundle_name']
       @description = args['description']
       @format = args['format']
       @mime_type = args['mimeType']

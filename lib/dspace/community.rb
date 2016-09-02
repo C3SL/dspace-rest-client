@@ -15,10 +15,10 @@ module Dspace
       @link = args['link']
       @logo = args['logo']
       @parent_community = Dspace::Community.new(args['parentCommunity']) unless args['parentCommunity'].nil?
-      @copyright_text = args['copyrightText']
-      @introductory_text = args['introductoryText']
-      @short_description = args['shortDescription']
-      @sidebar_text = args['sidebarText']
+      @copyright_text = args['copyrightText'] || args['copyright_text']
+      @introductory_text = args['introductoryText'] || args['introductory_text']
+      @short_description = args['shortDescription'] || args['short_description']
+      @sidebar_text = args['sidebarText'] || args['sidebar_text']
       @count_items = args['countItems']
       @sub_communities = Dspace::Builders::ModelBuilder.build_communities(args['subcommunities']) unless args['subcommunities'].nil?
       @collections = Dspace::Builders::ModelBuilder.build_collections(args['collections']) unless args['collections'].nil?
