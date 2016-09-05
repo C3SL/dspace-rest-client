@@ -4,6 +4,7 @@ module Dspace
 
       resources do
         default_handler(401) { raise NotAuthorizedError, 'This request requires authentication' }
+        default_handler { |response| raise StandardError, "#{response}" }
 
         action :all, 'GET /rest/communities' do
           query_keys :expand, :limit, :offset
