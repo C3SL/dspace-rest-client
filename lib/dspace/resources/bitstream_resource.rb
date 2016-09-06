@@ -49,7 +49,7 @@ module Dspace
         end
 
         action :update_data, 'PUT /rest/bitstreams/:id/data' do
-          body { |file| Base64.encode64(file.read) }
+          body { |file| file.read }
           handler(200, 201) { |response| true }
         end
       end
