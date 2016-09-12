@@ -8,7 +8,7 @@ module Dspace
         default_handler { |response| raise StandardError, "#{response.inspect}" }
 
         action :login, 'POST /rest/login' do
-          body { |email, password| {email: email, password: password}.to_query }
+          query_keys :email, :password
           handler(200, 201) { |response| response.inspect }
         end
 

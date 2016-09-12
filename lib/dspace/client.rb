@@ -43,7 +43,7 @@ module Dspace
     end
 
     def login(email, password)
-      @access_token = resource(:authentication).login(email, password)
+      @access_token = resource(:authentication).login(email: email, password: password)
     end
 
     def logout
