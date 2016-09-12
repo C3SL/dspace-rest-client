@@ -9,12 +9,16 @@ module Dspace
 
         action :login, 'POST /rest/login' do
           query_keys :email, :password
-          handler(200, 201) { |response| response.inspect }
+          handler(200, 201) { |response| response['set-cookie'] }
         end
 
         action :logout, 'POST /rest/logout' do
           body { |object| JSON.generate(object.to_h) }
           handler(200, 201, 203, 204) { |response| true }
+        end
+
+        action :status, 'GET /rest/status' do
+          handler(200, 201, 203, 204) { |response| response.body }
         end
       end
 

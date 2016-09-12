@@ -4,6 +4,7 @@ gemspec
 gem 'json'
 gem 'resource_kit'
 gem 'faraday'
+gem 'faraday-cookie_jar'
 gem 'net-http-persistent'
 gem 'activesupport'
 

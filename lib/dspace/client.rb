@@ -1,3 +1,5 @@
+require 'faraday-cookie_jar'
+
 module Dspace
   class Client
     DSPACE_API = 'https://demo.dspace.org'
@@ -12,6 +14,7 @@ module Dspace
 
     def connection
       Faraday.new(connection_options) do |req|
+        req.use :cookie_jar
         req.request :multipart
         req.request :url_encoded
         req.use(Faraday::Response::Logger, @logger) unless @logger.nil?
@@ -51,6 +54,10 @@ module Dspace
       @access_token = nil
     end
 
+    def status
+      resource(:authentication).status
+    end
+
     private
 
     def resource(name)
@@ -62,16 +69,15 @@ module Dspace
 
     def connection_options
       {
-          url: @dspace_api || DSPACE_API,
-          ssl: {
-              verify: false
-          },
-          headers: {
-              content_type: 'application/json',
-              accept: 'application/json',
-              'rest-dspace-token' => access_token.to_s,
-              user_agent: "dspace-rest-client #{Dspace::VERSION}"
-          }
+        url: @dspace_api || DSPACE_API,
+        ssl: {
+          verify: false
+        },
+        headers: {
+          content_type: 'application/json',
+          accept: 'application/json',
+          user_agent: "dspace-rest-client #{Dspace::VERSION}"
+        }
       }
     end
   end
