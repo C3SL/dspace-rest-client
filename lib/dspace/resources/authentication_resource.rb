@@ -8,8 +8,8 @@ module Dspace
         default_handler { |response| raise StandardError, "#{response.inspect}" }
 
         action :login, 'POST /rest/login' do
-          body { |email, password| JSON.generate({email: email, password: password}) }
-          handler(200, 201) { |response| access_token = response.body }
+          body { |email, password| {email: email, password: password}.to_query }
+          handler(200, 201) { |response| response.inspect }
         end
 
         action :logout, 'POST /rest/logout' do
