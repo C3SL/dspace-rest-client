@@ -3,7 +3,7 @@ module Dspace
     class StatusResource < ResourceKit::Resource
 
       resources do
-        default_handler { |response| raise StandardError, "#{response}" }
+        default_handler { |response| raise StandardError, "#{response.inspect}" }
 
         action :test, 'GET /rest/test' do
           handler(200, 201) { |response| true }

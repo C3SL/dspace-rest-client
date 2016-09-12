@@ -4,7 +4,7 @@ module Dspace
 
       resources do
         default_handler(401) { raise NotAuthorizedError, 'This request requires authentication' }
-        default_handler { |response| raise StandardError, "#{response}" }
+        default_handler { |response| raise StandardError, "#{response.inspect}" }
 
         action :all, 'GET /rest/items' do
           query_keys :expand, :limit, :offset
