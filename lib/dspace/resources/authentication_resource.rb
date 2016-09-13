@@ -4,7 +4,7 @@ module Dspace
 
       resources do
         default_handler(400) { raise InvalidTokenError, 'Invalid access token.' }
-        default_handler(403) { raise InvalidCredentialsError, 'Wrong Dspace credentials.' }
+        default_handler(401,403) { raise InvalidCredentialsError, 'Wrong Dspace credentials.' }
         default_handler { |response| raise StandardError, "#{response.inspect}" }
 
         action :login, 'POST /rest/login' do
