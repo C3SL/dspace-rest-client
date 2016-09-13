@@ -2,7 +2,7 @@ module Dspace
   class Client
     DSPACE_API = 'https://demo.dspace.org'
 
-    attr_reader :access_token
+    attr_accessor :access_token
 
     def initialize(options = {})
       @access_token = options.with_indifferent_access[:access_token]
