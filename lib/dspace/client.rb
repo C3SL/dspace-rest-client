@@ -1,5 +1,3 @@
-require 'faraday-cookie_jar'
-
 module Dspace
   class Client
     DSPACE_API = 'https://demo.dspace.org'
