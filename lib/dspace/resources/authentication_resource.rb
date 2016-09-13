@@ -17,9 +17,6 @@ module Dspace
           handler(200, 201, 203, 204) { |response| true }
         end
 
-        action :status, 'GET /rest/status' do
-          handler(200, 201, 203, 204) { |response| response.body }
-        end
       end
 
     end

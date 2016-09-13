@@ -27,7 +27,7 @@ module Dspace
 
     def to_h
       {
-          id: @id,
+          uuid: @id,
           name: @name,
           handle: @handle,
           type: @type,

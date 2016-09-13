@@ -14,7 +14,7 @@ module Dspace
 
     def connection
       Faraday.new(connection_options) do |req|
-        req.use :cookie_jar
+        req.response :logger
         req.request :multipart
         req.request :url_encoded
         req.use(Faraday::Response::Logger, @logger) unless @logger.nil?
@@ -45,6 +45,10 @@ module Dspace
       resource(:status).test
     end
 
+    def status
+      resource(:status).status
+    end
+
     def login(email, password)
       @access_token = resource(:authentication).login(email: email, password: password)
     end
@@ -54,16 +58,11 @@ module Dspace
       @access_token = nil
     end
 
-    def status
-      resource(:authentication).status
-    end
-
     private
 
     def resource(name)
       if self.class.resources.keys.include?(name)
-        resources[name] ||= self.class.resources[name].new(connection: connection)
-        resources[name]
+        resources[name] = self.class.resources[name].new(connection: connection)
       end
     end
 
@@ -76,7 +75,8 @@ module Dspace
         headers: {
           content_type: 'application/json',
           accept: 'application/json',
-          user_agent: "dspace-rest-client #{Dspace::VERSION}"
+          user_agent: "dspace-rest-client #{Dspace::VERSION}",
+          'Cookie' => @access_token.to_s
         }
       }
     end
