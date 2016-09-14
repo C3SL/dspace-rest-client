@@ -64,7 +64,7 @@ module Dspace
         end
 
         action :update_metadata, 'PUT /rest/items/:id/metadata' do
-          body { |object| JSON.generate(object.to_h) }
+          body { |object| JSON.generate(Dspace::Builders::ModelBuilder.models2hash(object))}
           handler(200, 201) { |response| true }
         end
 
