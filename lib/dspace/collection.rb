@@ -15,7 +15,7 @@ module Dspace
       @handle = args['handle']
       @type = args['type']
       @link = args['link']
-      @logo = args['logo']
+      @logo = Dspace::Bitstream.new(args['logo']) unless args['logo'].nil?
       @license = args['license']
       @copyright_text = args['copyrightText'] || args['copyright_text']
       @introductory_text = args['introductoryText'] || args['introductory_text']
