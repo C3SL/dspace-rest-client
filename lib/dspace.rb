@@ -25,6 +25,10 @@ require_relative "dspace/client"
 module Dspace
 
   class NotAuthorizedError < StandardError; end
+  class NotFoundError < StandardError; end
+  class MethodNotAllowedError < StandardError; end
+  class UnsupportedMediaTypeError < StandardError; end
+  class ServerError < StandardError; end
   class InvalidTokenError < StandardError; end
   class InvalidCredentialsError < StandardError; end
 

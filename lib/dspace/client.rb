@@ -52,8 +52,8 @@ module Dspace
     end
 
     def logout
-      resource(:authentication).logout
-      @access_token = nil
+      (response = resource(:authentication).logout) && @access_token = nil
+      response
     end
 
     private
