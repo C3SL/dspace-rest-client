@@ -27,7 +27,8 @@ module Dspace
           collections: ::Dspace::Resources::CollectionResource,
           communities: ::Dspace::Resources::CommunityResource,
           status: ::Dspace::Resources::StatusResource,
-          authentication: ::Dspace::Resources::AuthenticationResource
+          authentication: ::Dspace::Resources::AuthenticationResource,
+          schema_registry: ::Dspace::Resources::SchemaRegistryResource
       }
     end
 
