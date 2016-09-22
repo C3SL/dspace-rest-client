@@ -2,17 +2,17 @@ module Dspace
   class MetadataField
     include Dspace::Builders::HashBuilder
 
-    attr_accessor :name, :element, :description, :qualifier
+    attr_accessor :name, :element, :qualifier, :description
 
-    attr_reader :id, :parentSchema, :expand
+    attr_reader :id, :parent_schema, :expand
 
     def initialize(args={})
       @id = args['fieldId']
       @name = args['name']
+      @parent_schema = args['parentSchema'] || args['parent_schema']
       @element = args['element']
-      @description = args['description']
       @qualifier = args['qualifier']
-      @parentSchema = args['parentSchema']
+      @description = args['description']
       @expand = args['expand']
     end
 
@@ -20,10 +20,10 @@ module Dspace
       {
         fieldId: @id,
         name: @name,
+        parentSchema: @parent_schema,
         element: @element,
-        description: @description,
         qualifier: @qualifier,
-        parentSchema: @parentSchema,
+        description: @description,
         expand: @expand
       }
     end
