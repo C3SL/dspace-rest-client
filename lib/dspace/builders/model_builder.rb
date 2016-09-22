@@ -29,11 +29,11 @@ module Dspace
         colls
       end
 
-      def self.build_schemaregistry(schemas=[])
+      def self.build_schemas(schemas=[])
         return schemas unless schemas.is_a? Array
         colls = []
         schemas.each do |c|
-          colls << Dspace::SchemaRegistry.new(c)
+          colls << Dspace::Schema.new(c)
         end
         colls
       end
@@ -42,7 +42,7 @@ module Dspace
         return fields unless fields.is_a? Array
         colls = []
         fields.each do |c|
-          colls << Dspace::Field.new(c)
+          colls << Dspace::MetadataField.new(c)
         end
         colls
       end

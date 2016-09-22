@@ -17,7 +17,7 @@ module Dspace
             'GET /rest/registries/schema' do
           query_keys :expand
           handler(200) do |response|
-            Dspace::Builders::ModelBuilder.build_schemaregistry(JSON.parse(response.body))
+            Dspace::Builders::ModelBuilder.build_schemas(JSON.parse(response.body))
           end
         end
 
@@ -37,7 +37,7 @@ module Dspace
             'POST /rest/registries/schema' do
           body { |object| JSON.generate(object.to_h) }
           handler(200) do |response|
-            Dspace::SchemaRegistry.new(JSON.parse(response.body))
+            Dspace::Schema.new(JSON.parse(response.body))
           end
         end
 
@@ -54,7 +54,7 @@ module Dspace
             'GET /rest/registries/metadata-fields/:field_id' do
           query_keys :expand
           handler(200) do |response|
-            Dspace::Field.new(JSON.parse(response.body))
+            Dspace::MetadataField.new(JSON.parse(response.body))
           end
         end
 
@@ -64,7 +64,7 @@ module Dspace
             'POST /rest/registries/schema/:schema_prefix/metadata-fields' do
           body { |object| JSON.generate(object.to_h) }
           handler(200) do |response|
-            Dspace::Field.new(JSON.parse(response.body))
+            Dspace::MetadataField.new(JSON.parse(response.body))
           end
         end
 
@@ -89,7 +89,7 @@ module Dspace
             'GET /rest/registries/schema/:schema_prefix/metadata-fields/:element' do
           query_keys :expand
           handler(200) do |response|
-            Dspace::SchemaRegistry.new(JSON.parse(response.body))
+            Dspace::Schema.new(JSON.parse(response.body))
           end
         end
 
@@ -98,7 +98,7 @@ module Dspace
         action :find_qualified_element,
             'GET /rest/registries/schema/:schema_prefix/metadata-fields/:element/:qualifier' do
           handler(200) do |response|
-            Dspace::Field.new(JSON.parse(response.body))
+            Dspace::MetadataField.new(JSON.parse(response.body))
           end
         end
 
