@@ -27,7 +27,7 @@ module Dspace
             'GET /rest/registries/schema/:schema_prefix' do
           query_keys :expand
           handler(200) do |response|
-            Dspace::SchemaRegistry.new(JSON.parse(response.body))
+            Dspace::Schema.new(JSON.parse(response.body))
           end
         end
 
