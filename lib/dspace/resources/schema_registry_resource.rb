@@ -36,7 +36,9 @@ module Dspace
         action :create_schema,
             'POST /rest/registries/schema' do
           body { |object| JSON.generate(object.to_h) }
-          handler(200) { |response| response.inspect }
+          handler(200) do |response|
+            Dspace::SchemaRegistry.new(JSON.parse(response.body))
+          end
         end
 
         # DELETE /registries/schema/{schema_id}
@@ -69,11 +71,9 @@ module Dspace
         # PUT /registries/metadata-fields/{field_id}
         # => Update the specified metadata field
         action :update_metadata_field,
-            'GET /rest/registries/metadata-fields/:field_id' do
-          query_keys :expand
-          handler(200) do |response|
-            Dspace::Field.new(JSON.parse(response.body))
-          end
+            'PUT /rest/registries/metadata-fields/:field_id' do
+          body { |object| JSON.generate(object.to_h) }
+          handler(200) { |response| true }
         end
 
         # DELETE /registries/metadata-fields/{field_id}
