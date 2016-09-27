@@ -14,7 +14,7 @@ module Dspace
         action :all, 'GET /rest/bitstreams' do
           query_keys :expand, :limit, :offset
           handler(200) do |response|
-            Dspace::Builders::ModelBuilder.build_items(JSON.parse(response.body))
+            Dspace::Builders::ModelBuilder.build_bitstreams(JSON.parse(response.body))
           end
         end
 
