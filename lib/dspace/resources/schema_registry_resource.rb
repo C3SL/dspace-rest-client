@@ -91,7 +91,7 @@ module Dspace
             'GET /rest/registries/schema/:schema_prefix/metadata-fields/:element' do
           query_keys :expand
           handler(200) do |response|
-            Dspace::Schema.new(JSON.parse(response.body))
+            Dspace::MetadataField.new(JSON.parse(response.body))
           end
         end
 
