@@ -13,7 +13,7 @@ module Dspace
       @handle = args['handle']
       @type = args['type']
       @link = args['link']
-      @logo = args['logo']
+      @logo = Dspace::Bitstream.new(args['logo']) unless args['logo'].nil?
       @parent_community = Dspace::Community.new(args['parentCommunity']) unless args['parentCommunity'].nil?
       @copyright_text = args['copyrightText'] || args['copyright_text']
       @introductory_text = args['introductoryText'] || args['introductory_text']
@@ -27,7 +27,7 @@ module Dspace
 
     def to_h
       {
-          id: @id,
+          uuid: @id,
           name: @name,
           handle: @handle,
           type: @type,

@@ -29,6 +29,24 @@ module Dspace
         colls
       end
 
+      def self.build_schemas(schemas=[])
+        return schemas unless schemas.is_a? Array
+        colls = []
+        schemas.each do |c|
+          colls << Dspace::Schema.new(c)
+        end
+        colls
+      end
+
+      def self.build_fields(fields=[])
+        return fields unless fields.is_a? Array
+        colls = []
+        fields.each do |c|
+          colls << Dspace::MetadataField.new(c)
+        end
+        colls
+      end
+
       def self.build_bitstreams(bitstreams=[])
         return bitstreams unless bitstreams.is_a? Array
         colls = []
