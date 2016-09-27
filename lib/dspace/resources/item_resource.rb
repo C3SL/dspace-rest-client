@@ -3,7 +3,9 @@ module Dspace
     class ItemResource < ResourceKit::Resource
 
       resources do
-        
+
+        default_handler(400) { raise InvalidTokenError, 'Invalid access token.' }
+        default_handler(403) { raise InvalidCredentialsError, 'Wrong Dspace credentials.' }
         default_handler(401) { raise NotAuthorizedError, 'This request requires authentication' }
         default_handler(404) { raise NotFoundError, 'The specified object doesn\'t exist' }
         default_handler(405) { raise MethodNotAllowedError, 'Wrong request method (GET,POST,PUT,DELETE) or wrong data format (JSON/XML)' }
@@ -46,20 +48,20 @@ module Dspace
         end
 
         action :delete, 'DELETE /rest/items/:id' do
-          handler(200) { |response| true }
+          handler(200, 201, 204) { |response| true }
         end
 
         action :clear_metadata, 'DELETE /rest/items/:id/metadata' do
-          handler(200) { |response| true }
+          handler(200, 201, 204) { |response| true }
         end
 
         action :delete_bitstream, 'DELETE /rest/items/:id/bitstreams/:bitstream_id' do
-          handler(200) { |response| true }
+          handler(200, 201, 204) { |response| true }
         end
 
         action :add_metadata, 'POST /rest/items/:id/metadata' do
           body { |objects| Dspace::Builders::ModelBuilder.models2hash(objects) }
-          handler(200) { |response| true }
+          handler(200, 201) { |response| true }
         end
 
         action :add_bitstream, 'POST /rest/items/:id/bitstreams' do
@@ -70,7 +72,7 @@ module Dspace
 
         action :update_metadata, 'PUT /rest/items/:id/metadata' do
           body { |object| JSON.generate(Dspace::Builders::ModelBuilder.models2hash(object))}
-          handler(200) { |response| true }
+          handler(200, 201) { |response| true }
         end
 
       end

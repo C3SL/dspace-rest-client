@@ -4,6 +4,8 @@ module Dspace
 
       resources do
 
+        default_handler(400) { raise InvalidTokenError, 'Invalid access token.' }
+        default_handler(403) { raise InvalidCredentialsError, 'Wrong Dspace credentials.' }
         default_handler(401) { raise NotAuthorizedError, 'This request requires authentication' }
         default_handler(404) { raise NotFoundError, 'The specified object doesn\'t exist' }
         default_handler(405) { raise MethodNotAllowedError, 'Wrong request method (GET,POST,PUT,DELETE) or wrong data format (JSON/XML)' }
@@ -13,12 +15,12 @@ module Dspace
 
         action :login, 'POST /rest/login' do
           query_keys :email, :password
-          handler(200) { |response| response['set-cookie'] }
+          handler(200, 201) { |response| response['set-cookie'] }
         end
 
         action :logout, 'POST /rest/logout' do
           body { |object| JSON.generate(object.to_h) }
-          handler(200) { |response| true }
+          handler(200, 201, 203, 204) { |response| true }
         end
 
       end

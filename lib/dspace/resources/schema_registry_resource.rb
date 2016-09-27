@@ -4,6 +4,8 @@ module Dspace
 
       resources do
 
+        default_handler(400) { raise InvalidTokenError, 'Invalid access token.' }
+        default_handler(403) { raise InvalidCredentialsError, 'Wrong Dspace credentials.' }
         default_handler(401) { raise NotAuthorizedError, 'This request requires authentication' }
         default_handler(404) { raise NotFoundError, 'The specified object doesn\'t exist' }
         default_handler(405) { raise MethodNotAllowedError, 'Wrong request method (GET,POST,PUT,DELETE) or wrong data format (JSON/XML)' }

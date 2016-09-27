@@ -4,6 +4,8 @@ module Dspace
 
       resources do
 
+        default_handler(400) { raise InvalidTokenError, 'Invalid access token.' }
+        default_handler(403) { raise InvalidCredentialsError, 'Wrong Dspace credentials.' }
         default_handler(401) { raise NotAuthorizedError, 'This request requires authentication' }
         default_handler(404) { raise NotFoundError, 'The specified object doesn\'t exist' }
         default_handler(405) { raise MethodNotAllowedError, 'Wrong request method (GET,POST,PUT,DELETE) or wrong data format (JSON/XML)' }
@@ -48,34 +50,34 @@ module Dspace
 
         action :create, 'POST /rest/communities' do
           body { |object| JSON.generate(object.to_h) }
-          handler(200) { |response| Dspace::Community.new(JSON.parse(response.body)) }
+          handler(200, 201) { |response| Dspace::Community.new(JSON.parse(response.body)) }
         end
 
         action :create_subcommunity, 'POST /rest/communities/:id/communities' do
           body { |object| JSON.generate(object.to_h) }
-          handler(200) { |response| Dspace::Community.new(JSON.parse(response.body)) }
+          handler(200, 201) { |response| Dspace::Community.new(JSON.parse(response.body)) }
         end
 
         action :create_collection, 'POST /rest/communities/:id/collections' do
           body { |object| JSON.generate(object.to_h) }
-          handler(200) { |response| Dspace::Collection.new(JSON.parse(response.body)) }
+          handler(200, 201) { |response| Dspace::Collection.new(JSON.parse(response.body)) }
         end
 
         action :update, 'PUT /rest/communities/:id' do
           body { |object| JSON.generate(object.to_h) }
-          handler(200) { |response| true }
+          handler(200, 201) { |response| true }
         end
 
         action :delete, 'DELETE /rest/communities/:id' do
-          handler(200) { |response| true }
+          handler(200, 201, 204) { |response| true }
         end
 
         action :delete_collection, 'DELETE /rest/communities/:id/collections/:collection_id' do
-          handler(200) { |response| true }
+          handler(200, 201, 204) { |response| true }
         end
 
         action :delete_subcommunity, 'DELETE /rest/communities/:id/communities/:subcommunity_id' do
-          handler(200) { |response| true }
+          handler(200, 201, 204) { |response| true }
         end
 
       end

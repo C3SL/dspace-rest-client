@@ -4,6 +4,8 @@ module Dspace
 
       resources do
 
+        default_handler(400) { raise InvalidTokenError, 'Invalid access token.' }
+        default_handler(403) { raise InvalidCredentialsError, 'Wrong Dspace credentials.' }
         default_handler(401) { raise NotAuthorizedError, 'This request requires authentication' }
         default_handler(404) { raise NotFoundError, 'The specified object doesn\'t exist' }
         default_handler(405) { raise MethodNotAllowedError, 'Wrong request method (GET,POST,PUT,DELETE) or wrong data format (JSON/XML)' }
@@ -36,26 +38,26 @@ module Dspace
         end
 
         action :delete, 'DELETE /rest/bitstreams/:id' do
-          handler(200) { |response| true }
+          handler(200, 201, 204) { |response| true }
         end
 
         action :delete_policy, 'DELETE /rest/bitstreams/:id/policy/:policy_id' do
-          handler(200) { |response| true }
+          handler(200, 201, 204) { |response| true }
         end
 
         action :add_policy, 'POST /rest/bitstreams/:id/policy' do
           body { |object| JSON.generate(object.to_h) }
-          handler(200) { |response| true }
+          handler(200, 201) { |response| true }
         end
 
         action :update, 'PUT /rest/bitstreams/:id' do
           body { |object| JSON.generate(object.to_h) }
-          handler(200) { |response| true }
+          handler(200, 201) { |response| true }
         end
 
         action :update_data, 'PUT /rest/bitstreams/:id/data' do
           body { |file| file.read }
-          handler(200) { |response| true }
+          handler(200, 201) { |response| true }
         end
       end
 

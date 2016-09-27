@@ -4,6 +4,8 @@ module Dspace
 
       resources do
 
+        default_handler(400) { raise InvalidTokenError, 'Invalid access token.' }
+        default_handler(403) { raise InvalidCredentialsError, 'Wrong Dspace credentials.' }
         default_handler(401) { raise NotAuthorizedError, 'This request requires authentication' }
         default_handler(404) { raise NotFoundError, 'The specified object doesn\'t exist' }
         default_handler(405) { raise MethodNotAllowedError, 'Wrong request method (GET,POST,PUT,DELETE) or wrong data format (JSON/XML)' }
@@ -27,15 +29,15 @@ module Dspace
 
         action :update, 'PUT /rest/collections/:id' do
           body { |object| JSON.generate(object.to_h) }
-          handler(200) { |response| true }
+          handler(200, 201) { |response| true }
         end
 
         action :delete, 'DELETE /rest/collections/:id' do
-          handler(200) { |response| true }
+          handler(200, 201, 204) { |response| true }
         end
 
         action :delete_item, 'DELETE /rest/collections/:id/items/:item_id' do
-          handler(200) { |response| true }
+          handler(200, 201, 204) { |response| true }
         end
 
         action :items, 'GET /rest/collections/:id/items' do
@@ -47,7 +49,7 @@ module Dspace
 
         action :create_item, 'POST /rest/collections/:id/items' do
           body { |object| JSON.generate(object.to_h) }
-          handler(200) { |response| Dspace::Item.new(JSON.parse(response.body)) }
+          handler(200, 201) { |response| Dspace::Item.new(JSON.parse(response.body)) }
         end
 
       end
