@@ -15,7 +15,7 @@ module Dspace
 
         action :all, 'GET /rest/hierarchy' do
           handler(200) do |response|
-            response.body
+            Dspace::Site.new(JSON.parse(response.body))
           end
         end
 

@@ -20,8 +20,17 @@ module Dspace
       @short_description = args['shortDescription'] || args['short_description']
       @sidebar_text = args['sidebarText'] || args['sidebar_text']
       @count_items = args['countItems']
-      @sub_communities = Dspace::Builders::ModelBuilder.build_communities(args['subcommunities']) unless args['subcommunities'].nil?
-      @collections = Dspace::Builders::ModelBuilder.build_collections(args['collections']) unless args['collections'].nil?
+
+      # subcommunities = All community endpoints
+      # community = Hierarchy endpoint
+      sub_communities = args['subcommunities'] || args['community']
+      @sub_communities = Dspace::Builders::ModelBuilder.build_communities(sub_communities) unless sub_communities.nil?
+
+      # collections = All community/collection endpoints
+      # collection = Hierarchy endpoint
+      collections = args['collections'] || args['collection']
+      @collections = Dspace::Builders::ModelBuilder.build_collections(collections) unless collections.nil?
+
       @expand = args['expand']
     end
 
