@@ -5,6 +5,7 @@ require "faraday"
 require "active_support/all"
 
 require_relative "dspace/version"
+require_relative "dspace/resources/hierarchy_resource"
 require_relative "dspace/resources/schema_registry_resource"
 require_relative "dspace/resources/community_resource"
 require_relative "dspace/resources/collection_resource"
