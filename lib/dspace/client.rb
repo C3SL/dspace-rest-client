@@ -12,7 +12,7 @@ module Dspace
 
     def connection
       Faraday.new(connection_options) do |req|
-        # req.response :logger
+        req.response :logger
         req.request :multipart
         req.request :url_encoded
         req.use(Faraday::Response::Logger, @logger) unless @logger.nil?
@@ -29,7 +29,8 @@ module Dspace
           status: ::Dspace::Resources::StatusResource,
           authentication: ::Dspace::Resources::AuthenticationResource,
           schema_registry: ::Dspace::Resources::SchemaRegistryResource,
-          hierarchy: ::Dspace::Resources::HierarchyResource
+          hierarchy: ::Dspace::Resources::HierarchyResource,
+          query_report: ::Dspace::Resources::QueryReportResource
       }
     end
 

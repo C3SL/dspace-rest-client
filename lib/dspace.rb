@@ -5,6 +5,7 @@ require "faraday"
 require "active_support/all"
 
 require_relative "dspace/version"
+require_relative "dspace/resources/query_report_resource"
 require_relative "dspace/resources/hierarchy_resource"
 require_relative "dspace/resources/schema_registry_resource"
 require_relative "dspace/resources/community_resource"
@@ -25,6 +26,7 @@ require_relative "dspace/schema"
 require_relative "dspace/metadata_field"
 require_relative "dspace/bitstream"
 require_relative "dspace/policy"
+require_relative "dspace/item_filter"
 require_relative "dspace/client"
 
 module Dspace
