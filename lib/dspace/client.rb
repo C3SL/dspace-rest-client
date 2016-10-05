@@ -30,7 +30,7 @@ module Dspace
           authentication: ::Dspace::Resources::AuthenticationResource,
           schema_registry: ::Dspace::Resources::SchemaRegistryResource,
           hierarchy: ::Dspace::Resources::HierarchyResource,
-          query_report: ::Dspace::Resources::QueryReportResource
+          report: ::Dspace::Resources::ReportResource
       }
     end
 

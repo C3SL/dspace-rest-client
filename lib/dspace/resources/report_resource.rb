@@ -1,6 +1,6 @@
 module Dspace
   module Resources
-    class QueryReportResource < ResourceKit::Resource
+    class ReportResource < ResourceKit::Resource
 
       resources do
 
@@ -49,8 +49,9 @@ module Dspace
         # TODO: Test it!
         action :filtered_collections,
             'GET /rest/filtered-collections' do
+          query_keys :limit, :offset, :expand, :filters, :collection
           handler(200) do |response|
-            Dspace::Builders::ModelBuilder.build_collections(JSON.parse(response.body)['collections'])
+            Dspace::Builders::ModelBuilder.build_collections(JSON.parse(response.body))
           end
         end
 
@@ -59,7 +60,8 @@ module Dspace
         # TODO: Fix query keys
         # TODO: Test it!
         action :filtered_collections_by_id,
-            'GET /filtered-collections/:collection_id' do
+            'GET /rest/filtered-collections/:collection_id' do
+          query_keys :limit, :offset, :expand, :filters, :collection
           handler(200) do |response|
             Dspace::Builders::ModelBuilder.build_items(JSON.parse(response.body)['items'])
           end
