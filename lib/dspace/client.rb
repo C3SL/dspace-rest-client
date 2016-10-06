@@ -12,7 +12,7 @@ module Dspace
 
     def connection
       Faraday.new(connection_options) do |req|
-        req.response :logger
+        # req.response :logger
         req.request :multipart
         req.request :url_encoded
         req.use(Faraday::Response::Logger, @logger) unless @logger.nil?
