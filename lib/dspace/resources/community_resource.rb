@@ -3,7 +3,15 @@ module Dspace
     class CommunityResource < ResourceKit::Resource
 
       resources do
+
+        default_handler(400) { raise InvalidTokenError, 'Invalid access token.' }
+        default_handler(403) { raise InvalidCredentialsError, 'Wrong Dspace credentials.' }
         default_handler(401) { raise NotAuthorizedError, 'This request requires authentication' }
+        default_handler(404) { raise NotFoundError, 'The specified object doesn\'t exist' }
+        default_handler(405) { raise MethodNotAllowedError, 'Wrong request method (GET,POST,PUT,DELETE) or wrong data format (JSON/XML)' }
+        default_handler(415) { raise UnsupportedMediaTypeError, 'Missing "Content-Type: application/json" or "Content-Type: application/xml" request header' }
+        default_handler(500) { raise ServerError, 'Likely a SQLException, IOException, more details in the logs' }
+        default_handler { |response| raise StandardError, "#{response.inspect}" }
 
         action :all, 'GET /rest/communities' do
           query_keys :expand, :limit, :offset
@@ -42,17 +50,17 @@ module Dspace
 
         action :create, 'POST /rest/communities' do
           body { |object| JSON.generate(object.to_h) }
-          handler(200, 201) { |response| true }
+          handler(200, 201) { |response| Dspace::Community.new(JSON.parse(response.body)) }
         end
 
         action :create_subcommunity, 'POST /rest/communities/:id/communities' do
           body { |object| JSON.generate(object.to_h) }
-          handler(200, 201) { |response| true }
+          handler(200, 201) { |response| Dspace::Community.new(JSON.parse(response.body)) }
         end
 
         action :create_collection, 'POST /rest/communities/:id/collections' do
           body { |object| JSON.generate(object.to_h) }
-          handler(200, 201) { |response| true }
+          handler(200, 201) { |response| Dspace::Collection.new(JSON.parse(response.body)) }
         end
 
         action :update, 'PUT /rest/communities/:id' do

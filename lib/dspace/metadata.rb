@@ -2,7 +2,7 @@ module Dspace
   class Metadata
     attr_accessor :key, :value, :language
 
-    def initialize args
+    def initialize(args={})
       @key = args['key']
       @value = args['value']
       @language = args['language'] || nil
