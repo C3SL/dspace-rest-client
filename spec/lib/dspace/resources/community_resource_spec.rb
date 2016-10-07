@@ -23,7 +23,7 @@ RSpec.describe Dspace::Resources::CommunityResource, resource_kit: true do
 
   it 'create a new top-level community' do
     expect(resource).to have_action(:create).that_handles(200, 201).at_path('/rest/communities').with_verb(:post) do |handled|
-      expect(handled).to be_kind_of(Dspace::Community)
+      expect(handled).to eq(true)
     end
   end
 
@@ -49,7 +49,7 @@ RSpec.describe Dspace::Resources::CommunityResource, resource_kit: true do
 
     it 'create a sub-community' do
       expect(resource).to have_action(:create_subcommunity).that_handles(200, 201).at_path('/rest/communities/:id/communities').with_verb(:post) do |handled|
-        expect(handled).to be_kind_of(Dspace::Community)
+        expect(handled).to eq(true)
       end
     end
 
@@ -61,7 +61,7 @@ RSpec.describe Dspace::Resources::CommunityResource, resource_kit: true do
 
     it 'create a collection' do
       expect(resource).to have_action(:create_collection).that_handles(200, 201).at_path('/rest/communities/:id/collections').with_verb(:post) do |handled|
-        expect(handled).to be_kind_of(Dspace::Collection)
+        expect(handled).to eq(true)
       end
     end
 

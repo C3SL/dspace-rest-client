@@ -15,12 +15,6 @@ RSpec.describe Dspace::Resources::ItemResource, resource_kit: true do
     end
   end
 
-  it 'find item by metadata field' do
-    expect(resource).to have_action(:find_by_metadata).that_handles(200).at_path('/rest/items/find-by-metadata-field').with_verb(:post) do |handled|
-      expect(handled).to all(be_kind_of(Dspace::Item))
-    end
-  end
-
   it 'Delete item' do
     expect(resource).to have_action(:delete).that_handles(200).at_path('/rest/items/:id').with_verb(:delete) do |handled|
       expect(handled).to eq(true)

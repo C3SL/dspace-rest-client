@@ -9,12 +9,12 @@ module Dspace
                 :parent_object, :retrieve_link, :check_sum,
                 :sequence_id, :policies
 
-    def initialize(args={})
-      @id = args['id'] || args['uuid']
+    def initialize args
+      @id = args['id']
       @name = args['name']
       @type = args['type']
       @link = args['link']
-      @bundle_name = args['bundleName'] || args['bundle_name']
+      @bundle_name = args['bundleName']
       @description = args['description']
       @format = args['format']
       @mime_type = args['mimeType']
@@ -29,7 +29,7 @@ module Dspace
 
     def to_h
       {
-          uuid: @id,
+          id: @id,
           name: @name,
           type: @type,
           link: @link,

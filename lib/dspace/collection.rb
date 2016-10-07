@@ -9,18 +9,18 @@ module Dspace
                 :parent_community_list, :items,
                 :number_items, :expand
 
-    def initialize(args={})
-      @id = args['id'] || args['uuid']
+    def initialize args
+      @id = args['id']
       @name = args['name']
       @handle = args['handle']
       @type = args['type']
       @link = args['link']
-      @logo = Dspace::Bitstream.new(args['logo']) unless args['logo'].nil?
+      @logo = args['logo']
       @license = args['license']
-      @copyright_text = args['copyrightText'] || args['copyright_text']
-      @introductory_text = args['introductoryText'] || args['introductory_text']
-      @short_description = args['shortDescription'] || args['short_description']
-      @sidebar_text = args['sidebarText'] || args['sidebar_text']
+      @copyright_text = args['copyrightText']
+      @introductory_text = args['introductoryText']
+      @short_description = args['shortDescription']
+      @sidebar_text = args['sidebarText']
       @number_items = args['numberItems']
       @expand = args['expand']
 
@@ -31,14 +31,14 @@ module Dspace
 
     def to_h
       {
-          uuid: @id,
+          id: @id,
           name: @name,
           handle: @handle,
           type: @type,
           link: @link,
           logo: @logo,
           parentCommunity: @parent_community,
-          parentCommunityList: @parent_community_list,
+          parentCommunitList: @parent_community_list,
           items: obj2hash(@items),
           license: @license,
           copyrightText: @copyright_text,

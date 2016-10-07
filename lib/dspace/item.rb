@@ -8,8 +8,8 @@ module Dspace
                 :parent_collection_list, :parent_community_list, :bit_streams,
                 :expand, :metadata
 
-    def initialize(args={})
-      @id = args['id'] || args['uuid']
+    def initialize args
+      @id = args['id']
       @name = args['name']
       @handle = args['handle']
       @type = args['type']
@@ -22,12 +22,12 @@ module Dspace
       @archived = args['archived']
       @withdrawn = args['withdrawn']
       @expand = args['expand']
-      @metadata = Dspace::Builders::ModelBuilder.build_metadatas(args['metadata']) || []
+      @metadata = Dspace::Builders::ModelBuilder.build_metadatas(args['metadata'])
     end
 
     def to_h
       {
-          uuid: @id,
+          id: @id,
           name: @name,
           handle: @handle,
           type: @type,
