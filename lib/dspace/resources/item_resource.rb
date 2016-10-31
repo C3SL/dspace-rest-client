@@ -45,7 +45,7 @@ module Dspace
         end
 
         action :add_metadata, 'POST /rest/items/:id/metadata' do
-          body { |objects| Dspace::Builders::ModelBuilder.models2hash(objects) }
+          body { |objects| JSON.generate(objects) }
           handler(200, 201) { |response| true }
         end
 
