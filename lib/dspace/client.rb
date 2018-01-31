@@ -2,7 +2,7 @@ module Dspace
   class Client
     DSPACE_API = 'https://demo.dspace.org'
 
-    attr_reader :access_token
+    attr_accessor :access_token
 
     def initialize(options = {})
       @access_token = options.with_indifferent_access[:access_token]
@@ -12,6 +12,7 @@ module Dspace
 
     def connection
       Faraday.new(connection_options) do |req|
+        # req.response :logger
         req.request :multipart
         req.request :url_encoded
         req.use(Faraday::Response::Logger, @logger) unless @logger.nil?
@@ -26,7 +27,10 @@ module Dspace
           collections: ::Dspace::Resources::CollectionResource,
           communities: ::Dspace::Resources::CommunityResource,
           status: ::Dspace::Resources::StatusResource,
-          authentication: ::Dspace::Resources::AuthenticationResource
+          authentication: ::Dspace::Resources::AuthenticationResource,
+          schema_registry: ::Dspace::Resources::SchemaRegistryResource,
+          hierarchy: ::Dspace::Resources::HierarchyResource,
+          report: ::Dspace::Resources::ReportResource
       }
     end
 
@@ -42,36 +46,39 @@ module Dspace
       resource(:status).test
     end
 
+    def status
+      resource(:status).status
+    end
+
     def login(email, password)
-      @access_token = resource(:authentication).login(email, password)
+      @access_token = resource(:authentication).login(email: email, password: password)
     end
 
     def logout
-      resource(:authentication).logout
-      @access_token = nil
+      (response = resource(:authentication).logout) && @access_token = nil
+      response
     end
 
     private
 
     def resource(name)
       if self.class.resources.keys.include?(name)
-        resources[name] ||= self.class.resources[name].new(connection: connection)
-        resources[name]
+        resources[name] = self.class.resources[name].new(connection: connection)
       end
     end
 
     def connection_options
       {
-          url: @dspace_api || DSPACE_API,
-          ssl: {
-              verify: false
-          },
-          headers: {
-              content_type: 'application/json',
-              accept: 'application/json',
-              'rest-dspace-token' => access_token.to_s,
-              user_agent: "dspace-rest-client #{Dspace::VERSION}"
-          }
+        url: @dspace_api || DSPACE_API,
+        ssl: {
+          verify: false
+        },
+        headers: {
+          content_type: 'application/json',
+          accept: 'application/json',
+          user_agent: "dspace-rest-client #{Dspace::VERSION}",
+          'Cookie' => @access_token.to_s
+        }
       }
     end
   end
