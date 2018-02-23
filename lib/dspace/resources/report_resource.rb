@@ -16,23 +16,11 @@ module Dspace
 
         # GET /reports
         # => Return a list of report tools built on the rest api
-        # TODO: Fix response error
-        action :reports,
-            'GET /rest/reports' do
-          handler(200) do |response|
-            Dspace::Builders::ModelBuilder.build_reports(JSON.parse(response.body))
-          end
-        end
+        # NOT SUPPORTED: DSpace route returns XML instead of JSON
 
         # GET /reports/{nickname}
         # => Return a redirect to a specific report
-        # TODO: Fix response error
-        action :reports_by_nickname,
-            'GET /rest/reports/:nickname' do
-          handler(200) do |response|
-            response.body
-          end
-        end
+        # NOT SUPPORTED: DSpace route redirects to a HTML page
 
         # GET /filters
         # => Return a list of use case filters available for quality control reporting
@@ -45,25 +33,21 @@ module Dspace
 
         # GET /filtered-collections
         # => Return collections and item counts based on pre-defined filters
-        # TODO: Fix query keys
-        # TODO: Test it!
         action :filtered_collections,
             'GET /rest/filtered-collections' do
-          query_keys :limit, :offset, :expand, :filters, :collection
+          query_keys :limit, :offset, :expand, :filters
           handler(200) do |response|
             Dspace::Builders::ModelBuilder.build_collections(JSON.parse(response.body))
           end
         end
 
         # GET /filtered-collections/{collection_id}
-        # => Return items and item counts for a collection based on pre-defined filters
-        # TODO: Fix query keys
-        # TODO: Test it!
+        # => Return a specific collection based on pre-defined filters
         action :filtered_collections_by_id,
             'GET /rest/filtered-collections/:collection_id' do
-          query_keys :limit, :offset, :expand, :filters, :collection
+          query_keys :limit, :offset, :expand, :filters
           handler(200) do |response|
-            Dspace::Builders::ModelBuilder.build_items(JSON.parse(response.body)['items'])
+            Dspace::Collection.new(JSON.parse(response.body))
           end
         end
 
