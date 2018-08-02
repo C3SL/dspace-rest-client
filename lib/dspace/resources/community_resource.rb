@@ -42,17 +42,17 @@ module Dspace
 
         action :create, 'POST /rest/communities' do
           body { |object| JSON.generate(object.to_h) }
-          handler(200, 201) { |response| true }
+          handler(200, 201) { |response| Dspace::Community.new(JSON.parse(response.body)) }
         end
 
         action :create_subcommunity, 'POST /rest/communities/:id/communities' do
           body { |object| JSON.generate(object.to_h) }
-          handler(200, 201) { |response| true }
+          handler(200, 201) { |response| Dspace::Community.new(JSON.parse(response.body)) }
         end
 
         action :create_collection, 'POST /rest/communities/:id/collections' do
           body { |object| JSON.generate(object.to_h) }
-          handler(200, 201) { |response| true }
+          handler(200, 201) { |response| Dspace::Collection.new(JSON.parse(response.body)) }
         end
 
         action :update, 'PUT /rest/communities/:id' do

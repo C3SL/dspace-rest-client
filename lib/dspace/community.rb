@@ -1,5 +1,6 @@
 module Dspace
   class Community
+    include Dspace::Builders::HashBuilder
 
     attr_accessor :name, :logo, :copyright_text,
                   :introductory_text, :short_description, :sidebar_text
@@ -43,12 +44,6 @@ module Dspace
           countItems: @count_items,
           expand: @expand
       }
-    end
-
-    private
-
-    def obj2hash(list)
-      Dspace::Builders::HashBuilder.models2hash list if list.is_a? Array
     end
 
   end

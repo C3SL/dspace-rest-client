@@ -38,7 +38,7 @@ module Dspace
           link: @link,
           logo: @logo,
           parentCommunity: @parent_community,
-          parentCommunitList: @parent_community_list,
+          parentCommunityList: @parent_community_list,
           items: obj2hash(@items),
           license: @license,
           copyrightText: @copyright_text,
