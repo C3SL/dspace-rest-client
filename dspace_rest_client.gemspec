@@ -2,7 +2,6 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'dspace/version'
-require 'rake'
 
 Gem::Specification.new do |spec|
   spec.date = '2020-01-13'
