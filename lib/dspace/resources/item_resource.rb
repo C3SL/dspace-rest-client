@@ -56,7 +56,7 @@ module Dspace
         end
 
         action :update_metadata, 'PUT /rest/items/:id/metadata' do
-          body { |object| JSON.generate(object.to_h) }
+          body { |objects| JSON.generate(objects) }
           handler(200, 201) { |response| true }
         end
 
