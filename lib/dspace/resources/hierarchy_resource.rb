@@ -1,6 +1,6 @@
 module Dspace
   module Resources
-    class StatusResource < ResourceKit::Resource
+    class HierarchyResource < ResourceKit::Resource
 
       resources do
 
@@ -13,16 +13,13 @@ module Dspace
         default_handler(500) { raise ServerError, 'Likely a SQLException, IOException, more details in the logs' }
         default_handler { |response| raise StandardError, "#{response.inspect}" }
 
-        action :test, 'GET /rest/test' do
-          handler(200, 201) { |response| true }
-        end
-
-        action :status, 'GET /rest/status' do
-          handler(200) { |response| JSON.parse(response.body) }
+        action :all, 'GET /rest/hierarchy' do
+          handler(200) do |response|
+            Dspace::Site.new(JSON.parse(response.body))
+          end
         end
 
       end
-
     end
   end
 end

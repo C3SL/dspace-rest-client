@@ -9,18 +9,18 @@ module Dspace
                 :parent_community_list, :items,
                 :number_items, :expand
 
-    def initialize args
-      @id = args['id']
+    def initialize(args={})
+      @id = args['id'] || args['uuid']
       @name = args['name']
       @handle = args['handle']
       @type = args['type']
       @link = args['link']
-      @logo = args['logo']
+      @logo = Dspace::Bitstream.new(args['logo']) unless args['logo'].nil?
       @license = args['license']
-      @copyright_text = args['copyrightText']
-      @introductory_text = args['introductoryText']
-      @short_description = args['shortDescription']
-      @sidebar_text = args['sidebarText']
+      @copyright_text = args['copyrightText'] || args['copyright_text']
+      @introductory_text = args['introductoryText'] || args['introductory_text']
+      @short_description = args['shortDescription'] || args['short_description']
+      @sidebar_text = args['sidebarText'] || args['sidebar_text']
       @number_items = args['numberItems']
       @expand = args['expand']
 
@@ -31,7 +31,7 @@ module Dspace
 
     def to_h
       {
-          id: @id,
+          uuid: @id,
           name: @name,
           handle: @handle,
           type: @type,
