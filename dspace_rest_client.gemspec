@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'dspace/version'
 
 Gem::Specification.new do |spec|
-  spec.date = '2016-10-25'
+  spec.date = '2020-01-13'
   spec.name = 'dspace_rest_client'
   spec.version = Dspace::VERSION
   spec.authors = ['Mauricio Giacomini Girardello', 'Bruno N. Zanette', 'Mateus Rambo Strey']
@@ -18,13 +18,13 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_runtime_dependency 'json', '~> 1.8', '>= 1.8.3'
-  spec.add_runtime_dependency 'resource_kit', '>= 0.1.4'
-  spec.add_runtime_dependency 'faraday', '~> 0.9.2'
-  spec.add_runtime_dependency 'net-http-persistent', '~> 2.9', '>= 2.9.4'
-  spec.add_runtime_dependency 'activesupport', '>= 4.2.0'
+  spec.add_runtime_dependency 'json', '~> 2.3'
+  spec.add_runtime_dependency 'resource_kit', '~> 0.1.7'
+  spec.add_runtime_dependency 'faraday', '~> 1.0'
+  spec.add_runtime_dependency 'net-http-persistent', '~> 3.1'
+  spec.add_runtime_dependency 'activesupport', '~> 6.0', '>= 6.0.2.1'
 
-  spec.add_development_dependency 'bundler', '~> 1.10'
-  spec.add_development_dependency 'rake', '~> 10.0'
-  spec.add_development_dependency 'rspec', '~> 3.4', '>= 3.4.0'
+  spec.add_development_dependency 'bundler', '~> 2.1', '>= 2.1.4'
+  spec.add_development_dependency 'rake', '~> 13.0', '>= 13.0.1'
+  spec.add_development_dependency 'rspec', '~> 3.9'
 end
