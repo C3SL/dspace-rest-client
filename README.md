@@ -16,6 +16,12 @@ Or install it yourself as:
 
     $ gem install dspace_rest_client
 
+## DSpace Version
+
+The `master` branch is currently on version 3.x.x, which only works with DSpace 6.
+
+If you're using DSpace 5 you will need to use the branch `v2.x.x`.
+
 ## Resources
 
 ### Item's resources
