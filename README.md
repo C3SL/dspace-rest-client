@@ -16,6 +16,69 @@ Or install it yourself as:
 
     $ gem install dspace_rest_client
 
+## DSpace Version
+
+The `master` branch is currently on version 3.x.x, which only works with DSpace 6.
+
+If you're using DSpace 5 you will need to use the branch `v2.x.x`.
+
+## Resources
+
+### Item's resources
+* action :all, 'GET /rest/items' (query_keys :expand, :limit, :offset)
+* action :find, 'GET /rest/items/:id' (query_keys :expand)
+* action :find_by_metadata, 'POST /rest/items/find-by-metadata-field'
+* action :metadata, 'GET /rest/items/:id/metadata'
+* action :bitstreams, 'GET /rest/items/:id/bitstreams' (query_keys :expand, :limit, :offset)
+* action :delete, 'DELETE /rest/items/:id'
+* action :clear_metadata, 'DELETE /rest/items/:id/metadata'
+* action :delete_bitstream, 'DELETE /rest/items/:id/bitstreams/:bitstream_id'
+* action :add_metadata, 'POST /rest/items/:id/metadata'
+* action :add_bitstream, 'POST /rest/items/:id/bitstreams' (query_keys :name, :description, :bundle_name)
+* action :update_metadata, 'PUT /rest/items/:id/metadata'
+
+### Collection's resources
+* action :all, 'GET /rest/collections' (query_keys :expand, :limit, :offset)
+* action :find, 'GET /rest/collections/:id' (query_keys :expand)
+* action :update, 'PUT /rest/collections/:id'
+* action :delete, 'DELETE /rest/collections/:id'
+* action :delete_item, 'DELETE /rest/collections/:id/items/:item_id'
+* action :items, 'GET /rest/collections/:id/items' (query_keys :expand, :limit, :offset)
+* action :create_item, 'POST /rest/collections/:id/items'
+
+### Community's resources
+* action :all, 'GET /rest/communities' (query_keys :expand, :limit, :offset)
+* action :top_communities, 'GET /rest/communities/top-communities' (query_keys :expand, :limit, :offset)
+* action :find, 'GET /rest/communities/:id' (query_keys :expand)
+* action :collections, 'GET /rest/communities/:id/collections' (query_keys :expand, :limit, :offset)
+* action :sub_communities, 'GET /rest/communities/:id/communities' (query_keys :expand, :limit, :offset)
+* action :create, 'POST /rest/communities'
+* action :create_subcommunity, 'POST /rest/communities/:id/communities'
+* action :create_collection, 'POST /rest/communities/:id/collections'
+* action :update, 'PUT /rest/communities/:id'
+* action :delete, 'DELETE /rest/communities/:id'
+* action :delete_collection, 'DELETE /rest/communities/:id/collections/:collection_id'
+* action :delete_subcommunity, 'DELETE /rest/communities/:id/communities/:subcommunity_id'
+
+### Bitstream's resources
+* action :all, 'GET /rest/bitstreams' (query_keys :expand, :limit, :offset)
+* action :find, 'GET /rest/bitstreams/:id' (query_keys :expand)
+* action :policy, 'GET /rest/bitstreams/:id/policy'
+* action :retrieve, 'GET /rest/bitstreams/:id/retrieve'
+* action :delete, 'DELETE /rest/bitstreams/:id'
+* action :delete_policy, 'DELETE /rest/bitstreams/:id/policy/:policy_id'
+* action :add_policy, 'POST /rest/bitstreams/:id/policy'
+* action :update, 'PUT /rest/bitstreams/:id'}
+* action :update_data, 'PUT /rest/bitstreams/:id/data' do
+
+### Authentication's resources
+* action :login, 'POST /rest/login'
+* action :logout, 'POST /rest/logout'
+
+### Status's resources
+* action :test, 'GET /rest/test'
+* action :status, 'GET /rest/status'
+
 ## Get started
 
 Some requests requires user authentication.
