@@ -8,10 +8,10 @@ Gem::Specification.new do |spec|
   spec.name = 'dspace_rest_client'
   spec.version = Dspace::VERSION
   spec.authors = ['Mauricio Giacomini Girardello', 'Bruno N. Zanette', 'Mateus Rambo Strey']
-  spec.email = ['mauriciogiacomini4@gmail.com', 'mateus.rstrey@gmail.com']
+  spec.email = ['mauriciogiacomini4@gmail.com', 'brunonzanette@gmail.com', 'mateus.rstrey@gmail.com']
   spec.summary = 'DSpace REST API Client for Ruby'
   spec.description = 'DSpace REST-API Client for Ruby! Implements all DSpace REST-API endpoints requests.'
-  spec.homepage = 'http://github.com/mgiacomini/dspace-rest-client'
+  spec.homepage = 'https://gitlab.c3sl.ufpr.br/c3sl/dspace-rest-client'
   spec.license = 'GNU - General Public License'
   spec.test_files = `git ls-files -z spec/`.split("\0")
   spec.files = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(spec)/}) }

@@ -29,6 +29,24 @@ module Dspace
         colls
       end
 
+      def self.build_schemas(schemas=[])
+        return schemas unless schemas.is_a? Array
+        colls = []
+        schemas.each do |c|
+          colls << Dspace::Schema.new(c)
+        end
+        colls
+      end
+
+      def self.build_fields(fields=[])
+        return fields unless fields.is_a? Array
+        colls = []
+        fields.each do |c|
+          colls << Dspace::MetadataField.new(c)
+        end
+        colls
+      end
+
       def self.build_bitstreams(bitstreams=[])
         return bitstreams unless bitstreams.is_a? Array
         colls = []
@@ -52,6 +70,24 @@ module Dspace
         colls = []
         policies.each do |c|
           colls << Dspace::Policy.new(c)
+        end
+        colls
+      end
+
+      def self.build_reports(reports=[])
+        return reports unless reports.is_a? Array
+        colls = []
+        reports.each do |c|
+          colls << Dspace::Report.new(c)
+        end
+        colls
+      end
+
+      def self.build_item_filters(item_filters=[])
+        return item_filters unless item_filters.is_a? Array
+        colls = []
+        item_filters.each do |c|
+          colls << Dspace::ItemFilter.new(c)
         end
         colls
       end
