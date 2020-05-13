@@ -12,7 +12,7 @@ module Dspace
 
     def connection(reconnect = false)
       if @conn.nil? || reconnect
-        close
+        close_connection
         @conn = Faraday.new(connection_options) do |req|
           # req.response :logger
           req.request :multipart
@@ -24,7 +24,7 @@ module Dspace
       @conn
     end
 
-    def close
+    def close_connection
       @conn.close unless @conn.nil?
     end
 
