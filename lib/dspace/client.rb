@@ -61,7 +61,9 @@ module Dspace
     end
 
     def logout
-      (response = resource(:authentication).logout) && @access_token = nil
+      response = resource(:authentication).logout
+      connection.headers['Cookie'] = ""
+      @access_token = nil
       response
     end
 
