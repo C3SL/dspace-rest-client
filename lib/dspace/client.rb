@@ -8,6 +8,7 @@ module Dspace
       @access_token = options.with_indifferent_access[:access_token]
       @dspace_api = options.with_indifferent_access[:dspace_api]
       @logger = options.with_indifferent_access[:logger]
+      @adapter = options.with_indifferent_access[:adapter]
     end
 
     def connection
@@ -15,7 +16,8 @@ module Dspace
         req.request :multipart
         req.request :url_encoded
         req.use(Faraday::Response::Logger, @logger) unless @logger.nil?
-        req.adapter Dspace::Adapter::NetHttpPersistent
+        # req.adapter Dspace::Adapter::NetHttpPersistent
+        req.adapter @adapter
       end
       @conn
     end
