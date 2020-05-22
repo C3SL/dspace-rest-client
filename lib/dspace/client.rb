@@ -15,9 +15,12 @@ module Dspace
       @conn ||= Faraday.new(connection_options) do |req|
         req.request :multipart
         req.request :url_encoded
-        req.use(Faraday::Response::Logger, @logger) unless @logger.nil?
-        # req.adapter Dspace::Adapter::NetHttpPersistent
-        req.adapter @adapter
+        req.use(Faraday::Response::Logger, @logger) unless @logger.blank?
+        if @adapter == :net_http_persistent
+          req.adapter Dspace::Adapter::NetHttpPersistent
+        else
+          req.adapter @adapter unless @adapter.blank?
+        end
       end
       @conn
     end
