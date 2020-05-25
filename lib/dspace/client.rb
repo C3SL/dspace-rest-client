@@ -8,16 +8,25 @@ module Dspace
       @access_token = options.with_indifferent_access[:access_token]
       @dspace_api = options.with_indifferent_access[:dspace_api]
       @logger = options.with_indifferent_access[:logger]
+      @adapter = options.with_indifferent_access[:adapter]
     end
 
     def connection
-      Faraday.new(connection_options) do |req|
-        # req.response :logger
+      @conn ||= Faraday.new(connection_options) do |req|
         req.request :multipart
         req.request :url_encoded
-        req.use(Faraday::Response::Logger, @logger) unless @logger.nil?
-        req.adapter :net_http_persistent
+        req.use(Faraday::Response::Logger, @logger) unless @logger.blank?
+        if @adapter == :net_http_persistent
+          req.adapter Dspace::Adapter::NetHttpPersistent
+        else
+          req.adapter @adapter unless @adapter.blank?
+        end
       end
+      @conn
+    end
+
+    def close_connection
+      @conn.close unless @conn.nil?
     end
 
     def self.resources
@@ -52,10 +61,14 @@ module Dspace
 
     def login(email, password)
       @access_token = resource(:authentication).login(email: email, password: password)
+      connection.headers['Cookie'] = @access_token
+      @access_token
     end
 
     def logout
-      (response = resource(:authentication).logout) && @access_token = nil
+      response = resource(:authentication).logout
+      connection.headers['Cookie'] = ""
+      @access_token = nil
       response
     end
 
