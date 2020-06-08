@@ -9,6 +9,8 @@ module Dspace
       @dspace_api = options.with_indifferent_access[:dspace_api]
       @logger = options.with_indifferent_access[:logger]
       @adapter = options.with_indifferent_access[:adapter]
+      @timeout = options.with_indifferent_access[:timeout]
+      @open_timeout = options.with_indifferent_access[:open_timeout]
     end
 
     def connection
@@ -16,6 +18,8 @@ module Dspace
         req.request :multipart
         req.request :url_encoded
         req.use(Faraday::Response::Logger, @logger) unless @logger.blank?
+        req.options.open_timeout = @open_timeout unless @open_timeout.blank?
+        req.options.timeout = @timeout unless @timeout.blank?
         if @adapter == :net_http_persistent
           req.adapter Dspace::Adapter::NetHttpPersistent
         else

@@ -33,10 +33,6 @@ module Dspace
           end
         end
 
-        action :retrieve, 'GET /rest/bitstreams/:id/retrieve' do
-          handler(200) { |response| response.body }
-        end
-
         action :delete, 'DELETE /rest/bitstreams/:id' do
           handler(200, 201, 204) { |response| true }
         end
@@ -65,7 +61,15 @@ module Dspace
         bitstreams_path = args.fetch(:bitstreams_path, nil)
         bitstream = ResourceKit::ActionInvoker.call(action(:find), self, id: args.fetch(:id))
         return nil if bitstream.is_a? String
-        Dspace::Builders::TempfileBuilder.build(bitstream_filename(bitstream), ResourceKit::ActionInvoker.call(action(:retrieve), self, id: bitstream.id), bitstreams_path)
+
+        bitstream_data = []
+        @connection.get("rest/bitstreams/#{bitstream.id}/retrieve") do |req|
+          req.options.on_data = Proc.new do |chunk, overall_received_bytes|
+            bitstream_data << chunk
+          end
+        end
+
+        Dspace::Builders::TempfileBuilder.build(bitstream_filename(bitstream), bitstream_data.join, bitstreams_path)
       end
 
       private

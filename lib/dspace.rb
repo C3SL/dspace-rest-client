@@ -3,6 +3,7 @@ require "json"
 require "resource_kit"
 require "faraday"
 require "active_support/all"
+require "tempfile"
 
 require_relative "dspace/version"
 require_relative "dspace/resources/report_resource"
